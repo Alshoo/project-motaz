@@ -1,0 +1,91 @@
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --primary: #6c63ff;
+  --perpel: #E5E1EC;
+  --green: #36B057;
+  --greenOpacity: #36b05795;
+  --blackOpacity: #A6A6A6;
+  --blue: #1900FF;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  float: center;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
+  text-transform: capitalize;
+}
+
+.Vector {
+  width: 30px;
+}
+
+.yld {
+  font-weight: 700;
+}
+
+.cash {
+  box-shadow: 0px 4px 6px rgba(128, 128, 128, 0.3)
+}
+
+.ahmed {
+  box-shadow: 2px 10px 10px slategray;
+}
+
+.or {
+  position: relative;
+  text-align: center;
+}
+
+.or::after {
+  border-bottom: 1px solid #000;
+  content: '';
+  display: block;
+  width: 100px;
+  position: absolute;
+  top: 50%;
+  right: 30px;
+}
+
+.or::before {
+  border-bottom: 1px solid #000;
+  content: '';
+  display: block;
+  width: 100px;
+  position: absolute;
+  top: 50%;
+  left: 30px;
+}
+
+/* Spiner */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50vh;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid var(--primary);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

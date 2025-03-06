@@ -1,0 +1,8 @@
+.content{
+    width: 600px;
+    height: 307px;
+    overflow-y: scroll;
+}
+.ahmed{
+    box-shadow:0px 15px 30px 10px slategray;
+}
