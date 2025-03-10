@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Head>
-        <link rel="icon" href="/logo-nav.svg" />
+        <link rel="icon" href="./logo-nav.svg" />
       </Head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
