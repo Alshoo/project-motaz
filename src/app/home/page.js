@@ -3,23 +3,11 @@ import { motion } from "framer-motion";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Image from "next/image";
-import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function Home() {
 
 
-    const { data: session } = useSession();
-
-    if (session) {
-      return (
-        <div style={{ textAlign: "center", marginTop: "2rem" }}>
-          <h1> Name {session.user.name || ''}</h1>
-          <p> EMAIL : {session.user.email || ''}</p>
-          <p> TOKEN : {session.accessToken || ''}</p>
-          <button onClick={() => signOut()}>تسجيل الخروج</button>
-        </div>
-      );
-    }
+  
 
 
 
