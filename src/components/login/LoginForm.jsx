@@ -5,6 +5,8 @@ import Link from "next/link";
 import { UserLogin } from "@/Helper/Apis/Auth";
 import { AuthContext } from "@/context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
+import { signIn, signOut, useSession } from "next-auth/react";
+
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -92,10 +94,19 @@ const LoginForm = () => {
       </div>
 
       <div className="space-y-4">
-        <button className="flex w-full justify-center items-center gap-3 border rounded-lg py-3 px-4 transition duration-300 hover:bg-gray-100">
+
+
+
+        <button 
+        className="flex w-full justify-center items-center gap-3 border rounded-lg py-3 px-4 transition duration-300 hover:bg-gray-100"
+        onClick={() => signIn("google")}
+        >
           <Image width={25} height={25} src="/google.svg" alt="Google" />
           <span className="text-sm font-medium">Continue With Google</span>
         </button>
+
+
+
         <button className="flex w-full justify-center items-center gap-3 border rounded-lg py-3 px-4 transition duration-300 hover:bg-gray-100">
           <Image width={25} height={25} src="/apple.svg" alt="Apple" />
           <span className="text-sm font-medium">Continue With Apple</span>
