@@ -13,9 +13,9 @@ export default function Home() {
     if (session) {
       return (
         <div style={{ textAlign: "center", marginTop: "2rem" }}>
-          <h1> Name {session.user.name}</h1>
-          <p> EMAIL : {session.user.email}</p>
-          <p> TOKEN : {session?.accessToken}</p>
+          <h1> Name {session.user.name || ''}</h1>
+          <p> EMAIL : {session.user.email || ''}</p>
+          <p> TOKEN : {session.accessToken || ''}</p>
           <button onClick={() => signOut()}>تسجيل الخروج</button>
         </div>
       );
