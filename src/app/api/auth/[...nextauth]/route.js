@@ -21,6 +21,6 @@ const handler = NextAuth({
       return session;
     },
   },
-});
+}); 
 
 export { handler as GET, handler as POST };
