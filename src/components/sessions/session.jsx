@@ -5,8 +5,6 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import Axios from '@/lib/axiosInstance';
 import Cookies from 'js-cookie';
-import { signIn, useSession } from "next-auth/react";
-
 
  function SessionContent() {
     const cookieData = Cookies.get("user");
@@ -132,25 +130,6 @@ import { signIn, useSession } from "next-auth/react";
     const filteredSessions = filter === "All" 
     ? sessionData 
     : sessionData.filter(session => session.status === filter);
-
-
-
-
-    const { data: session } = useSession();
-
-    if (session) {
-      return (
-        <div style={{ textAlign: "center", marginTop: "2rem" }}>
-          <h1> Name {session.user.name || ''}</h1>
-          <p> EMAIL : {session.user.email || ''}</p>
-          <p> TOKEN : {session.accessToken || ''}</p>
-          <button onClick={() => signOut()}>تسجيل الخروج</button>
-        </div>
-      );
-    }
-
-
-
 
 
     

@@ -64,11 +64,11 @@ const LoginForm = () => {
             />
           </div>
           {err && <p className="mt-2 text-red-600 font-bold text-sm">{err}</p>}
-          <div className="mt-3">
+          {/* <div className="mt-3">
             <Link className="underline text-primary text-sm" href="/Create">
               Forget your password?
             </Link>
-          </div> 
+          </div>  */}
         </div>
 
         <button
@@ -107,7 +107,9 @@ const LoginForm = () => {
 
 
 
-        <button className="flex w-full justify-center items-center gap-3 border rounded-lg py-3 px-4 transition duration-300 hover:bg-gray-100">
+        <button 
+        onClick={() => signOut()}
+        className="flex w-full justify-center items-center gap-3 border rounded-lg py-3 px-4 transition duration-300 hover:bg-gray-100">
           <Image width={25} height={25} src="/apple.svg" alt="Apple" />
           <span className="text-sm font-medium">Continue With Apple</span>
         </button>
