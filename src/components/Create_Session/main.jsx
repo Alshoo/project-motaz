@@ -3,6 +3,7 @@ import Axios from "@/lib/axiosInstance";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Popup from "./popup";
+import Image from "next/image";
 
 export default function CreateSessionPage() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -77,26 +78,26 @@ export default function CreateSessionPage() {
 
   return (
     <div>
-      <div className="py-5 flex justify-center items-center flex-col">
+      <div className="w-full flex justify-center items-center flex-col">
         <div className="w-full flex justify-start lg:px-6 px-4">
           <button
             onClick={() => window.history.back()}
-            className="bg-primary text-white px-3 py-2 mx-4 rounded-md"
+            className="bg-primary text-white px-3 py-2 mx-4 my-4 rounded-md"
           >
             Back
           </button>
         </div>
-        <div className="flex justify-center flex-col w-[90%] max-w-screen-lg items-center min-h-screen bg-gray-100 p-4">
-          <div className="w-full max-w-lg">
-            <div className="bg-gray shadow-md py-4 px-5 rounded-xl mb-5 w-full text-center">
-              <h2 className="text-xl font-bold text-primary text-center mb-4">
+        <div className="flex justify-center flex-col w-full max-w-screen-lg items-center min-h-screen ">
+          <div className="w-full max-w-3xl">
+            <div className="bg-gray-100 shadow-md py-4 px-5 rounded-xl mb-7 w-full text-center ">
+              <h2 className="text-xl font-bold text-primary text-center mb-4 ">
                 Create a Learning Session
               </h2>
               <p className="text-gray-600 font-light text-sm mb-6">
                 In the form below you can create a new study mode session to test yourself in any selected subject's topics and with the required amount of questions needed.
               </p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-lg">
+            <div className="bg-white p-6 rounded-lg shadow-md w-full ">
               <div className="mb-4">
                 <label className="block text-primary text-lg font-semibold mb-2">
                   Topics
@@ -126,8 +127,12 @@ export default function CreateSessionPage() {
                       ))
                     : null}
                 </select>
-                <div className="max-h-[200px] overflow-y-auto shadow-sm bg-zinc-100 rounded-md p-4">
-                  <div className="flex justify-end items-center">
+                <div className="max-h-[225px] overflow-y-auto shadow-sm bg-zinc-100 rounded-md p-4">
+                
+                  {chapters.length > 0 ? (
+                    chapters.map((topic) => (
+                      <>
+                        <div className="flex justify-end items-center">
                     <button
                       type="button"
                       onClick={handleSelectAllTopics}
@@ -136,9 +141,8 @@ export default function CreateSessionPage() {
                       Select All
                     </button>
                   </div>
-                  {chapters.length > 0 ? (
-                    chapters.map((topic) => (
-                      <div key={topic.id} className="flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border-[.5px] border-black rounded-lg shadow-sm">
+
+                  <div key={topic.id} className="flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border-[.5px] border-black rounded-lg shadow-sm">
                         <label htmlFor={`topic-${topic.id}`} className="text-black opacity-70 text-xs font-bold">
                           {topic.name}
                         </label>
@@ -150,9 +154,17 @@ export default function CreateSessionPage() {
                           className="rounded-full"
                         />
                       </div>
+
+
+                      </>
+                    
                     ))
                   ) : (
-                    <p className="text-gray-600 text-xs font-bold">No topics found for this subject</p>
+                    <div className="flex flex-col gap-5 items-center justify-center">
+                    <Image src="/sad 1.png" alt="ERR404" width={100} height={100}/>
+                    <p>Couldn’t Find any Topics</p>
+                    <p>Please Change Your filters and try again </p>
+                    </div>
                   )}
                 </div>
                 {selectedTopics.length === 0 && (
@@ -181,9 +193,9 @@ export default function CreateSessionPage() {
                       setAmount(value);
                     }}
                     placeholder="Set the amount of questions to have in the session"
-                    className="block py-1 px-2 border-[1px] me-3 rounded-full"
+                    className="text-red block py-1 w-[85%] sm:w-[90%] px-2 border-[1px] me-3 rounded-full"
                   />
-                  <h4 className="text-xl opacity-60">/ 0</h4>
+                  <h4 className="text-xs sm:text-xl opacity-60">/ 0</h4>
                 </div>
               </div>
               <hr className="py-2 opacity-40"></hr>

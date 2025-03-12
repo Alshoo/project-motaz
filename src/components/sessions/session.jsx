@@ -153,7 +153,7 @@ function SessionContent() {
                     <li key={filterOption}>
                       <button
                         onClick={() => handleFilterChange(filterOption)}
-                        className={`text-xs font-medium hover:text-primary ${filter === filterOption ? "text-primary" : "text-gray-700"}`}
+                        className={`text-sm font-medium hover:text-primary ${filter === filterOption ? "text-primary" : "text-gray-700"}`}
                       >
                         {filterOption === "All" ? "All" : 
                          filterOption === "completed" ? "Finished" : 

@@ -34,7 +34,7 @@ function Header() {
   }, []);
 
   return (
-    <header className={`${isScrolled ? "fixed top-0 left-0 right-0 z-50 mt-8" : "w-full"} transition-all duration-500 ease-in-out`}>
+    <header className={`${isScrolled ? "fixed top-0 left-0 right-0 z-50 mt-8" : "w-full"} md:flex justify-center transition-all duration-500 ease-in-out`}>
       <nav className={isScrolled ?
        "w-11/12 lg:w-3/4 mx-auto bg-[rgba(255,255,255,0.5)] backdrop-blur px-5 rounded-full shadow-lg flex items-center justify-between p-4 relative transition-all duration-500 ease-in-out" 
         : 
