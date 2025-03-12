@@ -4,6 +4,7 @@ import { createContext} from "react";
 import Axios from "@/lib/axiosInstance";
 import toast, { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
+import { signOut } from "next-auth/react";
 
 export const AuthContext = createContext({});
 
@@ -96,6 +97,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
+    await signOut()
     try {
       // await Axios.post("logout");
       
