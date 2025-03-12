@@ -80,8 +80,7 @@ export function AuthProvider({ children }) {
         duration: 4000,
         position: "top-center",
         style: {
-          fontSize: "20px",
-          width: "50%",
+          fontSize: "15px",
         },
       });
 
@@ -122,8 +121,7 @@ export function AuthProvider({ children }) {
         style: {
           backgroundColor: "var(--primary)",
           color: "white",
-          fontSize: "20px",
-          width: "50%",
+          fontSize: "15px",
         },
       });
       signOut()
