@@ -97,7 +97,7 @@ export function AuthProvider({ children }) {
   };
 
   const logout = async () => {
-    await signOut()
+
     try {
       // await Axios.post("logout");
       
@@ -115,7 +115,7 @@ export function AuthProvider({ children }) {
           width: "50%",
         },
       });
-      
+      signOut()
     } catch (e) {
       console.warn(e);
       toast.error("An Error");
