@@ -77,7 +77,7 @@ const code = couponCode;
 
 
     return (
-        <div >
+        <>
               <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
 
             <div className='py-5 px-5 lg:w-[35%] w-80 h-[80%] shadow-lg bg-white overflow-y-auto rounded-lg'>
@@ -189,7 +189,7 @@ const code = couponCode;
                     </button>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
