@@ -128,11 +128,9 @@ export default function CreateSessionPage() {
                     : null}
                 </select>
                 <div className="max-h-[225px] overflow-y-auto shadow-sm bg-zinc-100 rounded-md p-4">
-                
-                  {chapters.length > 0 ? (
-                    chapters.map((topic) => (
-                      <>
-                        <div className="flex justify-end items-center">
+                {
+                  chapters.length > 0 ? (
+                    <div className="flex justify-end items-center">
                     <button
                       type="button"
                       onClick={handleSelectAllTopics}
@@ -141,6 +139,12 @@ export default function CreateSessionPage() {
                       Select All
                     </button>
                   </div>
+                  ):(null)
+                }
+                  {chapters.length > 0 ? (
+                    chapters.map((topic) => (
+                      <>
+                   
 
                   <div key={topic.id} className="flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border-[.5px] border-black rounded-lg shadow-sm">
                         <label htmlFor={`topic-${topic.id}`} className="text-black opacity-70 text-xs font-bold">
