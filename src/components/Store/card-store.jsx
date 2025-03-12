@@ -40,8 +40,8 @@ function CardStore({ title, pricing_plans, subject_id, questions_count, chapters
         </div>
       </div>
 
-      <div className="flex flex-col md:items-end items-center justify-center">
-        <p className="text-black opacity-40 text-sm md:text-base font-semibold">
+      <div className="flex flex-col md:items-end items- justify-center relative">
+        <p className="text-black opacity-40 text-sm md:text-base font-semibold absolute top-0">
           Start at {pricing_plans[0]?.total_price} LYD
         </p>
       </div>
