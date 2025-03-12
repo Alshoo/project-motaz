@@ -107,12 +107,6 @@ const LoginForm = () => {
 
 
 
-        {/* <button 
-        onClick={() => signOut()}
-        className="flex w-full justify-center items-center gap-3 border rounded-lg py-3 px-4 transition duration-300 hover:bg-gray-100">
-          <Image width={25} height={25} src="/apple.svg" alt="Apple" />
-          <span className="text-sm font-medium">Continue With Apple</span>
-        </button> */}
       </div>
     </div>
   );

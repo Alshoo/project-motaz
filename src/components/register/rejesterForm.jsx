@@ -5,6 +5,7 @@ import React, { useContext, useState } from "react";
 import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 export default function RejesterForm() {
   const [name, setName] = useState("");
@@ -104,14 +105,14 @@ export default function RejesterForm() {
            </div>
      
            <div className="space-y-4">
-             <button className="flex w-full justify-center items-center gap-3 border rounded-lg py-3 px-4 transition duration-300 hover:bg-gray-100">
+             <button 
+             className="flex w-full justify-center items-center gap-3 border rounded-lg py-3 px-4 transition duration-300 hover:bg-gray-100"
+             onClick={() => signIn("google")}
+             >
                <Image width={25} height={25} src="/google.svg" alt="Google" />
                <span className="text-sm font-medium">Continue With Google</span>
              </button>
-             <button className="flex w-full justify-center items-center gap-3 border rounded-lg py-3 px-4 transition duration-300 hover:bg-gray-100">
-               <Image width={25} height={25} src="/apple.svg" alt="Apple" />
-               <span className="text-sm font-medium">Continue With Apple</span>
-             </button>
+           
            </div>
 
 

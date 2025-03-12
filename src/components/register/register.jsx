@@ -9,7 +9,7 @@ export default function Register() {
   return (
     <div>
       
-      <div className="mx-auto my-14 max-w-screen-xl px-1 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-screen-xl px-1 py-16 sm:px-6 lg:px-8">
        
         <div className="mx-auto max-w md:max-w-lg shadow-md rounded-xl">
            <span className="flex justify-center">
