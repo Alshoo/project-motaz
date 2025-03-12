@@ -5,6 +5,7 @@ import { useSession, signIn } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { getSession } from "next-auth/react";
 import { sendTokenToBackend } from "@/Helper/Apis/GoogleApi";
+import Link from "next/link";
 
 export default function HomePage() {
 
@@ -63,12 +64,14 @@ export default function HomePage() {
                                     your academic skills!
                                 </p>
 
-                                <motion.button
+                               <Link href="/sessction">
+                               <motion.button
                                 whileHover={{ scale: 1.08 }}
                                 whileTap={{ scale: 0.5 }}
                                 transition={{ duration: 0.5 }}
                                 className="mt-4 text-white bg-primary font-bold rounded-lg text-sm px-[4rem] py-3 font-5 me-2 mb-2 outline-none"
                                 >Get start</motion.button>
+                               </Link>
 
                             </div>
                         </motion.div>

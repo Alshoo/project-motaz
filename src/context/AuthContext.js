@@ -26,8 +26,7 @@ export function AuthProvider({ children }) {
         duration: 4000,
         position: "top-center",
         style: {
-          fontSize: "20px",
-          width: "50%",
+          fontSize: "15px",
         },
       });
 
@@ -37,10 +36,22 @@ export function AuthProvider({ children }) {
     } catch (e) {
       if (e.response) {
         console.warn(e.response.data);
-        toast.error("Login data error");
+        toast.error("Enter correct data", {
+          duration: 4000,
+          position: "top-center",
+          style: {
+            fontSize: "15px",
+          },
+        });
       }else {
         console.warn(e);
-        toast.error("Login data error");
+        toast.error("Enter correct data", {
+          duration: 4000,
+          position: "top-center",
+          style: {
+            fontSize: "15px",
+          },
+        });
       }
     } 
   };
