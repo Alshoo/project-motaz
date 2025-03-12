@@ -14,7 +14,7 @@ export async function sendTokenToBackend(accessToken) {
       }
     );
     Cookies.set("auth_token", response.data.token);
-    Cookies.set("user", response.data.user);
+    Cookies.set("user",  JSON.stringify(response.data.user));
     return response.data; 
   } catch (error) {
     console.error("Error sending token to backend:", error);
