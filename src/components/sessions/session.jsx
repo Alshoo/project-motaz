@@ -142,13 +142,13 @@ function SessionContent() {
               <Link href="/Create-Session">
                 <button
                   type="button"
-                  className="mt-4 text-white bg-primary font-bold rounded-lg text-base px-6 py-1 mb-2 transition duration-300 hover:bg-transparent hover:border border-primary hover:text-black"
+                  className="mt-4 text-white bg-primary font-bold rounded-lg text-base px-6 py-2 mb-2 transition-all duration-300 ease-in-out hover:bg-primary hover:scale-105 hover:shadow-lg"
                 >
                   Create Session
                 </button>
               </Link>
               <nav className="mt-4">
-                <ul className="bg-perpel py-2 px-3 sm:px-4 rounded gap-2 text-black inline-flex items-center space-x-1">
+                <ul className="bg-perpel py-2 px-3 sm:px-4 rounded gap-2 text-black inline-flex items-center space-x-1 flex-wrap">
                   {["All", "completed", "ongoing", "Not Started"].map((filterOption) => (
                     <li key={filterOption}>
                       <button
@@ -191,6 +191,8 @@ function SessionContent() {
                       ? "Continue"
                       : "Start"
                   }
+                  // Pass a prop to shrink the image in each card
+                  imgSize="w-20 h-20"
                 />
               ))
             ) : (
@@ -242,7 +244,7 @@ function SessionContent() {
 
 export default function Session() {
   return (
-    <Suspense fallback={<div className="text-center py-4 text-sm">Loading...</div>}>
+    <Suspense fallback={<div className="text-center py-4 text-xs">Loading...</div>}>
       <SessionContent />
     </Suspense>
   );
