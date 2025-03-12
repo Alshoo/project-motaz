@@ -37,13 +37,13 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
         </div>
         <ul className="text-gray-700 grid gap-1 text-xs md:text-sm">
           <li>
-            <span>Subject </span>: {subject?.name || "Loading..."}
+            <span className='text-primary'>Subject </span>: {subject?.name || "Loading..."}
           </li>
           <li>
-            <span>Topics </span>: {chapters.length > 0 ? chapters.map((item) => ` ( ${item.name} ) `) : "Loading..."}
+            <span className='text-primary'>Topics </span>: {chapters.length > 0 ? chapters.map((item) => ` ( ${item.name} ) `) : "Loading..."}
           </li>
           <li>
-            <span>Last access </span>: {dateOnly2}
+            <span className='text-primary'>Last access </span>: {dateOnly2}
           </li>
         </ul>
       </div>
