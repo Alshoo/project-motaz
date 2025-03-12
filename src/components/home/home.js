@@ -22,22 +22,22 @@ export default function HomePage() {
   
         const backendData = await sendTokenToBackend(session.accessToken);
         if (backendData) {
-          setUserData(backendData.user);
+          setUserData(backendData);
         }
       }
   
       processBackendCall();
     }, []);
   
-    if (!userData) {
-      return <div>Loading...</div>;
-    }
+    // if (!userData) {
+    //   return <div>Loading...</div>;
+    // }
 
 
   return (
     <div>
-        <h1>Welcome {userData.name}</h1>
-        <p>Your token: {userData.token}</p>
+        {/* <h1>Welcome {userData?.user?.name}</h1>
+        <p>Your token: {userData.token}</p> */}
          <section>
                 <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8">
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center md:gap-8">
