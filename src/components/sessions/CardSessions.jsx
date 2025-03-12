@@ -37,13 +37,13 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
         </div>
         <ul className="text-gray-700 grid gap-1 text-xs md:text-sm">
           <li>
-            <span className='text-primary'>Subject </span>: {subject?.name || "Loading..."}
+            <span className='text-primary font-bold'>Subject </span>: {subject?.name || "Loading..."}
           </li>
           <li>
-            <span className='text-primary'>Topics </span>: {chapters.length > 0 ? chapters.map((item) => ` ( ${item.name} ) `) : "Loading..."}
+            <span className='text-primary font-bold'>Topics </span>: {chapters.length > 0 ? chapters.map((item) => ` ( ${item.name} ) `) : "Loading..."}
           </li>
           <li>
-            <span className='text-primary'>Last access </span>: {dateOnly2}
+            <span className='text-primary font-bold'>Last access </span>: {dateOnly2}
           </li>
         </ul>
       </div>
@@ -55,17 +55,17 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
         {statusText === 'ongoing' ? (
           <Link
             href={`MCQ?id=${Session_id}`}
-            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent hover:bg-gray-500  rounded flex flex-wrap justify-center items-center transition duration-300 text-xs md:text-sm"
+            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent hover:bg-black hover:text-white  rounded flex flex-wrap justify-center items-center transition duration-300 text-xs md:text-sm"
           >
-            <Image className="mr-1" src="/documents 1.svg" width={20} height={20} alt="ERR404" />
+            <i className="mr-1 fa-regular fa-rectangle-list"></i>
             {buttonText}
           </Link>
         ) : (
           <Link
             href={`done?sessionID=${Session_id}`}
-            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent hover:bg-gray-500  rounded flex flex-wrap justify-center items-center transition duration-300 text-xs md:text-sm"
+            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent hover:bg-black hover:text-white  rounded flex flex-wrap justify-center items-center transition duration-300 text-xs md:text-sm"
           >
-            <Image className="mr-1" src="/documents 1.svg" width={20} height={20} alt="ERR404" />
+            <i className="mr-1 fa-regular fa-rectangle-list"></i>
             {buttonText}
           </Link>
         )}
