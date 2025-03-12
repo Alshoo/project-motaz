@@ -103,7 +103,7 @@ const code = couponCode;
                     <h2 className='text-primary font text-2xl'>Please Choose The Package</h2>
                     <div className='gap-2 grid'>
                         {pricing_plans.length > 0 ? pricing_plans.map((item, index) => (
-                            <div key={index} className="flex items-center bg-gray bg-opacity-55 px-4 rounded-lg">
+                            <div key={index} className="flex items-center bg-gray bg-opacity-55 px-4 py-2 rounded-lg border-[1px] border-black">
                                 <label htmlFor={`bordered-radio-${index}`} className="w-full py-4 ms-2 text-sm font-medium text-black">
                                     {item.name} [{item.discount}% Limited Offer Discount]
                                 </label>
