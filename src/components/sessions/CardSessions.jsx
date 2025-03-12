@@ -19,7 +19,7 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
         <Image
           className="object-cover rounded-lg w-32 h-24 md:w-48 md:h-40"
           src="/sessction.svg"
-          alt="Session Image"
+          alt="Technology Acquisitions 2021"
           width={200}
           height={200}
           layout="intrinsic"
@@ -55,43 +55,17 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
         {statusText === 'ongoing' ? (
           <Link
             href={`MCQ?id=${Session_id}`}
-            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent rounded flex items-center justify-center transition-all duration-300 group text-xs md:text-sm hover:bg-black hover:text-white"
+            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent hover:bg-gray hover:text-white rounded flex flex-wrap justify-center items-center transition duration-300 text-xs md:text-sm"
           >
-            <Image
-              className="mr-1 transition-all duration-300 group-hover:hidden"
-              src="/documents 1.svg"
-              width={20}
-              height={20}
-              alt="Default Icon"
-            />
-            <Image
-              className="mr-1 hidden transition-all duration-300 group-hover:block"
-              src="/documents-hover.svg"
-              width={20}
-              height={20}
-              alt="Hover Icon"
-            />
+            <Image className="mr-1" src="/documents 1.svg" width={20} height={20} alt="ERR404" />
             {buttonText}
           </Link>
         ) : (
           <Link
             href={`done?sessionID=${Session_id}`}
-            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent rounded flex items-center justify-center transition-all duration-300 group text-xs md:text-sm hover:bg-black hover:text-white"
+            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent hover:bg-gray hover:text-white rounded flex flex-wrap justify-center items-center transition duration-300 text-xs md:text-sm"
           >
-            <Image
-              className="mr-1 transition-all duration-300 group-hover:hidden"
-              src="/documents 1.svg"
-              width={20}
-              height={20}
-              alt="Default Icon"
-            />
-            <Image
-              className="mr-1 hidden transition-all duration-300 group-hover:block"
-              src="/documents-hover.svg"
-              width={20}
-              height={20}
-              alt="Hover Icon"
-            />
+            <Image className="mr-1" src="/documents 1.svg" width={20} height={20} alt="ERR404" />
             {buttonText}
           </Link>
         )}
