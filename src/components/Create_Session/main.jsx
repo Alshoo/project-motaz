@@ -90,7 +90,7 @@ export default function CreateSessionPage() {
   
   return (
     <div>
-      <div className="w-full flex justify-center items-center flex-col">
+      <div className="w-full flex ju'f stify-center items-center flex-col">
         <div className="flex justify-center flex-col w-full max-w-screen-lg items-center min-h-screen ">
           <div className="w-full max-w-3xl">
             <div className="w-full flex justify-start ">
