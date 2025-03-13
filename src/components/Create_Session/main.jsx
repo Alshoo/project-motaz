@@ -12,9 +12,11 @@ export default function CreateSessionPage() {
   };
 
   const [selectedTopics, setSelectedTopics] = useState([]);
+  const [selectedExams, setSelectedExams] = useState([]);
   const [amount, setAmount] = useState("");
   const [subject, setSubject] = useState(null);
   const [SelectedSubject, setSelectedSubject] = useState(null);
+  const [SelectedSubjectMame, setSelectedSubjectName] = useState(null);
   const [chapters, setChapters] = useState([]);
   const [exams, setExams] = useState([]);
   const [data, setdata] = useState({
@@ -28,8 +30,8 @@ export default function CreateSessionPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const subjectRes = await Axios.get("subjects");
-        setSubject(subjectRes.data.data.data);
+        const subjectRes = await Axios.get("subscriptions");
+        setSubject(subjectRes.data.data);
       } catch (err) {
         console.warn(err);
       }
@@ -42,13 +44,12 @@ export default function CreateSessionPage() {
       const fetchData1 = async () => {
         try {
           const chapterRes = await Axios.get(`chapters/${SelectedSubject}`);
-          const examRes = await Axios.get(`exams/${SelectedSubject}`);
+          const examRes = await Axios.get(`exams/${selectedTopics[0]}`);
           setChapters(chapterRes.data.data);
           setExams(examRes.data.data);
           setdata((prev) => ({
             ...prev,
-            subject_id: SelectedSubject,
-            exams: examRes.data.data.map((exam) => exam.id),
+            subject_id: SelectedSubject
           }));
         } catch (err) {
           console.warn(err);
@@ -56,49 +57,50 @@ export default function CreateSessionPage() {
       };
       fetchData1();
     }
-  }, [SelectedSubject]);
+  }, [SelectedSubject, selectedTopics]);
 
   useEffect(() => {
     setdata((prev) => ({ ...prev, chapters: selectedTopics }));
   }, [selectedTopics]);
 
+  useEffect(() => {
+    setdata((prev) => ({ ...prev, exams: selectedExams }));
+  }, [selectedExams]);
+
   const handleTopicSelection = (id) => {
-    setSelectedTopics((prev) =>
-      prev.includes(id) ? prev.filter((topic) => topic !== id) : [...prev, id]
-    );
+    setSelectedTopics([id]);
   };
 
-  const handleSelectAllTopics = () => {
-    if (selectedTopics.length === chapters.length) {
-      setSelectedTopics([]);
+  const handleExamSelection = (id) => {
+    if (selectedExams.includes(id)) {
+      setSelectedExams(selectedExams.filter((examId) => examId !== id));
     } else {
-      setSelectedTopics(chapters.map((topic) => topic.id));
+      setSelectedExams([...selectedExams, id]);
     }
   };
 
+  const handleSelectAllExams = () => {
+    if (selectedExams.length === exams.length) {
+      setSelectedExams([]);
+    } else {
+      setSelectedExams(exams.map((exam) => exam.id));
+    }
+  };
+
+  
   return (
     <div>
       <div className="w-full flex justify-center items-center flex-col">
-       
         <div className="flex justify-center flex-col w-full max-w-screen-lg items-center min-h-screen ">
-
-
-      
-
-
           <div className="w-full max-w-3xl">
-
-          <div className="w-full flex justify-start ">
-          <button
-            onClick={() => window.history.back()}
-            className="bg-primary text-white px-3 py-2 my-4 rounded-md w-[110px]"
-          >
-            Back
-          </button>
-        </div>
-
-
-
+            <div className="w-full flex justify-start ">
+              <button
+                onClick={() => window.history.back()}
+                className="bg-primary text-white px-3 py-2 my-4 rounded-md w-[110px]"
+              >
+                Back
+              </button>
+            </div>
             <div className="bg-gray-100 shadow-md py-4 px-5 rounded-xl mb-7 w-[90%] m-auto text-center ">
               <h2 className="text-lg font-bold text-primary text-center mb-4 ">
                 Create a Learning Session
@@ -131,53 +133,58 @@ export default function CreateSessionPage() {
                   <option>Choose a Subject</option>
                   {subject
                     ? subject.map((sub) => (
-                        <option key={sub.id} value={sub.id}>
-                          {sub.name}
+                        <option key={sub.id} value={sub.subject_id.id}>
+                          {sub.subject_id.name}
+                        </option>
+                      ))
+                    : null}
+                </select>
+                <select
+                  className="block w-full p-2 border-[1px] border-black bg-white text-black opacity-50 rounded-md mb-4"
+                  onChange={(e) => handleTopicSelection(Number(e.target.value))}
+                >
+                  <option>Choose a Year or years</option>
+                  {chapters
+                    ? chapters.map((topic) => (
+                        <option key={topic.id} value={topic.id}>
+                          {topic.name}
                         </option>
                       ))
                     : null}
                 </select>
                 <div className="max-h-[225px] overflow-y-auto shadow-sm bg-zinc-100 rounded-md p-4">
-                {
-                  chapters.length > 0 ? (
+                  {exams.length > 0 ? (
                     <div className="flex justify-end items-center">
-                    <button
-                      type="button"
-                      onClick={handleSelectAllTopics}
-                      className="mt-1 text-white bg-primary rounded-lg text-xs px-2 py-2 mb-3 transition duration-300 hover:bg-transparent hover:border-[1px] border-[1px] hover:border-primary hover:text-black"
-                    >
-                      Select All
-                    </button>
-                  </div>
-                  ):(null)
-                }
-                  {chapters.length > 0 ? (
-                    chapters.map((topic) => (
-                      <>
-                   
-
-                  <div key={topic.id} className="flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border-[.5px] border-black rounded-lg shadow-sm">
-                        <label htmlFor={`topic-${topic.id}`} className="text-black opacity-70 text-xs font-bold">
-                          {topic.name}
+                      <button
+                        type="button"
+                        onClick={handleSelectAllExams}
+                        className="mt-1 text-white bg-primary rounded-lg text-xs px-2 py-2 mb-3 transition duration-300 hover:bg-transparent hover:border-[1px] border-[1px] hover:border-primary hover:text-black"
+                      >
+                        Select All
+                      </button>
+                    </div>
+                  ) : null}
+                  {exams.length > 0 ? (
+                    exams.map((exam) => (
+                      <div key={exam.id}
+                       className="flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border-[.5px] border-black rounded-lg shadow-sm">
+                        <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
+                          {exam.name}
                         </label>
                         <input
                           type="checkbox"
-                          id={`topic-${topic.id}`}
-                          checked={selectedTopics.includes(topic.id)}
-                          onChange={() => handleTopicSelection(topic.id)}
+                          id={`exam-${exam.id}`}
+                          checked={selectedExams.includes(exam.id)}
+                          onChange={() => handleExamSelection(exam.id)}
                           className="rounded-full"
                         />
                       </div>
-
-
-                      </>
-                    
                     ))
                   ) : (
                     <div className="flex flex-col gap-2 sm:gap-5 items-center justify-center">
-                    <Image src="/sad 1.png" alt="ERR404" width={100} height={100}/>
-                    <p className="text-[12px] sm:text-[16px]">Couldn’t Find any Topics</p>
-                    <p className="text-[12px] sm:text-[16px]">Please Change Your filters and try again </p>
+                      <Image src="/sad 1.png" alt="ERR404" width={100} height={100}/>
+                      <p className="text-[12px] sm:text-[16px]">Couldn’t Find any Topics</p>
+                      <p className="text-[12px] sm:text-[16px]">Please Change Your filters and try again </p>
                     </div>
                   )}
                 </div>
@@ -220,7 +227,7 @@ export default function CreateSessionPage() {
                 <div className="fixed inset-0 bg-gray-200 bg-opacity-50 flex justify-center items-center z-50 backdrop-blur-[20px]">
                   <Popup
                     closePopup={togglePopup}
-                    subjectName={subject?.find((sub) => sub.id == SelectedSubject)?.name || ""}
+                    subjectName={subject?.find((sub) => sub.subject_id.id == SelectedSubject)?.subject_id.name || ""}
                     topics={chapters.filter((ch) => selectedTopics.includes(ch.id))}
                     questionCount={amount}
                     data={data}

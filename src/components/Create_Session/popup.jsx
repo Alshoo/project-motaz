@@ -10,15 +10,14 @@ function Popup({ closePopup, subjectName, topics, questionCount, data }) {
       toast.success(response.data.message, {
         duration: 4000,
         position: "top-center",
-        style: { fontSize: "20px", width: "50%" },
+        style: { fontSize: "15px" },
       });
-      // Redirect to your designated page
-      window.location.href = "/your-redirect-page";
+      window.location.href = "/";
     } catch (error) {
       toast.error(error.response?.data?.message || "Operation failed", {
         duration: 4000,
         position: "top-center",
-        style: { fontSize: "20px", width: "50%" },
+        style: { fontSize: "15px"},
       });
     }
   };
@@ -31,13 +30,12 @@ function Popup({ closePopup, subjectName, topics, questionCount, data }) {
         position: "top-center",
         style: { fontSize: "20px", width: "50%" },
       });
-      // Remain on the same page and create a new session
       closePopup();
     } catch (error) {
       toast.error(error.response?.data?.message || "Operation failed", {
         duration: 4000,
         position: "top-center",
-        style: { fontSize: "20px", width: "50%" },
+        style: { fontSize: "15px"},
       });
     }
   };
