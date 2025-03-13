@@ -79,21 +79,31 @@ export default function CreateSessionPage() {
   return (
     <div>
       <div className="w-full flex justify-center items-center flex-col">
-        <div className="w-full flex justify-start lg:px-6 px-4">
+       
+        <div className="flex justify-center flex-col w-full max-w-screen-lg items-center min-h-screen ">
+
+
+      
+
+
+          <div className="w-full max-w-3xl">
+
+          <div className="w-full flex justify-start ">
           <button
             onClick={() => window.history.back()}
-            className="bg-primary text-white px-3 py-2 mx-4 my-4 rounded-md"
+            className="bg-primary text-white px-3 py-2 my-4 rounded-md w-[110px]"
           >
             Back
           </button>
         </div>
-        <div className="flex justify-center flex-col w-full max-w-screen-lg items-center min-h-screen ">
-          <div className="w-full max-w-3xl">
-            <div className="bg-gray-100 shadow-md py-4 px-5 rounded-xl mb-7 w-full text-center ">
-              <h2 className="text-xl font-bold text-primary text-center mb-4 ">
+
+
+
+            <div className="bg-gray-100 shadow-md py-4 px-5 rounded-xl mb-7 w-[90%] m-auto text-center ">
+              <h2 className="text-lg font-bold text-primary text-center mb-4 ">
                 Create a Learning Session
               </h2>
-              <p className="text-gray-600 font-light text-sm mb-6">
+              <p className="text-gray-600 font-light text-[12px] mb-6">
                 In the form below you can create a new study mode session to test yourself in any selected subject's topics and with the required amount of questions needed.
               </p>
             </div>
@@ -164,10 +174,10 @@ export default function CreateSessionPage() {
                     
                     ))
                   ) : (
-                    <div className="flex flex-col gap-5 items-center justify-center">
+                    <div className="flex flex-col gap-2 sm:gap-5 items-center justify-center">
                     <Image src="/sad 1.png" alt="ERR404" width={100} height={100}/>
-                    <p>Couldn’t Find any Topics</p>
-                    <p>Please Change Your filters and try again </p>
+                    <p className="text-[12px] sm:text-[16px]">Couldn’t Find any Topics</p>
+                    <p className="text-[12px] sm:text-[16px]">Please Change Your filters and try again </p>
                     </div>
                   )}
                 </div>
@@ -197,7 +207,7 @@ export default function CreateSessionPage() {
                       setAmount(value);
                     }}
                     placeholder="Set the amount of questions to have in the session"
-                    className="text-red block py-1 w-[85%] sm:w-[90%] px-2 border-[1px] me-3 rounded-full"
+                    className="placeholder-gray-400 placeholder-opacity-75 text-red block py-1 w-[85%] sm:w-[30%] px-2 border-gray-400 border-[1px] me-3 rounded-full"
                   />
                   <h4 className="text-xs sm:text-xl opacity-60">/ 0</h4>
                 </div>

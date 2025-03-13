@@ -32,7 +32,7 @@ function DonePageContent() {
         Well done! You’ve finished the exam.
       </h1>
       <div className="container text-center m-auto mb-24">
-        <h2 className='text-black py-3 know my-11 bg-slate-200 w-80 rounded-3xl m-auto ahmed'>
+        <h2 className='border shadow-md text-black py-3 know my-11 w-80 rounded-3xl m-auto'>
           <strong>Total</strong> : 
           <span className='text-slate-600'>{resultDetails.correct}/</span>
           <span className='text-blue-500'>{resultDetails.total}</span>
