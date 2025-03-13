@@ -12,7 +12,7 @@ function Popup({ closePopup, subjectName, topics, questionCount, data }) {
         position: "top-center",
         style: { fontSize: "15px" },
       });
-      window.location.href = "/";
+      window.location.href = `/MCQ?id=${response.data.data.id}`;
     } catch (error) {
       toast.error(error.response?.data?.message || "Operation failed", {
         duration: 4000,

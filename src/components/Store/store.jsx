@@ -13,6 +13,7 @@ export default function Store() {
     const [loading, setLoading] = useState(true);
     const [Subject, setSubject] = useState([]);
 
+
     useEffect(() => {
       const FetchSubject = async () => {
         try {
@@ -26,6 +27,9 @@ export default function Store() {
       }
       FetchSubject();
     }, []);
+
+
+
 
 
   return cookieData ? (
@@ -57,7 +61,7 @@ export default function Store() {
                                 questions_count ={subject.questions_count}
                                 chapters ={subject.chapters}
                                 pricing_plans={subject.pricing_plans}
-                                subject_id={subject.id}
+                                subject_ID={subject.id}
                                 />
                                 ))
                             ) : (
