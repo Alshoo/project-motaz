@@ -4,13 +4,15 @@ import useProfile from '@/hooks/profile';
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from "react-hot-toast";
 
-function Package({ closePopup, pricing_plans ,title,subject_id,questions_count,chapters}) {
+function Package({ closePopup, pricing_plans ,title,subject_ID,questions_count,chapters}) {
     const [coupon, setCoupon] = useState(null);
     const [couponCode, setCouponCode] = useState('');
     const [couponError, setCouponError] = useState('');
     const [selectedPlan, setSelectedPlan] = useState(null);
 
+    const subject_id = subject_ID
 
+    
     const { walletBalance, loading: profileLoading, error: profileError } = useProfile();
 
     const handleCouponCheck = async () => {
@@ -60,11 +62,10 @@ const code = couponCode;
         try {
             const res = await Axios.post('subscriptions/store',{pricing_plan_id,code,subject_id});
             toast.success(res.data.message, {
-                duration: 4000,
+                duration: 3000,
                 position: "top-center",
                 style: {
-                  fontSize: "20px",
-                  width: "50%",
+                  fontSize: "15px"
                 },
               });
               closePopup();

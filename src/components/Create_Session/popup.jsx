@@ -28,7 +28,7 @@ function Popup({ closePopup, subjectName, topics, questionCount, data }) {
       toast.success(response.data.message, {
         duration: 4000,
         position: "top-center",
-        style: { fontSize: "20px", width: "50%" },
+        style: { fontSize: "15px"},
       });
       closePopup();
     } catch (error) {

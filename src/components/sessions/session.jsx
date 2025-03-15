@@ -191,15 +191,16 @@ function SessionContent() {
                       ? "Continue"
                       : "Start"
                   }
-                  // Pass a prop to shrink the image in each card
                   imgSize="w-20 h-20"
                 />
               ))
             ) : (
-              <p className="text-sm text-gray-600">No sessions available.</p>
+              <div className='flex flex-col  min-h-[30vh]'>
+                  <p className="text-sm text-gray-600 translate-y-[15vh]">No sessions available.</p>
+              </div>
             )
           )}
-          <div className="inline-flex justify-center gap-2 flex-wrap mt-4">
+          <div className="inline-flex justify-center gap-2 flex-wrap mt-4 items-center">
             <button
               onClick={() => handlePageChange(pagination.prev)}
               disabled={!pagination.prev}
@@ -218,7 +219,7 @@ function SessionContent() {
           </div>
         </div>
       </section>
-    </div>
+    </div> 
   ) : (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
       <div className="bg-white p-6 rounded-lg shadow-lg max-w-md text-center">

@@ -4,11 +4,12 @@ import Axios from "@/lib/axiosInstance";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import striptags from "striptags";
+import Link from "next/link";
 
 function McqPageContent() {
   const searchParams = useSearchParams();
   const sessionID = searchParams.get("id");
-
   const [mode, setMode] = useState("question");
   const [loading, setLoading] = useState(false);
   const [questDet, setQuestDet] = useState({
@@ -17,17 +18,16 @@ function McqPageContent() {
     current_page: 1,
     questionText: "",
     questionDescription: "",
+    img: "",
     questionSummary: "",
     answers: [],
   });
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showOverallExplanation, setShowOverallExplanation] = useState(false);
-
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
     [sessionID]
   );
-
   const fetchQuest = useCallback(
     async (page = 1) => {
       try {
@@ -42,6 +42,7 @@ function McqPageContent() {
             current_page: 0,
             questionText: "No questions available, right now.",
             questionDescription: "",
+            img: "",
             questionSummary: "",
             answers: [],
           });
@@ -54,6 +55,7 @@ function McqPageContent() {
           current_page: res.data.data.meta.current_page,
           questionText: questionData.question_text,
           questionDescription: questionData.description,
+          img: questionData.img,
           questionSummary: questionData.summary,
           answers: questionData.answers,
         });
@@ -69,14 +71,12 @@ function McqPageContent() {
     },
     [constructUrl]
   );
-
   useEffect(() => {
     if (sessionID) {
       const pageParam = searchParams.get("page") || "1";
       fetchQuest(Number(pageParam));
     }
   }, [sessionID, fetchQuest, searchParams]);
-
   const handleSubmition = async () => {
     try {
       const res = await Axios.put(
@@ -93,13 +93,19 @@ function McqPageContent() {
       toast.error("Error submitting answer");
     }
   };
-
+  useEffect(() => {
+    if (mode === "question" && selectedAnswer !== null) {
+      (async () => {
+        await handleSubmition();
+        setMode("review");
+      })();
+    }
+  }, [selectedAnswer, mode]);
   const handleNextInQuestionMode = async () => {
     if (!selectedAnswer) return;
     await handleSubmition();
     setMode("review");
   };
-
   const handleNextQuestion = async () => {
     if (questDet.current_page >= questDet.total) {
       setQuestDet({
@@ -108,6 +114,7 @@ function McqPageContent() {
         current_page: 0,
         questionText: "Exam Finished",
         questionDescription: "",
+        img: "",
         questionSummary: "",
         answers: [],
       });
@@ -116,13 +123,12 @@ function McqPageContent() {
       await fetchQuest(questDet.current_page + 1);
     }
   };
-
   if (!sessionID) {
     return <div>Error: Session ID not provided.</div>;
   }
-
   return (
-    <div className="container text-center w-full m-auto px-4">
+    <div className="container text- w-full m-auto px-4">
+     
       {loading ? (
         <div className="spinner-container">
           <div className="spinner"></div>
@@ -133,13 +139,18 @@ function McqPageContent() {
         </div>
       ) : (
         <>
+         <Link
+          href="/"
+          className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2">
+            <img src="paaause 1.png" alt="ERR404" width={17} height={17}/>
+          Suspend
+          </Link>
           <h5 className="text-end mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
             {questDet.current_page}/{questDet.total}
           </h5>
           <h2 className="mt-2 ml-4 md:ml-14 text-lg md:text-2xl">
             {questDet.questionText} ?
           </h2>
-
           {mode === "question" && (
             <div className="mt-5 ml-4 md:mt-14 md:ml-14 text-sm md:text-base">
               {questDet.answers.map((ans, i) => (
@@ -160,11 +171,17 @@ function McqPageContent() {
               ))}
             </div>
           )}
-
           {mode === "review" && (
             <div className="mt-5 ml-4 md:mt-14 md:ml-14 space-y-2 md:space-y-4 text-sm md:text-base">
               {questDet.answers.map((ans, i) => {
                 const answerColor = ans.is_correct ? "bg-greenOpacity" : "bg-red-200";
+                const cleanText = (html) => {
+                  return striptags(html)
+                    .replace(/&nbsp;/g, " ")
+                    .replace(/\s+/g, " ")
+                    .trim();
+                };
+                const textOnly = cleanText(ans.description);
                 return (
                   <div key={i} className={`relative p-2 md:p-4 rounded-md ${answerColor}`}>
                     <div className="flex items-center">
@@ -182,9 +199,14 @@ function McqPageContent() {
                       </label>
                     </div>
                     <details className="mt-2">
-                      <summary className="absolute right-1 top-3 cursor-pointer text-black"></summary>
-                      <div className="mt-1 text-left p-2 border rounded text-sm md:text-base">
-                        {ans.description?.replace(/<\/?[^>]+(>|$)/g, "") || "No details for this answer"}
+                      <summary className="absolute right-1 top-5 cursor-pointer text-black"></summary>
+                      <div className="mt-2 md:p-4 rounded-lg shadow-inner text-left p-2 text-sm md:text-base">
+                        {textOnly || "No details for this answer"}
+                        {ans.img ? (
+                          <img src={ans.img} alt="ERR404" className="w-[15%] rounded-lg" />
+                        ) : (
+                          <div className="bg-slate-100 w-[10%] h-[60px] rounded-lg"></div>
+                        )}
                       </div>
                     </details>
                   </div>
@@ -192,7 +214,6 @@ function McqPageContent() {
               })}
             </div>
           )}
-
           <div className="my-8 flex flex-col md:flex-row justify-evenly items-center gap-2 md:gap-4">
             {mode === "question" && questDet.current_page > 1 ? (
               <button
@@ -215,64 +236,46 @@ function McqPageContent() {
                 Back
               </button>
             )}
-
-            <div className="focus:ring-2 md:focus:ring-4 focus:outline-none from-neutral-950 rounded-full text-base md:text-lg px-8 md:px-28 py-1 text-center inline-flex items-center relative ahmed">
+            <div className="focus:ring-2 md:focus:ring-4 focus:outline-none from-neutral-950 rounded-full text-base md:text-lg px-8 md:px-28 py-1 text-center inline-flex items-center relative border shadow-md text-black">
               <button
                 onClick={() => setShowOverallExplanation((prev) => !prev)}
                 className="flex cursor-pointer items-center justify-between gap-2 bg-white p-2 md:p-4 text-gray-900 transition"
               >
-                <p className="text-stone-500 w-fit py-1 md:py-3 rounded-full">
+                <p className="flex items-center text-stone-500 w-fit py-1 md:py-3 rounded-full">
                   {showOverallExplanation ? "Hide Overall Explanation" : "Show Overall Explanation"}
+                  {!showOverallExplanation ? (
+                    <svg className="w-2.5 h-2.5 ml-2 md:ml-3 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                    </svg>
+                  ) : (
+                    <svg className="w-2.5 h-2.5 ml-2 md:ml-3 transition-transform rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                    </svg>
+                  )}
                 </p>
-                <svg
-                  className="w-2.5 h-2.5 ml-2 md:ml-3 transition-transform"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
-                >
-                  <path
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
               </button>
             </div>
-
-            {mode === "question" ? (
-              <button
-                onClick={handleNextInQuestionMode}
-                disabled={!selectedAnswer}
-                className={`h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center text-sm md:text-base ${
-                  !selectedAnswer ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
-                Next
-                <span>
-                  <Image src="left 10.svg" alt="next" width={16} height={16} />
-                </span>
-              </button>
-            ) : (
-              <button
-                onClick={handleNextQuestion}
-                className="h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center text-sm md:text-base"
-              >
-                {questDet.current_page >= questDet.total ? "Finish" : "Next Question"}
-                <span>
-                  <Image src="left 10.svg" alt="next" width={16} height={16} />
-                </span>
-              </button>
-            )}
+            <button
+              onClick={mode === "question" ? handleNextInQuestionMode : handleNextQuestion}
+              disabled={mode === "question" && selectedAnswer === null}
+              className="h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center text-sm md:text-base"
+            >
+              {mode === "question" ? "Next" : questDet.current_page >= questDet.total ? "Finish" : "Next Question"}
+              <span>
+                <Image src="left 10.svg" alt="next" width={16} height={16} />
+              </span>
+            </button>
           </div>
         </>
       )}
-
       {showOverallExplanation && (
         <div className="mt-2 border border-gray-200 bg-white p-2 md:p-4 rounded-lg shadow-inner text-sm md:text-base">
-          {questDet.questionDescription.replace(/<\/?[^>]+(>|$)/g, "")}
+          {questDet.questionDescription.replace(/<\/?[^>]+(>|$)/g, "").replace(/&nbsp;/g, " ")}
+          {questDet.img ? (
+            <img src={questDet.img} alt="ERR404" className="w-[20%] rounded-lg" />
+          ) : (
+            <div className="bg-slate-300 w-[20%] h-[100px] rounded-lg"></div>
+          )}
         </div>
       )}
     </div>

@@ -10,9 +10,12 @@ function Sessction() {
     <div>
       <Header />
 
-      <Session/>
 
-      <Footer />
+      <div className="">
+      
+      <Session className=" " />
+        <Footer className="" />
+      </div>
     </div>
   )
 }

@@ -45,7 +45,7 @@ export default function Store() {
                     </div>
                 </div>
 
-                <div className='m-auto max-w-screen-lg py-5 px-5 gap-4 grid place-items-center'>
+                <div className='m-auto max-w-screen-lg py-5 px-5 gap-4 grid place-items-center  min-h-[50vh]'>
                 {
                         loading?(
                             <div className="spinner-container">
@@ -62,10 +62,14 @@ export default function Store() {
                                 chapters ={subject.chapters}
                                 pricing_plans={subject.pricing_plans}
                                 subject_ID={subject.id}
+                                
                                 />
                                 ))
                             ) : (
-                                <p>No Subject available.</p>
+
+                              <div className='flex flex-col  min-h-[40vh]'>
+                              <p className="text-sm text-gray-600 translate-y-[15vh]">No Subject available.</p>
+                              </div>
                             )
                         )
                     }
