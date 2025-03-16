@@ -35,7 +35,7 @@ export default function PaymentProcessPage() {
 
 
   return (
-    <div className='flex justify-center mx-3'>
+    <div className='flex justify-center mx-3 mt-5 md:mt-5'>
             <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
       <div className='my-10 p-9 rounded-lg bg-[#EBEBEB] max-w-screen-lg m-auto'>
 
@@ -50,7 +50,7 @@ export default function PaymentProcessPage() {
           <div className='flex flex-col mt-5'>
             <input type='text'
             placeholder='Add your code'
-              className=' border-none rounded-lg p-3 w-[90%] sm:w-[60%] m-auto mb-5'
+              className=' border-none rounded-lg p-3 w-[95%] sm:w-[80%] m-auto mb-5 placeholder:opacity-55'
               value={code}
                               onChange={(e) => {
                                 setcode(e.target.value)
@@ -61,7 +61,7 @@ export default function PaymentProcessPage() {
             
             <input type='text'
             placeholder='Add Price'
-              className=' border-none rounded-lg p-3 w-[90%] sm:w-[60%] m-auto mb-5'
+              className=' border-none rounded-lg p-3 w-[95%] sm:w-[80%] m-auto mb-5 placeholder:opacity-55'
               value={Price}
               onChange={(e) => {
                 const value = e.target.value.replace(/\D/g, "");

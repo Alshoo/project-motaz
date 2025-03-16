@@ -138,7 +138,7 @@ function SessionContent() {
                 You may start, resume, or review your sessions at any time.
               </p>
             </div>
-            <div className="flex flex-col sm:flex-row justify-center lg:justify-between items-center">
+            <div className="flex flex-col md:flex-row justify-center md:justify-between items-center">
               <Link href="/Create-Session">
                 <button
                   type="button"
@@ -149,7 +149,7 @@ function SessionContent() {
               </Link>
               <nav className="mt-4">
                 <ul className="bg-perpel py-2 px-3 sm:px-4 rounded gap-2 text-black inline-flex items-center space-x-1 flex-wrap list-none">
-                  {["All", "completed", "ongoing", "Not Started"].map((filterOption) => (
+                  {["All", "completed", "ongoing"].map((filterOption) => (
                     <li key={filterOption}>
                       <button
                         onClick={() => handleFilterChange(filterOption)}
@@ -157,7 +157,7 @@ function SessionContent() {
                       >
                         {filterOption === "All" ? "All" : 
                          filterOption === "completed" ? "Finished" : 
-                         filterOption === "ongoing" ? "Ongoing" : "Not Started"}
+                         filterOption === "ongoing" ? "Ongoing" : ""}
                       </button>
                     </li>
                   ))}

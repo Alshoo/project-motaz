@@ -280,7 +280,7 @@ export default function CreateSessionPage() {
                     placeholder="Set the amount of questions to have in the session"
                     className="placeholder-gray-400 placeholder-opacity-75 text-red block py-1 w-[85%] sm:w-[30%] px-2 border-gray-400 border rounded-full"
                   />
-                  <h4 className="text-xs sm:text-xl opacity-60"> / {maxAllowed}</h4>
+                  <h4 className="text-xs sm:text-xl opacity-60 ml-2"> / {maxAllowed}</h4>
                 </div>
               </div>
               <hr className="py-2 opacity-40" />

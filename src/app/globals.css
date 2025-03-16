@@ -21,7 +21,7 @@ body {
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
-  text-transform: capitalize;
+  /* text-transform: capitalize; */
 }
 
 .Vector {

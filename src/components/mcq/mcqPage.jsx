@@ -160,14 +160,14 @@ function McqPageContent() {
               Suspend
             </Link>
           )}
-          <h5 className="text-end mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
-            {questDet.current_page}/{questDet.total}
+          <h5 className="text-end text-xl mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
+           <strong className="text-gray-400 font-medium">{questDet.current_page}</strong>/<strong className="font-medium">{questDet.total}</strong>
           </h5>
-          <h2 className="mt-2 ml-1 md:ml-1 text-lg md:text-2xl">
+          <h2 className="mt-2 ml-4 md:ml-4 text-lg md:text-2xl font-light">
             {questDet.questionText} ?
           </h2>
           {mode === "question" && (
-            <div className="mt-5 ml-4 md:mt-14 md:ml-14 text-sm md:text-base shadow-lg rounded-lg p-4 bg-white">
+            <div className="mt-5 ml-4 md:mt-14 md:ml-4 text-sm md:text-base shadow-lg rounded-lg p-4 bg-white">
               {questDet.answers.map((ans, i) => {
                 const letter = String.fromCharCode(65 + i);
                 return (
@@ -178,10 +178,10 @@ function McqPageContent() {
                       selectedAnswer === ans.id ? "bg-blue-100" : "hover:bg-gray-100"
                     }`}
                   >
-                    <span className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full font-bold">
+                    <span className="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-bold">
                       {letter}
                     </span>
-                    <strong>{ans.answer_text}</strong>
+                    <strong className="font-medium">{ans.answer_text}</strong>
                   </div>
                 );
               })}

@@ -8,8 +8,8 @@ function PayPage  () {
       <Header/>
 
 
-<div  className= "flex gap-[7.8vh] flex-col">
-    <PaymentProcessPage />
+<div  className= "flex gap-[15vh] flex-col ">
+    <PaymentProcessPage className="flex items-center" />
 
       <Footer />
 </div>

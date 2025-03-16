@@ -104,7 +104,7 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
               pricing_plans.map((item, index) => {
                 const isCurrentPlan = item.id === currentPlanId;
                 return (
-                  <div key={index} className={`flex items-center px-4 py-2 rounded-lg  ${isCurrentPlan ? "opacity-20 border border-gray-400" : "bg-gray bg-opacity-55 border border-black"}`}>
+                  <div key={index} className={`flex items-center px-4 py-2 rounded-lg  ${isCurrentPlan ? "opacity-20 border border-gray-400" : "bg-gray bg-opacity-55 border border-gray-400"}`}>
                     <label htmlFor={`bordered-radio-${index}`} className="w-full py-4 ms-2 text-sm font-medium text-black">
                       {item.name} [{item.discount}% Limited Offer Discount]
                     </label>
@@ -127,11 +127,11 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
               <input
                 type="text"
                 placeholder="Enter Coupon Code"
-                className="w-full p-3 rounded-lg bg-gray border-gray-200 focus:border-primary"
+                className="w-full p-3 rounded-lg bg-gray border-gray-200 focus:border-primary placeholder:opacity-55"
                 value={couponCode}
                 onChange={(e) => setCouponCode(e.target.value)}
               />
-              <button className="mt-2 text-white bg-primary font-bold rounded-lg text-lg px-[4rem] py-1" onClick={handleCouponCheck}>
+              <button className="mt-2 text-white bg-primary font-bold rounded-lg text-lg px-[6rem] py-1 m-auto flex justify-center " onClick={handleCouponCheck}>
                 Check
               </button>
             </div>
@@ -143,7 +143,7 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
             )}
           </div>
           {selectedPlan && (
-            <div className="w-full text-center lg:text-start border-[1px] border-black bg-transparent rounded-lg my-4 p-5">
+            <div className="w-full text-center lg:text-start border-[1px] border-gray-300 bg-transparent rounded-lg my-4 p-5">
               <h1 className="text-primary text-xl font-bold">Order Summary</h1>
               <hr />
               <div className='flex justify-between items-center pt-3'>
