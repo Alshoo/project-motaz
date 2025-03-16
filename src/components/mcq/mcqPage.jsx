@@ -4,8 +4,9 @@ import Axios from "@/lib/axiosInstance";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
-import striptags from "striptags";
 import Link from "next/link";
+import './mcq.css'
+
 
 function McqPageContent() {
   const searchParams = useSearchParams();
@@ -25,6 +26,7 @@ function McqPageContent() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showOverallExplanation, setShowOverallExplanation] = useState(false);
   const [detailsVisible, setDetailsVisible] = useState({});
+  const [popupImg, setPopupImg] = useState(null);
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
     [sessionID]
@@ -138,7 +140,7 @@ function McqPageContent() {
     return <div>Error: Session ID not provided.</div>;
   }
   return (
-    <div className="container w-full m-auto px-4">
+    <div className="container w-full m-auto px-4 md:px-4 relative">
       {loading ? (
         <div className="spinner-container">
           <div className="spinner"></div>
@@ -161,7 +163,7 @@ function McqPageContent() {
           <h5 className="text-end mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
             {questDet.current_page}/{questDet.total}
           </h5>
-          <h2 className="mt-2 ml-4 md:ml-14 text-lg md:text-2xl">
+          <h2 className="mt-2 ml-1 md:ml-1 text-lg md:text-2xl">
             {questDet.questionText} ?
           </h2>
           {mode === "question" && (
@@ -186,29 +188,29 @@ function McqPageContent() {
             </div>
           )}
           {mode === "review" && (
-            <div className="mt-5 ml-4 md:mt-14 md:ml-14 space-y-2 md:space-y-4 text-sm md:text-base shadow-lg rounded-lg p-4 bg-white">
+            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-sm md:text-base shadow-lg rounded-lg bg-white">
               {questDet.answers.map((ans, i) => {
-                const answerColor = ans.is_correct ? "bg-greenOpacity" : "bg-red-200";
-                const cleanText = (html) => {
-                  return striptags(html)
-                    .replace(/&nbsp;/g, " ")
-                    .replace(/\s+/g, " ")
-                    .trim();
-                };
-                const textOnly = cleanText(ans.description);
+                const answerColor = ans.is_correct ? "bg-greenOpacity border-green border-l-4" : "bg-red-200 border-red-600 border-l-4";
+                const answerColorbox = ans.is_correct ? "bg-greenOpacity" : "bg-red-200 ";
+                const answerbgColorbox = ans.is_correct ? "bg-greenWhite" : "bg-red-50 ";
                 const letter = String.fromCharCode(65 + i);
                 return (
-                  <div key={i} className={`relative p-2 md:p-4 rounded-md  ${
-                    selectedAnswer === ans.id ? answerColor : ""
-                  }`}>
-                    <div className="flex items-center">
-                      <span className={`w-8 h-8 flex items-center justify-center rounded-full font-bold ${
-                        selectedAnswer === ans.id
-                          ? ans.is_correct
-                            ? "bg-greenOpacity text-white"
-                            : "bg-red-200 text-white"
-                          : answerColor
-                      }`}>
+                  <div
+                    key={i}
+                    className={`relative  ${
+                      selectedAnswer === ans.id ? answerColor : ""
+                    }`}
+                  >
+                    <div className="flex items-center p-2 md:p-4">
+                      <span
+                        className={`w-9 h-9 flex items-center justify-center rounded-full font-bold ${
+                          selectedAnswer === ans.id
+                            ? ans.is_correct
+                              ? "bg-green text-black"
+                              : "bg-red-600 text-black"
+                            : answerColorbox
+                        }`}
+                      >
                         {letter}
                       </span>
                       <label className="cursor-not-allowed ml-2">
@@ -226,16 +228,37 @@ function McqPageContent() {
                           fill="none"
                           viewBox="0 0 10 6"
                         >
-                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                          <path
+                            stroke="currentColor"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="m1 1 4 4 4-4"
+                          />
                         </svg>
                       </button>
                     </div>
                     {detailsVisible[ans.id] && (
-                      <div className="mt-2 p-4 rounded-lg shadow-inner text-left text-sm md:text-base">
-                        {textOnly || "No details for this answer"}
-                        {ans.img ? (
-                          <img src={ans.img} alt="ERR404" className="w-[15%] rounded-lg mt-2" />
-                        ) : null}
+                      <div 
+                      className={`mt-2 p-4  shadow-inner text-left text-sm md:text-base prose 
+                       ${
+                        selectedAnswer === ans.id ? answerbgColorbox : "bg-gray-100"
+                      }   
+                       `} >
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: ans.description || "<ul><li>No details for this answer</li></ul>",
+                          }}
+                          className={`text-`}
+                        />
+                        {ans.img && (
+                          <img
+                            src={ans.img}
+                            alt="ERR404"
+                            className="w-[15%] rounded-lg mt-2 cursor-pointer"
+                            onClick={() => setPopupImg(ans.img)}
+                          />
+                        )}
                       </div>
                     )}
                   </div>
@@ -243,67 +266,105 @@ function McqPageContent() {
               })}
             </div>
           )}
-          <div className="my-8 flex flex-col md:flex-row justify-evenly items-center gap-2 md:gap-4">
+          <div className="my-8 flex md:flex-row justify-evenly items-center gap-2 md:gap-4">
             {questDet.current_page > 1 ? (
               <button
                 onClick={() => fetchQuest(questDet.current_page - 1)}
-                className="h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center text-sm md:text-base"
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-2xl flex justify-center items-center text-xs md:text-base"
               >
                 <span>
-                  <Image src="left 9.svg" alt="back" width={16} height={16} />
+                  <Image src="left 9.svg" alt="back" width={13} height={13} />
                 </span>
                 Back
               </button>
             ) : (
               <button
                 disabled
-                className="h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center disabled:opacity-50 text-sm md:text-base"
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-2xl flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
               >
                 <span>
-                  <Image src="left 9.svg" alt="back" width={16} height={16} />
+                  <Image src="left 9.svg" alt="back" width={13} height={13} />
                 </span>
                 Back
               </button>
             )}
-            <div className="focus:ring-2 md:focus:ring-4 focus:outline-none from-neutral-950 rounded-full text-base md:text-lg px-8 md:px-28 py-1 text-center inline-flex items-center relative border shadow-md text-black">
+          
+            <div 
+            className=" rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md">
               <button
                 onClick={() => setShowOverallExplanation((prev) => !prev)}
-                className="flex cursor-pointer items-center justify-between gap-2 bg-white p-2 md:p-4 text-gray-900 transition"
+                className="flex cursor-pointer items-center justify-between gap-2 bg-white p-1 text-gray-900 transition"
               >
-                <p className="flex items-center text-stone-500 w-fit py-1 md:py-3 rounded-full">
-                  {showOverallExplanation ? "Hide Overall Explanation" : "Show Overall Explanation"}
+                <p className="flex items-center text-xs md:text-lg text-stone-500 w-fit py-1 md:py-3 rounded-full">
+                  {showOverallExplanation
+                    ? "Hide Overall Explanation"
+                    : "Show Overall Explanation"}
                   <svg
-                    className={`w-2.5 h-2.5 ml-2 md:ml-3 transition-transform ${
+                    className={`w-2.5 h-2.5 ml-1 md:ml-3 transition-transform ${
                       showOverallExplanation ? "rotate-180" : ""
                     }`}
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 10 6"
                   >
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 1 4 4 4-4"
+                    />
                   </svg>
                 </p>
               </button>
             </div>
             <button
-              onClick={mode === "question" ? handleNextInQuestionMode : handleNextQuestion}
+              onClick={
+                mode === "question" ? handleNextInQuestionMode : handleNextQuestion
+              }
               disabled={mode === "question" && selectedAnswer === null}
-              className="h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center text-sm md:text-base"
+              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-2xl flex justify-center items-center text-xs md:text-base"
             >
-              {mode === "question" ? "Next" : questDet.current_page >= questDet.total ? "Finish" : "Next Question"}
+              {mode === "question"
+                ? "Next"
+                : questDet.current_page >= questDet.total
+                ? "Finish"
+                : "Next"}
               <span>
-                <Image src="left 10.svg" alt="next" width={16} height={16} />
+                <Image src="left 10.svg" alt="next" width={13} height={13} />
               </span>
             </button>
           </div>
         </>
       )}
       {showOverallExplanation && (
-        <div className="mt-2 border border-gray-200 bg-white p-2 md:p-4 rounded-lg shadow-inner text-sm md:text-base">
-          {questDet.questionDescription.replace(/<\/?[^>]+(>|$)/g, "").replace(/&nbsp;/g, " ")}
-          {questDet.img ? (
-            <img src={questDet.img} alt="ERR404" className="w-[20%] rounded-lg" />
-          ) : null}
+        <div className="mt-2 border border-gray-200 bg-white p-4 rounded-lg shadow-inner text-sm md:text-base prose">
+          <div dangerouslySetInnerHTML={{ __html: questDet.questionDescription }} />
+          {questDet.img && (
+            <img
+              src={questDet.img}
+              alt="ERR404"
+              className="w-[20%] rounded-lg mt-2 cursor-pointer"
+              onClick={() => setPopupImg(questDet.img)}
+            />
+          )}
+        </div>
+      )}
+      {popupImg && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="relative bg-white p-2 rounded shadow-lg">
+            <button
+              onClick={() => setPopupImg(null)}
+              className="absolute top-0 right-0 m-2 text-gray-500"
+            >
+              X
+            </button>
+            <img
+              src={popupImg}
+              alt="Popup"
+              className="w-[60vw] max-h-[80vh] object-contain"
+            />
+          </div>
         </div>
       )}
     </div>

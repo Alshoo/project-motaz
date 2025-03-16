@@ -35,7 +35,7 @@ export default function PaymentProcessPage() {
 
 
   return (
-    <div className='flex justify-center'>
+    <div className='flex justify-center mx-3'>
             <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
       <div className='my-10 p-9 rounded-lg bg-[#EBEBEB] max-w-screen-lg m-auto'>
 

@@ -28,9 +28,9 @@ function CardStore({ title, pricing_plans, subject_ID, questions_count, chapters
       </div>
       <div className="flex flex-col justify-center items-start">
         <div className="mb-4 gap-2 grid text-xs md:text-sm font-bold text-gray-900 justify-center items-center">
-          <h2 className="text-primary font-bold text-xl md:text-2xl">{title}</h2>
-          <h3 className="text-black font-bold text-sm md:text-md">Contains {questions_count} Questions</h3>
-          <p className="text-blackOpacity text-sm md:text-base">Choose to buy one of the items and enjoy high-quality content.</p>
+          <h2 className="text-primary font-bold text-xl md:text-2xl m-0">{title}</h2>
+          <h3 className="text-black font-bold text-sm md:text-md m-0">Contains {questions_count} Questions</h3>
+          <p className="text-blackOpacity text-sm md:text-base m-0">Choose to buy one of the items and enjoy high-quality content.</p>
           <button onClick={togglePopup} className="mt-4 w-full lg:w-[75%] font-light px-3 py-2 border border-transparent bg-primary text-white rounded-lg shadow-md transition duration-300 hover:border-primary hover:text-primary hover:bg-transparent">
             Explore Packages
           </button>

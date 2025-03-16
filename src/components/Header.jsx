@@ -76,7 +76,7 @@ function Header() {
             Wallet
           </Link>
         </div>
-        <div className="hidden md:flex items-center">
+        <div className="hidden md:flex items-center z-50">
           {userData ? (
             <>
               <button onClick={() => setUserDropdownOpen(!userDropdownOpen)} className="focus:outline-none">
@@ -128,7 +128,7 @@ function Header() {
       </nav>
       {mobileMenuOpen && (
         <div className="bg-white mt-2 rounded-lg shadow-lg p-4 md:hidden">
-          <ul className="space-y-2 text-left">
+          <ul className="space-y-2 m-0 p-0 text-left list-none">
             <li>
               <Link href="/home" className="flex gap-2 items-center px-3 py-2 rounded-lg transition-colors duration-500 hover:bg-black hover:text-white">
                 <i className="fa-solid fa-home mr-1"></i>

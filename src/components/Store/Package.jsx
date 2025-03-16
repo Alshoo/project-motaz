@@ -84,12 +84,14 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
       <div className='py-5 px-5 lg:w-[35%] w-80 h-[80%] shadow-2xl bg-white overflow-y-auto rounded-lg'>
         <div className='flex justify-between items-center'>
           <div>
-            <h1 className='text-primary pb-2 font-bold text-2xl'>{title}</h1>
-            <h2 className='text-black'><span className='font-bold text-black'>{chapters.length} </span>Topics</h2>
-            <h2 className='text-black'><span className='font-bold text-black'>{questions_count} </span>Questions</h2>
+            <p className='text-primary pb-2 font-bold text-2xl'>{title}</p>
+            <p className='text-black'><span className='font-bold text-black'>{chapters.length} </span>Topics</p>
+            <p className='text-black'><span className='font-bold text-black'>{questions_count} </span>Questions</p>
           </div>
           <div>
-            <button onClick={closePopup} className="border-2 font-bold rounded-full px-2">X</button>
+          <i onClick={closePopup} 
+          className="   fa-solid fa-x      cursor-pointer border border-gray-500 font-bold rounded-full px-[7px] py-[5px] hover:bg-gray-200"
+          ></i>
           </div>
         </div>
         <div className='flex justify-center items-center p-6'>

@@ -7,9 +7,12 @@ function PayPage  () {
     <div>
       <Header/>
 
-    <PaymentProcessPage/>
+
+<div  className= "flex gap-[7.8vh] flex-col">
+    <PaymentProcessPage />
 
       <Footer />
+</div>
     </div>
   )
 }

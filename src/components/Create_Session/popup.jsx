@@ -45,9 +45,9 @@ function Popup({ closePopup, subjectName, topics, questionCount, data ,exams}) {
       <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
       <div className="flex justify-between items-center mb-4">
         <h1 className="pb-2 font-bold text-2xl">Session Summary</h1>
-        <button onClick={closePopup} className="border-2 font-bold rounded-full px-2">
-          X
-        </button>
+        <i onClick={closePopup} 
+          className="   fa-solid fa-x      cursor-pointer border border-gray-500 font-bold rounded-full px-[7px] py-[5px] hover:bg-gray-200"
+          ></i>
       </div>
       <div className="flex-grow">
         <div className="list-disc pl-5 space-y-2">

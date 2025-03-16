@@ -148,7 +148,7 @@ function SessionContent() {
                 </button>
               </Link>
               <nav className="mt-4">
-                <ul className="bg-perpel py-2 px-3 sm:px-4 rounded gap-2 text-black inline-flex items-center space-x-1 flex-wrap">
+                <ul className="bg-perpel py-2 px-3 sm:px-4 rounded gap-2 text-black inline-flex items-center space-x-1 flex-wrap list-none">
                   {["All", "completed", "ongoing", "Not Started"].map((filterOption) => (
                     <li key={filterOption}>
                       <button
