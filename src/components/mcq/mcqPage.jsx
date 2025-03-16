@@ -272,9 +272,9 @@ function McqPageContent() {
                 onClick={() => fetchQuest(questDet.current_page - 1)}
                 className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-2xl flex justify-center items-center text-xs md:text-base"
               >
-                <span>
+                {/* <span>
                   <Image src="left 9.svg" alt="back" width={13} height={13} />
-                </span>
+                </span> */}
                 Back
               </button>
             ) : (
@@ -282,9 +282,9 @@ function McqPageContent() {
                 disabled
                 className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-2xl flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
               >
-                <span>
+                {/* <span>
                   <Image src="left 9.svg" alt="back" width={13} height={13} />
-                </span>
+                </span> */}
                 Back
               </button>
             )}
@@ -330,9 +330,9 @@ function McqPageContent() {
                 : questDet.current_page >= questDet.total
                 ? "Finish"
                 : "Next"}
-              <span>
+              {/* <span>
                 <Image src="left 10.svg" alt="next" width={13} height={13} />
-              </span>
+              </span> */}
             </button>
           </div>
         </>
@@ -352,13 +352,11 @@ function McqPageContent() {
       )}
       {popupImg && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="relative bg-white p-2 rounded shadow-lg">
-            <button
-              onClick={() => setPopupImg(null)}
-              className="absolute top-0 right-0 m-2 text-gray-500"
-            >
-              X
-            </button>
+          <div className="relative bg-white p-2 rounded shadow-2xl">
+            <i 
+            onClick={() => setPopupImg(null)}
+          className="   fa-solid fa-x     absolute top-0 right-0 mx-3 my-2 cursor-pointer border border-gray-500 font-bold rounded-full px-[8px] py-[6px] hover:bg-gray-200"
+          ></i>
             <img
               src={popupImg}
               alt="Popup"
