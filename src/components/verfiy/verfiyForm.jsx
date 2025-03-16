@@ -2,67 +2,51 @@
 import Image from "next/image";
 import React, { useContext, useState } from "react";
 import Link from "next/link";
-import { UserLogin } from "@/Helper/Apis/Auth";
 import { AuthContext } from "@/context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import { signIn, signOut, useSession } from "next-auth/react";
-
-
+ 
 const VerfiyForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
 
-  const { login } = useContext(AuthContext);
+  const { verfiy } = useContext(AuthContext);
 
-  const handleLogin = async (e) => {
+  const handleVerfiy = async (e) => {
     e.preventDefault();
-
-    console.log(email, password);
-
-    if (email === "") {
-      setErr("Please, Enter Your Email.");
-      return;
-    }
-    if (password === "") {
-      setErr("Please, Enter Your Password.");
+    if (code === "" || code.length !== 5) {
+      setErr("Please, enter your 5-digit code.");
       return;
     }
     setErr("");
     setIsLoading(true);
-    login({ email, password });
+    verfiy({ code });
   };
 
-
-    const la = ''
   return (
-    <div className=" mx-auto mt-3 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+    <div className="mx-auto mt-3 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
       <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
-
-      <form method="POST" className="flex flex-col gap-4" onSubmit={handleLogin}>
-  
-
-
-       <div>
-          <label htmlFor="password" className="sr-only">verification code</label>
+      <form method="POST" className="flex flex-col gap-4" onSubmit={handleVerfiy}>
+        <div>
+          <label htmlFor="otp" className="sr-only">Verification Code</label>
           <div className="relative">
             <input
-              type="password"
-              id="password"
-              onChange={(e) => setPassword(e.target.value)}
+              type="text"
+              inputMode="numeric"
+              maxLength={5}
+              id="otp"
+              onChange={(e) => setCode(e.target.value)}
               className="w-full rounded-lg border-gray-200 p-4 pr-12 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="Password"
+              placeholder="Enter 5-digit code"
             />
           </div>
           {err && <p className="mt-2 text-red-600 font-bold text-sm">{err}</p>}
-       
         </div>
-
-
-        <h4>Not received yet? <span className="underline text-primary">Resend verification code</span></h4>
-
-
+        <h4>
+          Not received yet?{" "}
+          <span className="underline text-primary">Resend verification code</span>
+        </h4>
         <button
           type="submit"
           disabled={isLoading}
@@ -71,17 +55,6 @@ const VerfiyForm = () => {
           Continue
         </button>
       </form>
-
-
-
-
-  
-
-
-
-
-
-
     </div>
   );
 };

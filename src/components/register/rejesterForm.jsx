@@ -6,7 +6,7 @@ import Link from "next/link";
 import { AuthContext } from "@/context/AuthContext";
 import toast, { Toaster } from "react-hot-toast";
 import { signIn } from "next-auth/react";
-
+ 
 export default function RejesterForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -98,7 +98,7 @@ export default function RejesterForm() {
       </form> 
 
      
-           <div className="flex items-center justify-center">
+           {/* <div className="flex items-center justify-center">
              <span className="border-b w-1/5 md:w-1/4"></span>
              <h6 className="mx-2 text-sm text-gray-600">or</h6>
              <span className="border-b w-1/5 md:w-1/4"></span>
@@ -113,7 +113,7 @@ export default function RejesterForm() {
                <span className="text-sm font-medium">Continue With Google</span>
              </button>
            
-           </div>
+           </div> */}
 
 
 

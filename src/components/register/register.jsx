@@ -4,7 +4,7 @@ import React from 'react'
 import Image from "next/image";
 import RejesterForm from './rejesterForm';
 
-
+ 
 export default function Register() {
   return (
     <div>

@@ -3,7 +3,7 @@ import Axios from "@/lib/axiosInstance";
 import React from "react";
 import toast, { Toaster } from "react-hot-toast";
  
-function Popup({ closePopup, subjectName, topics, questionCount, data }) {
+function Popup({ closePopup, subjectName, topics, questionCount, data ,exams}) {
   const handleStartSession = async () => {
     try {
       const response = await Axios.post("exam-sessions", data);
@@ -56,9 +56,17 @@ function Popup({ closePopup, subjectName, topics, questionCount, data }) {
             <span>{subjectName}</span>
           </div>
           <div>
-            <strong className="text-primary font-bold">Topics:</strong>
+            <strong className="text-primary font-bold">Years:</strong>
             <ul className="list-disc pl-5 mt-1 space-y-1">
               {topics.map((t, i) => (
+                <li key={i}>{t.name}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <strong className="text-primary font-bold">Topics:</strong>
+            <ul className="list-disc pl-5 mt-1 space-y-1">
+              {exams.map((t, i) => (
                 <li key={i}>{t.name}</li>
               ))}
             </ul>

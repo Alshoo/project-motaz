@@ -157,7 +157,7 @@ function SessionContent() {
                       >
                         {filterOption === "All" ? "All" : 
                          filterOption === "completed" ? "Finished" : 
-                         filterOption === "ongoing" ? "ONGOING" : "Not Started"}
+                         filterOption === "ongoing" ? "Ongoing" : "Not Started"}
                       </button>
                     </li>
                   ))}
@@ -166,7 +166,7 @@ function SessionContent() {
             </div>
           </div>
         </div>
-        <div className="m-auto max-w-screen-lg py-4 px-4 gap-4 grid place-items-center">
+        <div className="m-auto max-w-screen-lg py-4 px-4 gap-4 grid place-items-center min-h-[40vh]">
           {loading ? (
             <div className="spinner-container">
               <div className="spinner"></div>

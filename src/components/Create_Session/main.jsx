@@ -23,7 +23,6 @@ export default function CreateSessionPage() {
     question_count: amount,
   });
 
-  // Fetch subjects on mount
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
@@ -36,7 +35,6 @@ export default function CreateSessionPage() {
     fetchSubjects();
   }, []);
 
-  // When a subject is selected, fetch its chapters (years)
   useEffect(() => {
     if (SelectedSubject) {
       const fetchChapters = async () => {
@@ -54,7 +52,6 @@ export default function CreateSessionPage() {
     }
   }, [SelectedSubject]);
 
-  // When selectedTopics changes (multiple years), fetch exams for all topics
   useEffect(() => {
     if (SelectedSubject && selectedTopics.length > 0) {
       const fetchExams = async () => {
@@ -82,13 +79,20 @@ export default function CreateSessionPage() {
     setdata((prev) => ({ ...prev, exams: selectedExams }));
   }, [selectedExams]);
 
-  // Handle year checkbox changes
   const handleTopicCheckboxChange = (e) => {
     const value = Number(e.target.value);
     if (e.target.checked) {
       setSelectedTopics((prev) => [...prev, value]);
     } else {
       setSelectedTopics((prev) => prev.filter((id) => id !== value));
+    }
+  };
+
+  const handleSelectAllTopics = () => {
+    if (selectedTopics.length === chapters.length) {
+      setSelectedTopics([]);
+    } else {
+      setSelectedTopics(chapters.map((ch) => ch.id));
     }
   };
 
@@ -101,7 +105,7 @@ export default function CreateSessionPage() {
   };
 
   const handleSelectAllExams = () => {
-    const availableExams = exams.filter((exam) => exam.questions_count > 0);
+    const availableExams = exams.filter((exam) => (exam.questions_count - exam.question_used) > 0);
     if (selectedExams.length === availableExams.length) {
       setSelectedExams([]);
     } else {
@@ -109,12 +113,13 @@ export default function CreateSessionPage() {
     }
   };
 
-  const maxAllowed = selectedExams.length > 0
-    ? selectedExams.reduce((sum, examId) => {
-        const examObj = exams.find((exam) => exam.id === examId);
-        return sum + (examObj ? examObj.questions_count : 0);
-      }, 0)
-    : 0;
+  const maxAllowed =
+    selectedExams.length > 0
+      ? selectedExams.reduce((sum, examId) => {
+          const examObj = exams.find((exam) => exam.id === examId);
+          return sum + (examObj ? (examObj.questions_count - examObj.question_used) : 0);
+        }, 0)
+      : 0;
 
   return (
     <div>
@@ -169,7 +174,17 @@ export default function CreateSessionPage() {
                     ))}
                 </select>
                 <div className="mb-4 border border-black p-2 rounded-md">
-                  <p className="mb-2 text-black opacity-50">Choose a Year or years</p>
+                  <div className="flex justify-between items-center mb-2">
+                    <p className="text-black opacity-50">Choose a Year or years</p>
+                    {chapters && chapters.length > 0 && (
+                      <button
+                        onClick={handleSelectAllTopics}
+                        className="text-white bg-primary rounded-lg text-xs px-2 py-1 border transition duration-300 hover:bg-transparent hover:border hover:border-primary hover:text-black"
+                      >
+                        {selectedTopics.length === chapters.length ? "Unselect All" : "Select All"}
+                      </button>
+                    )}
+                  </div>
                   {chapters && chapters.length > 0 ? (
                     chapters.map((topic) => (
                       <div key={topic.id} className="flex items-center mb-1">
@@ -203,24 +218,27 @@ export default function CreateSessionPage() {
                     </div>
                   )}
                   {exams.length > 0 ? (
-                    exams.map((exam) => (
-                      <div 
-                        key={exam.id}
-                        className={`flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border border-black rounded-lg shadow-sm ${exam.questions_count < 1 ? "opacity-30" : "opacity-100"}`}
-                      >
-                        <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
-                          {exam.name} ( {exam.questions_count} Out Of {exam.questions_count} )
-                        </label>
-                        <input
-                          type="checkbox"
-                          id={`exam-${exam.id}`}
-                          checked={selectedExams.includes(exam.id)}
-                          onChange={() => handleExamSelection(exam.id)}
-                          className="rounded-full"
-                          disabled={exam.questions_count < 1}
-                        />
-                      </div>
-                    ))
+                    exams.map((exam) => {
+                      const remaining = exam.questions_count - exam.question_used;
+                      return (
+                        <div 
+                          key={exam.id}
+                          className={`flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border border-black rounded-lg shadow-sm ${remaining < 1 ? "opacity-30" : "opacity-100"}`}
+                        >
+                          <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
+                            {exam.name} ( {remaining} Out Of {exam.questions_count} )
+                          </label>
+                          <input
+                            type="checkbox"
+                            id={`exam-${exam.id}`}
+                            checked={selectedExams.includes(exam.id)}
+                            onChange={() => handleExamSelection(exam.id)}
+                            className="rounded-full"
+                            disabled={remaining < 1}
+                          />
+                        </div>
+                      );
+                    })
                   ) : (
                     <div className="flex flex-col gap-2 sm:gap-5 items-center justify-center">
                       <Image src="/sad 1.png" alt="ERR404" width={100} height={100} />
@@ -282,6 +300,7 @@ export default function CreateSessionPage() {
                         ?.subject_id.name || ""
                     }
                     topics={chapters.filter((ch) => selectedTopics.includes(ch.id))}
+                    exams={exams.filter((exam) => selectedExams.includes(exam.id))}
                     questionCount={amount}
                     data={data}
                   />

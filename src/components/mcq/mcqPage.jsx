@@ -24,6 +24,7 @@ function McqPageContent() {
   });
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showOverallExplanation, setShowOverallExplanation] = useState(false);
+  const [detailsVisible, setDetailsVisible] = useState({});
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
     [sessionID]
@@ -49,6 +50,7 @@ function McqPageContent() {
           return;
         }
         const questionData = questions[0].question;
+        const existingAnswer = questions[0].answer;
         setQuestDet({
           id: questions[0].id,
           total: res.data.data.meta.total,
@@ -59,9 +61,15 @@ function McqPageContent() {
           questionSummary: questionData.summary,
           answers: questionData.answers,
         });
-        setSelectedAnswer(null);
+        setDetailsVisible({});
         setShowOverallExplanation(false);
-        setMode("question");
+        if (existingAnswer) {
+          setSelectedAnswer(existingAnswer.id);
+          setMode("review");
+        } else {
+          setSelectedAnswer(null);
+          setMode("question");
+        }
       } catch (err) {
         console.error(err);
         toast.error("Error fetching question");
@@ -123,12 +131,14 @@ function McqPageContent() {
       await fetchQuest(questDet.current_page + 1);
     }
   };
+  const toggleDetails = (id) => {
+    setDetailsVisible((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
   if (!sessionID) {
     return <div>Error: Session ID not provided.</div>;
   }
   return (
-    <div className="container text- w-full m-auto px-4">
-     
+    <div className="container w-full m-auto px-4">
       {loading ? (
         <div className="spinner-container">
           <div className="spinner"></div>
@@ -139,12 +149,15 @@ function McqPageContent() {
         </div>
       ) : (
         <>
-         <Link
-          href="/"
-          className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2">
-            <img src="paaause 1.png" alt="ERR404" width={17} height={17}/>
-          Suspend
-          </Link>
+          {mode === "question" && (
+            <Link
+              href="/"
+              className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2"
+            >
+              <img src="paaause 1.png" alt="ERR404" width={17} height={17} />
+              Suspend
+            </Link>
+          )}
           <h5 className="text-end mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
             {questDet.current_page}/{questDet.total}
           </h5>
@@ -152,27 +165,28 @@ function McqPageContent() {
             {questDet.questionText} ?
           </h2>
           {mode === "question" && (
-            <div className="mt-5 ml-4 md:mt-14 md:ml-14 text-sm md:text-base">
-              {questDet.answers.map((ans, i) => (
-                <div key={i} className="flex py-2 md:py-3 items-center">
-                  <input
-                    type="radio"
-                    id={`answer-${i + 1}`}
-                    name="answer"
-                    value={ans.answer}
-                    checked={selectedAnswer === ans.id}
-                    onChange={() => setSelectedAnswer(ans.id)}
-                    className="cursor-pointer"
-                  />
-                  <label htmlFor={`answer-${i + 1}`} className="cursor-pointer ml-2">
+            <div className="mt-5 ml-4 md:mt-14 md:ml-14 text-sm md:text-base shadow-lg rounded-lg p-4 bg-white">
+              {questDet.answers.map((ans, i) => {
+                const letter = String.fromCharCode(65 + i);
+                return (
+                  <div
+                    key={i}
+                    onClick={() => setSelectedAnswer(ans.id)}
+                    className={`flex items-center gap-2 py-2 md:py-3 cursor-pointer p-3 rounded-md ${
+                      selectedAnswer === ans.id ? "bg-blue-100" : "hover:bg-gray-100"
+                    }`}
+                  >
+                    <span className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full font-bold">
+                      {letter}
+                    </span>
                     <strong>{ans.answer_text}</strong>
-                  </label>
-                </div>
-              ))}
+                  </div>
+                );
+              })}
             </div>
           )}
           {mode === "review" && (
-            <div className="mt-5 ml-4 md:mt-14 md:ml-14 space-y-2 md:space-y-4 text-sm md:text-base">
+            <div className="mt-5 ml-4 md:mt-14 md:ml-14 space-y-2 md:space-y-4 text-sm md:text-base shadow-lg rounded-lg p-4 bg-white">
               {questDet.answers.map((ans, i) => {
                 const answerColor = ans.is_correct ? "bg-greenOpacity" : "bg-red-200";
                 const cleanText = (html) => {
@@ -182,43 +196,58 @@ function McqPageContent() {
                     .trim();
                 };
                 const textOnly = cleanText(ans.description);
+                const letter = String.fromCharCode(65 + i);
                 return (
-                  <div key={i} className={`relative p-2 md:p-4 rounded-md ${answerColor}`}>
+                  <div key={i} className={`relative p-2 md:p-4 rounded-md  ${
+                    selectedAnswer === ans.id ? answerColor : ""
+                  }`}>
                     <div className="flex items-center">
-                      <input
-                        type="radio"
-                        id={`answer-${i + 1}`}
-                        name="answer"
-                        value={ans.answer}
-                        checked={String(ans.id) === String(selectedAnswer)}
-                        readOnly
-                        className="cursor-not-allowed"
-                      />
-                      <label htmlFor={`answer-${i + 1}`} className="cursor-not-allowed ml-2">
+                      <span className={`w-8 h-8 flex items-center justify-center rounded-full font-bold ${
+                        selectedAnswer === ans.id
+                          ? ans.is_correct
+                            ? "bg-greenOpacity text-white"
+                            : "bg-red-200 text-white"
+                          : answerColor
+                      }`}>
+                        {letter}
+                      </span>
+                      <label className="cursor-not-allowed ml-2">
                         <strong>{ans.answer_text}</strong>
                       </label>
+                      <button
+                        onClick={() => toggleDetails(ans.id)}
+                        className="ml-auto focus:outline-none"
+                      >
+                        <svg
+                          className={`w-4 h-4 transition-transform ${
+                            detailsVisible[ans.id] ? "rotate-180" : ""
+                          }`}
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 10 6"
+                        >
+                          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                        </svg>
+                      </button>
                     </div>
-                    <details className="mt-2">
-                      <summary className="absolute right-1 top-5 cursor-pointer text-black"></summary>
-                      <div className="mt-2 md:p-4 rounded-lg shadow-inner text-left p-2 text-sm md:text-base">
+                    {detailsVisible[ans.id] && (
+                      <div className="mt-2 p-4 rounded-lg shadow-inner text-left text-sm md:text-base">
                         {textOnly || "No details for this answer"}
                         {ans.img ? (
-                          <img src={ans.img} alt="ERR404" className="w-[15%] rounded-lg" />
-                        ) : (
-                          <div className="bg-slate-100 w-[10%] h-[60px] rounded-lg"></div>
-                        )}
+                          <img src={ans.img} alt="ERR404" className="w-[15%] rounded-lg mt-2" />
+                        ) : null}
                       </div>
-                    </details>
+                    )}
                   </div>
                 );
               })}
             </div>
           )}
           <div className="my-8 flex flex-col md:flex-row justify-evenly items-center gap-2 md:gap-4">
-            {mode === "question" && questDet.current_page > 1 ? (
+            {questDet.current_page > 1 ? (
               <button
                 onClick={() => fetchQuest(questDet.current_page - 1)}
-                className="h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
+                className="h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center text-sm md:text-base"
               >
                 <span>
                   <Image src="left 9.svg" alt="back" width={16} height={16} />
@@ -227,8 +256,8 @@ function McqPageContent() {
               </button>
             ) : (
               <button
-                disabled={questDet.current_page === 1}
-                className="h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed text-sm md:text-base"
+                disabled
+                className="h-10 md:h-[50px] bg-primary text-white px-4 md:px-7 py-2 md:py-4 rounded-2xl flex justify-center items-center disabled:opacity-50 text-sm md:text-base"
               >
                 <span>
                   <Image src="left 9.svg" alt="back" width={16} height={16} />
@@ -243,15 +272,16 @@ function McqPageContent() {
               >
                 <p className="flex items-center text-stone-500 w-fit py-1 md:py-3 rounded-full">
                   {showOverallExplanation ? "Hide Overall Explanation" : "Show Overall Explanation"}
-                  {!showOverallExplanation ? (
-                    <svg className="w-2.5 h-2.5 ml-2 md:ml-3 transition-transform" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                    </svg>
-                  ) : (
-                    <svg className="w-2.5 h-2.5 ml-2 md:ml-3 transition-transform rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-                    </svg>
-                  )}
+                  <svg
+                    className={`w-2.5 h-2.5 ml-2 md:ml-3 transition-transform ${
+                      showOverallExplanation ? "rotate-180" : ""
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 10 6"
+                  >
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
+                  </svg>
                 </p>
               </button>
             </div>
@@ -273,9 +303,7 @@ function McqPageContent() {
           {questDet.questionDescription.replace(/<\/?[^>]+(>|$)/g, "").replace(/&nbsp;/g, " ")}
           {questDet.img ? (
             <img src={questDet.img} alt="ERR404" className="w-[20%] rounded-lg" />
-          ) : (
-            <div className="bg-slate-300 w-[20%] h-[100px] rounded-lg"></div>
-          )}
+          ) : null}
         </div>
       )}
     </div>

@@ -72,20 +72,21 @@ export function AuthProvider({ children }) {
       // Set token from response
       const token = response.data.token;
       const user = response.data.data;
-      Cookies.set("auth_token", token, { expires: 7 });
-      Cookies.set("user", JSON.stringify(user), { expires: 7 });
+      // Cookies.set("auth_token", token, { expires: 7 });
+      // Cookies.set("user", JSON.stringify(user), { expires: 7 });
+      Cookies.set("EmailVerified",data.email);
 
 
       toast.success(response.data.message , {
         duration: 4000,
-        position: "top-center",
+        position: "top-center", 
         style: {
-          fontSize: "15px",
+          fontSize: "12px",
         },
       });
 
       setTimeout(() => {
-        window.location.href = "/";
+        window.location.href = "/Verfy";
       }, 2000);
     } catch (e) {
       if (e.response) {
@@ -105,6 +106,63 @@ export function AuthProvider({ children }) {
       }
     } 
   };
+
+
+
+
+  const verfiy = async (code) => {
+
+      const email = Cookies.get("EmailVerified");
+    try {
+      const response = await Axios.post("verify-email", {email, code:code.code});
+      
+      // Set token from response
+      const token = response.data.token;
+      const user = response.data.data;
+      Cookies.set("auth_token", token, { expires: 7 });
+      Cookies.set("user", JSON.stringify(user), { expires: 7 });
+
+
+      toast.success(response.data.message , {
+        duration: 4000,
+        position: "top-center", 
+        style: {
+          fontSize: "15px",
+        },
+      });
+
+      setTimeout(() => {
+        window.location.href = "/";   
+        Cookies.remove("EmailVerified");
+      }, 2000);
+    } catch (e) {
+      if (e.response) {
+        console.warn(e.response.data);
+        if(e.response.data.errors.email){
+          toast.error(e.response.data.errors.email);
+        }
+        if(e.response.data.errors.password){
+          toast.error(e.response.data.errors.password);
+        }
+        if(e.response.data.errors.mobile){
+          toast.error(e.response.data.errors.mobile);
+        }
+      } else {
+        console.warn(e);
+        toast.error(errors);
+      }
+    } 
+  };
+
+
+
+
+
+
+
+
+
+
 
   const logout = async () => {
 
@@ -140,6 +198,7 @@ export function AuthProvider({ children }) {
         value={{
           login,
           register,
+          verfiy,
           logout,
         }}
       >

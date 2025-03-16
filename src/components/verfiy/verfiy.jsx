@@ -3,7 +3,7 @@ import Image from "next/image";
 import VerfiyForm from './verfiyForm';
 import Link from 'next/link';
 
-export default function Verify() { 
+export default function Verify() {  
     return (
         <div>
             <div className="mx-auto my-1 max-w-screen-xl px-1 py-16 sm:px-6 lg:px-8">
