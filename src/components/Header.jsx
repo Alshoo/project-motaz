@@ -61,7 +61,7 @@ function Header() {
 
              <Link 
               href="/home" 
-              className="flex items-center px-3 py-2 rounded-lg transition-colors duration-500 
+              className="flex items-center px-3 py-2  rounded-[30px] transition-colors duration-500 
                         hover:bg-black hover:text-white group"
             >
               <img 
@@ -74,7 +74,7 @@ function Header() {
 
           <div className="relative">
             <button onClick={() => setSessionOpen(!sessionOpen)}
-             className="flex items-center px-3 py-2 rounded-lg transition-colors duration-500 hover:bg-black hover:text-white group">
+             className="flex items-center px-3 py-2  rounded-[30px] transition-colors duration-500 hover:bg-black hover:text-white group">
                <img 
                 src="/checkfggfbox.svg" 
                 className="w-5 h-5 mr-2  invert-0 brightness-0 transition-all duration-500 group-hover:invert group-hover:brightness-0"
@@ -83,7 +83,7 @@ function Header() {
               <i className="fa-solid fa-caret-down ml-1"></i>
             </button>
             {sessionOpen && (
-              <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg">
+              <div className="absolute top-full left-0 mt-2 w-48 bg-white  rounded-[30px] shadow-lg">
                 <Link href="/sessction?action=All" className="block px-4 py-2 transition-colors duration-500 hover:bg-gray-200">All</Link>
                 <Link href="/sessction?action=completed" className="block px-4 py-2 transition-colors duration-500 hover:bg-gray-200">Finished</Link>
                 <Link href="/sessction?action=ongoing" className="block px-4 py-2 transition-colors duration-500 hover:bg-gray-200">Ongoing</Link>
@@ -92,7 +92,7 @@ function Header() {
             )}
           </div>
           <Link href="/store"
-           className="flex items-center px-3 py-2 rounded-lg transition-colors duration-500 hover:bg-black hover:text-white group">
+           className="flex items-center px-3 py-2  rounded-[30px] transition-colors duration-500 hover:bg-black hover:text-white group">
              <img 
                 src="/Stofdfdre.svg" 
                 className="w-5 h-5 mr-2  invert-0 brightness-0 transition-all duration-500 group-hover:invert group-hover:brightness-0"
@@ -100,7 +100,7 @@ function Header() {
             Store
           </Link>
           <Link href="/wallet" 
-          className="flex items-center px-3 py-2 rounded-lg transition-colors duration-500 hover:bg-black hover:text-white group">
+          className="flex items-center px-3 py-2  rounded-[30px] transition-colors duration-500 hover:bg-black hover:text-white group">
             <img 
                 src="/Walfdfdlet (1).svg" 
                 className="w-5 h-5 mr-2  invert-0 brightness-0 transition-all duration-500 group-hover:invert group-hover:brightness-0"
@@ -122,7 +122,7 @@ function Header() {
                       <p className="text-gray-500 text-sm overflow-hidden">{userData.email}</p>
                     </div>
                     <form method="POST" onSubmit={logout} className="pt-1">
-                      <button type="submit" className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-red-700 bg-red-50 hover:bg-red-100 transition-colors duration-500" role="menuitem">
+                      <button type="submit" className="flex items-center gap-2 rounded-[30px] px-3 py-2 text-sm text-red-700 bg-red-50 hover:bg-red-100 transition-colors duration-500" role="menuitem">
                         <i className="fa-solid fa-sign-out-alt"></i>
                         Log Out
                       </button>
@@ -134,14 +134,14 @@ function Header() {
           ) : (
             <div className="flex space-x-2">
               <Link href="/Login">
-                <button className="text-primary flex items-center px-4 py-2 border border-primary rounded-xl transition-colors duration-500 hover:bg-primary hover:text-white">
+                <button className="text-primary flex items-center px-4 py-2 border border-primary rounded-[30px] transition-colors duration-500 hover:bg-primary hover:text-white">
                   <i className="fa-solid fa-right-to-bracket mr-1"></i>
                   Login
                 </button>
               </Link>
               <Link href="/Create">
                 <button 
-                className="flex items-center px-4 py-2 bg-primary text-white rounded-xl transition-colors duration-500 hover:bg-transparent hover:text-primary hover:border border border-primary">
+                className="flex items-center px-4 py-2 bg-primary text-white rounded-[30px] transition-colors duration-500 hover:bg-transparent hover:text-primary hover:border border border-primary">
                   <i className="fa-solid fa-user-plus mr-1"></i>
                   Sign Up
                 </button>
@@ -164,7 +164,7 @@ function Header() {
           <ul className="space-y-2 m-0 p-0 text-left list-none">
             <li>
               <Link href="/home" 
-              className="flex gap-2 items-center px-3 py-2 rounded-lg transition-colors duration-500 hover:bg-black hover:text-white group">
+              className="flex gap-2 items-center px-3 py-2  rounded-[30px] transition-colors duration-500 hover:bg-black hover:text-white group">
               <img 
                 src="/Vector.svg" 
                 className="w-4 h-4 mr-2 mb-[2px] invert-0 brightness-0 transition-all duration-500 group-hover:invert group-hover:brightness-0"
@@ -175,7 +175,7 @@ function Header() {
             <li>
               <div className="relative">
                 <button onClick={() => setSessionOpen(!sessionOpen)}
-                 className="flex items-center justify-between w-full px-3 py-2 rounded-lg transition-colors duration-500 hover:bg-black hover:text-white group">
+                 className="flex items-center justify-between w-full px-3 py-2  rounded-[30px] transition-colors duration-500 hover:bg-black hover:text-white group">
                   <span className="flex gap-2 items-center">
                         <img 
                       src="/checkfggfbox.svg" 
@@ -197,7 +197,7 @@ function Header() {
             </li>
             <li>
               <Link href="/store"
-               className="flex gap-2 items-center px-3 py-2 rounded-lg transition-colors duration-500 hover:bg-black hover:text-white group">
+               className="flex gap-2 items-center px-3 py-2  rounded-[30px] transition-colors duration-500 hover:bg-black hover:text-white group">
               <img 
                 src="/Stofdfdre.svg" 
                 className="w-5 h-5 mr-2  invert-0 brightness-0 transition-all duration-500 group-hover:invert group-hover:brightness-0"
@@ -207,7 +207,7 @@ function Header() {
             </li>
             <li>
               <Link href="/wallet"
-               className="flex gap-2 items-center px-3 py-2 rounded-lg transition-colors duration-500 hover:bg-black hover:text-white group">
+               className="flex gap-2 items-center px-3 py-2  rounded-[30px] transition-colors duration-500 hover:bg-black hover:text-white group">
               <img 
                 src="/Walfdfdlet (1).svg" 
                 className="w-5 h-5 mr-2  invert-0 brightness-0 transition-all duration-500 group-hover:invert group-hover:brightness-0"
@@ -225,7 +225,7 @@ function Header() {
                     <p className="text-gray-800 font-semibold">{userData.name}</p>
                     <p className="text-gray-500 text-sm">{userData.email}</p>
                   </div>
-                  <button onClick={logout} className="w-full text-left px-4 py-2 rounded-b-lg bg-red-50 text-red-700 transition-colors duration-500 hover:bg-red-100 flex items-center" role="menuitem">
+                  <button onClick={logout} className="w-full text-left px-4 py-2 rounded-b-3xl bg-red-50 text-red-700 transition-colors duration-500 hover:bg-red-100 flex items-center" role="menuitem">
                     <i className="fa-solid fa-sign-out-alt mr-1"></i>
                     Log Out
                   </button>
@@ -234,13 +234,13 @@ function Header() {
             ) : (
               <li className="mt-2 flex flex-col items-start space-y-2 w-[100%]">
                 <Link href="/Login" >
-                  <button className="text-primary flex items-center w-[150px] m-auto justify-center px-4 py-2 border border-primary rounded-lg transition-colors duration-500 hover:bg-primary hover:text-white">
+                  <button className="text-primary flex items-center w-[150px] m-auto justify-center px-4 py-2 border border-primary  rounded-[30px] transition-colors duration-500 hover:bg-primary hover:text-white">
                     <i className="fa-solid fa-right-to-bracket mr-1"></i>
                     Login
                   </button>
                 </Link>
                 <Link href="/Create">
-                  <button className="flex items-center  w-[150px] m-auto justify-center px-4 py-2 bg-primary  text-white rounded-lg transition-colors duration-500 hover:bg-transparent hover:text-primary hover:border border-primary">
+                  <button className="flex items-center  w-[150px] m-auto justify-center px-4 py-2 bg-primary  text-white  rounded-[30px] transition-colors duration-500 hover:bg-transparent hover:text-primary hover:border border-primary">
                     <i className="fa-solid fa-user-plus mr-1"></i>
                     Sign Up
                   </button>
