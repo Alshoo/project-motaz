@@ -48,10 +48,14 @@ function Header() {
           " w-full bg-transparent px-5 shadow-lg flex items-center justify-between p-4 transition-all duration-500 ease-in-out"
           
           }`}>
-        <div className="flex items-center">
+        <div className="flex items-center h-[50px] lg:pl-10">
           <Link href="/">
-            <Image src="/logo-nav.svg" alt="Logo" width={150} height={150} />
+            <img src="/MOTAZ MCQs_20250317_220842_٠٠٠٠.svg" alt="Logo" 
+            // width={100} height={100}
+            className="w-[100px]"
+            />
           </Link>
+
         </div>
         <div className="hidden md:flex flex-1 justify-center space-x-4">
 
@@ -130,13 +134,14 @@ function Header() {
           ) : (
             <div className="flex space-x-2">
               <Link href="/Login">
-                <button className="flex items-center px-4 py-2 border border-black rounded-lg transition-colors duration-500 hover:bg-black hover:text-white">
+                <button className="text-primary flex items-center px-4 py-2 border border-primary rounded-xl transition-colors duration-500 hover:bg-primary hover:text-white">
                   <i className="fa-solid fa-right-to-bracket mr-1"></i>
                   Login
                 </button>
               </Link>
               <Link href="/Create">
-                <button className="flex items-center px-4 py-2 bg-black text-white rounded-lg transition-colors duration-500 hover:bg-transparent hover:text-black hover:border border border-black">
+                <button 
+                className="flex items-center px-4 py-2 bg-primary text-white rounded-xl transition-colors duration-500 hover:bg-transparent hover:text-primary hover:border border border-primary">
                   <i className="fa-solid fa-user-plus mr-1"></i>
                   Sign Up
                 </button>
@@ -227,15 +232,15 @@ function Header() {
                 </div>
               </li>
             ) : (
-              <li className="mt-2 flex flex-col items-start space-y-2">
-                <Link href="/Login">
-                  <button className="flex items-center w-full px-4 py-2 border border-black rounded-lg transition-colors duration-500 hover:bg-black hover:text-white">
+              <li className="mt-2 flex flex-col items-start space-y-2 w-[100%]">
+                <Link href="/Login" >
+                  <button className="text-primary flex items-center w-[150px] m-auto justify-center px-4 py-2 border border-primary rounded-lg transition-colors duration-500 hover:bg-primary hover:text-white">
                     <i className="fa-solid fa-right-to-bracket mr-1"></i>
                     Login
                   </button>
                 </Link>
                 <Link href="/Create">
-                  <button className="flex items-center w-full px-4 py-2 bg-black text-white rounded-lg transition-colors duration-500 hover:bg-transparent hover:text-black hover:border border-black">
+                  <button className="flex items-center  w-[150px] m-auto justify-center px-4 py-2 bg-primary  text-white rounded-lg transition-colors duration-500 hover:bg-transparent hover:text-primary hover:border border-primary">
                     <i className="fa-solid fa-user-plus mr-1"></i>
                     Sign Up
                   </button>
