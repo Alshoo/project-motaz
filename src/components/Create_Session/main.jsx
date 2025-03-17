@@ -241,7 +241,7 @@ export default function CreateSessionPage() {
                     })
                   ) : (
                     <div className="flex flex-col gap-2 sm:gap-5 items-center justify-center">
-                      <Image src="/sad 1.png" alt="ERR404" width={100} height={100} />
+                      <Image src="/saddd 1 (1).svg" alt="ERR404" width={100} height={100} />
                       <p className="text-[12px] sm:text-[16px]">Couldn’t Find any Topics</p>
                       <p className="text-[12px] sm:text-[16px]">Please Change Your filters and try again</p>
                     </div>

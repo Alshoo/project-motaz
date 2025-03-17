@@ -45,7 +45,7 @@ function Header() {
         <nav
          className={`${isScrolled ?
           " w-11/12 lg:w-3/4 mx-auto bg-[rgba(255,255,255,0.5)] backdrop-blur px-5 rounded-full shadow-lg flex items-center justify-between p-4 transition-all duration-500 ease-in-out mt-8" :
-          " w-full bg-transparent px-5 shadow-lg flex items-center justify-between p-4 transition-all duration-500 ease-in-out"
+          " w-full bg-[rgba(255,255,255,0.5)] px-5 shadow-lg flex items-center justify-between p-4 transition-all duration-500 ease-in-out"
           
           }`}>
         <div className="flex items-center h-[50px] lg:pl-10">

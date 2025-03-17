@@ -9,6 +9,8 @@ import Link from "next/link";
 
 export default function HomePage() {
   const [userData, setUserData] = useState(null);
+  const [videoError, setVideoError] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     async function processBackendCall() {
@@ -25,6 +27,9 @@ export default function HomePage() {
     processBackendCall();
   }, []);
 
+  setTimeout(()=>{
+    setIsLoaded(true);
+  },2000)
   return (
     <div>
       <section>
@@ -64,21 +69,60 @@ export default function HomePage() {
             <h1 className="text-xs md:text-xl px-4 text-center">How to get started</h1>
             <div className="flex-grow border-t border-black"></div>
           </div>
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:items-center md:gap-8">
-            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 1.5 }} className="flex justify-center">
-              <img src="/logo.svg" className="rounded" alt="" />
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5 }}>
-              <div className="max-w-lg md:max-w-none">
-                <h2 className="text-xl font-semibold text-primary md:text-2xl">
-                  Watch our introduction video to learn how to get the most out of your learning experience
-                </h2>
-                <p className="mt-4 text-gray-500 text-sm md:text-base">
-                  In this introductory video, you'll learn how to use our educational platform effectively. We’ll guide you through the steps of selecting study topics, solving questions, and tracking your academic progress. This video will be a perfect guide for new students to make the most of the website.
-                </p>
+
+
+
+          <div className="grid grid-cols-1 py-11 gap-4 md:grid-cols-2 md:items-center md:gap-8">
+      <motion.div
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="flex justify-center"
+      >
+        {!videoError ? (
+          <>
+            {!isLoaded && (
+              <div className="w-[400px] h-[300px] rounded bg-gray-200 animate-pulse flex items-center justify-center">
+                <span className="text-gray-500">Loading video...</span>
               </div>
-            </motion.div>
+            )}
+            <video
+              className={`rounded ${!isLoaded ? "hidden" : ""}`}
+              width="400"
+              height="300"
+              autoPlay
+              muted
+              controls
+              src="mov_bbb"
+              onLoadedData={() => setIsLoaded(true)}
+              onError={() => setVideoError(true)}
+            ></video>
+          </>
+        ) : (
+          <div className="w-[400px] h-[300px] rounded bg-gray-200 flex items-center justify-center">
+            <span className="text-gray-500">Video not available</span>
           </div>
+        )}
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5 }}
+      >
+        <div className="max-w-lg md:max-w-none">
+          <h2 className="text-xl font-semibold text-primary md:text-2xl">
+            Watch our introduction video to learn how to get the most out of your learning experience
+          </h2>
+          <p className="mt-4 text-gray-500 text-sm md:text-base">
+            In this introductory video, you'll learn how to use our educational platform effectively. We’ll guide you through the steps of selecting study topics, solving questions, and tracking your academic progress. This video will be a perfect guide for new students to make the most of the website.
+          </p>
+        </div>
+      </motion.div>
+    </div>
+
+
+
+
         </div>
       </section>
 
