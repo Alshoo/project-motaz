@@ -163,7 +163,7 @@ function McqPageContent() {
           <h5 className="text-end text-xl mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
            <strong className="text-gray-400 font-medium">{questDet.current_page}</strong>/<strong className="font-medium">{questDet.total}</strong>
           </h5>
-          <h2 className="mt-2 ml-4 md:ml-4 text-lg md:text-2xl font-light">
+          <h2 className="mt-2 ml-2 md:ml-4 text-base sm:text-lg md:text-xl font-light">
             {questDet.questionText} ?
           </h2>
           {mode === "question" && (
@@ -188,7 +188,7 @@ function McqPageContent() {
             </div>
           )}
           {mode === "review" && (
-            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-sm md:text-base shadow-lg rounded-2xl bg-white">
+            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white">
               {questDet.answers.map((ans, i) => {
                 const answerColor = ans.is_correct ? "bg-greenOpacity border-green border-l-4" : "bg-red-300 border-red-600 border-l-4";
                 const answerColorbox = ans.is_correct ? "bg-greenOpacity" : "bg-red-200 ";
@@ -203,7 +203,7 @@ function McqPageContent() {
                   >
                     <div className="flex items-center p-2 md:p-4">
                       <span
-                        className={`w-9 h-9 flex items-center justify-center rounded-full font-bold ${
+                        className={`w-9 h-9 p-[20px] flex items-center justify-center rounded-full font-bold ${
                           selectedAnswer === ans.id
                             ? ans.is_correct
                               ? "bg-green text-black"
