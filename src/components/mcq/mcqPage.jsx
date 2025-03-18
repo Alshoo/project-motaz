@@ -167,7 +167,7 @@ function McqPageContent() {
             {questDet.questionText} ?
           </h2>
           {mode === "question" && (
-            <div className="mt-5 ml-4 md:mt-14 md:ml-4 text-sm md:text-base shadow-lg rounded-lg p-4 bg-white">
+            <div className="mt-5 ml-4 md:mt-14 md:ml-4 text-sm md:text-base shadow-lg rounded-xl p-4 bg-white">
               {questDet.answers.map((ans, i) => {
                 const letter = String.fromCharCode(65 + i);
                 return (
@@ -188,7 +188,7 @@ function McqPageContent() {
             </div>
           )}
           {mode === "review" && (
-            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-sm md:text-base shadow-lg rounded-lg bg-white">
+            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-sm md:text-base shadow-lg rounded-2xl bg-white">
               {questDet.answers.map((ans, i) => {
                 const answerColor = ans.is_correct ? "bg-greenOpacity border-green border-l-4" : "bg-red-200 border-red-600 border-l-4";
                 const answerColorbox = ans.is_correct ? "bg-greenOpacity" : "bg-red-200 ";
@@ -270,7 +270,7 @@ function McqPageContent() {
             {questDet.current_page > 1 ? (
               <button
                 onClick={() => fetchQuest(questDet.current_page - 1)}
-                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-2xl flex justify-center items-center text-xs md:text-base"
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-xl flex justify-center items-center text-xs md:text-base"
               >
                 {/* <span>
                   <Image src="left 9.svg" alt="back" width={13} height={13} />
@@ -280,7 +280,7 @@ function McqPageContent() {
             ) : (
               <button
                 disabled
-                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-2xl flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-xl flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
               >
                 {/* <span>
                   <Image src="left 9.svg" alt="back" width={13} height={13} />
@@ -323,7 +323,7 @@ function McqPageContent() {
                 mode === "question" ? handleNextInQuestionMode : handleNextQuestion
               }
               disabled={mode === "question" && selectedAnswer === null}
-              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-2xl flex justify-center items-center text-xs md:text-base"
+              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-xl flex justify-center items-center text-xs md:text-base"
             >
               {mode === "question"
                 ? "Next"

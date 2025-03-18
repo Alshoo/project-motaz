@@ -225,7 +225,7 @@ function Header() {
                     <p className="text-gray-800 font-semibold">{userData.name}</p>
                     <p className="text-gray-500 text-sm">{userData.email}</p>
                   </div>
-                  <button onClick={logout} className="w-full text-left px-4 py-2 rounded-b-3xl bg-red-50 text-red-700 transition-colors duration-500 hover:bg-red-100 flex items-center" role="menuitem">
+                  <button onClick={logout} className="w-full text-left px-4 py-2 bg-red-50 text-red-700 transition-colors duration-500 hover:bg-red-100 flex items-center" role="menuitem">
                     <i className="fa-solid fa-sign-out-alt mr-1"></i>
                     Log Out
                   </button>
