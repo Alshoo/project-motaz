@@ -1,4 +1,4 @@
-@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import "@fortawesome/fontawesome-free/css/all.min.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -10,7 +10,7 @@
   --perpel: #e5e1ec;
   --green: #36b057;
   --greenWhite: #e2f4e6;
-  --greenOpacity: #36b05771;
+  --greenOpacity: #5bda7d71;
   --blackOpacity: #a6a6a6;
   --blue: #1900ff;
 }
@@ -33,7 +33,7 @@ body {
 }
 
 .cash {
-  box-shadow: 0px 4px 6px rgba(128, 128, 128, 0.3)
+  box-shadow: 0px 4px 6px rgba(128, 128, 128, 0.3);
 }
 
 .ahmed {
@@ -47,7 +47,7 @@ body {
 
 .or::after {
   border-bottom: 1px solid #000;
-  content: '';
+  content: "";
   display: block;
   width: 100px;
   position: absolute;
@@ -57,7 +57,7 @@ body {
 
 .or::before {
   border-bottom: 1px solid #000;
-  content: '';
+  content: "";
   display: block;
   width: 100px;
   position: absolute;
@@ -90,6 +90,3 @@ body {
     transform: rotate(360deg);
   }
 }
-
-
-
