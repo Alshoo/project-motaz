@@ -161,20 +161,20 @@ function McqPageContent() {
             </Link>
           )}
           <h5 className="text-end text-xl mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
-           <strong className="text-gray-400 font-medium">{questDet.current_page}</strong>/<strong className="font-medium">{questDet.total}</strong>
+           <strong className="text-gray-400 font-medium">{questDet.current_page } </strong> / <strong className="font-medium"> { questDet.total}</strong>
           </h5>
           <h2 className="mt-2 ml-2 md:ml-4 text-base sm:text-lg md:text-xl font-light">
             {questDet.questionText} ?
           </h2>
           {mode === "question" && (
-            <div className="mt-5 ml-4 md:mt-14 md:ml-4 text-sm md:text-base shadow-lg rounded-xl p-4 bg-white">
+            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl p-2 bg-white">
               {questDet.answers.map((ans, i) => {
                 const letter = String.fromCharCode(65 + i);
                 return (
                   <div
                     key={i}
                     onClick={() => setSelectedAnswer(ans.id)}
-                    className={`flex items-center gap-2 py-2 md:py-3 cursor-pointer p-3 rounded-md ${
+                    className={`flex items-center gap-2 py-2 md:py-3 cursor-pointer p-1 md:p-2 rounded-md ${
                       selectedAnswer === ans.id ? "bg-blue-100" : "hover:bg-gray-100"
                     }`}
                   >
@@ -190,7 +190,7 @@ function McqPageContent() {
           {mode === "review" && (
             <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white">
               {questDet.answers.map((ans, i) => {
-                const answerColor = ans.is_correct ? "bg-greenOpacity border-green border-l-4" : "bg-red-300 border-red-600 border-l-4";
+                const answerColor = ans.is_correct ? "bg-greenOpacity border-green border-l-4" : "bg-red-100 border-red-600 border-l-4";
                 const answerColorbox = ans.is_correct ? "bg-greenOpacity" : "bg-red-200 ";
                 const answerbgColorbox = ans.is_correct ? "bg-greenWhite" : "bg-red-50 ";
                 const letter = String.fromCharCode(65 + i);
