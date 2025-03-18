@@ -167,7 +167,7 @@ function McqPageContent() {
             {questDet.questionText} ?
           </h2>
           {mode === "question" && (
-            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl p-2 bg-white">
+            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl p-2 bg-white overflow-hidden">
               {questDet.answers.map((ans, i) => {
                 const letter = String.fromCharCode(65 + i);
                 return (
@@ -188,7 +188,7 @@ function McqPageContent() {
             </div>
           )}
           {mode === "review" && (
-            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white">
+            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white overflow-hidden">
               {questDet.answers.map((ans, i) => {
                 const answerColor = ans.is_correct ? "bg-greenOpacity border-green border-l-4" : "bg-red-100 border-red-600 border-l-4";
                 const answerColorbox = ans.is_correct ? "bg-greenOpacity" : "bg-red-200 ";
