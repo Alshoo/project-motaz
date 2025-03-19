@@ -29,6 +29,7 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
     fetchSubscriptions();
   }, [subject_id]);
   console.log("pricing_plan_id"+currentPlanId);
+  console.log("pricing_plans"+pricing_plans);
   console.log("pricing_plan_id"+currentPlanId);
   const handleCouponCheck = async () => {
     try {
