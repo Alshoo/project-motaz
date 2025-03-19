@@ -83,7 +83,7 @@ function Header() {
               <i className="fa-solid fa-caret-down ml-1"></i>
             </button>
             {sessionOpen && (
-              <div className="absolute top-full left-0 mt-2 w-48 bg-white  rounded-[30px] shadow-lg">
+              <div className="absolute top-full left-0 mt-2 w-48 bg-white  rounded-lg shadow-lg">
                 <Link href="/sessction?action=All" className="block px-4 py-2 transition-colors duration-500 hover:bg-gray-200">All</Link>
                 <Link href="/sessction?action=completed" className="block px-4 py-2 transition-colors duration-500 hover:bg-gray-200">Finished</Link>
                 <Link href="/sessction?action=ongoing" className="block px-4 py-2 transition-colors duration-500 hover:bg-gray-200">Ongoing</Link>
