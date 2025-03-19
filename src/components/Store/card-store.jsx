@@ -41,7 +41,13 @@ function CardStore({ title, pricing_plans, subject_ID, questions_count, chapters
       </div>
       {isPopupOpen && (
         <div className="fixed inset-0 bg-gray-200 bg-opacity-50 flex justify-center items-center z-50 backdrop-blur-lg">
-          <Package closePopup={togglePopup} pricing_plans={pricing_plans} title={title} subject_ID={subject_ID} questions_count={questions_count} chapters={chapters} />
+          <Package 
+          closePopup={togglePopup}
+           pricing_plans={pricing_plans}
+            title={title}
+             subject_ID={subject_ID}
+              questions_count={questions_count}
+               chapters={chapters} />
         </div>
       )}
     </div>

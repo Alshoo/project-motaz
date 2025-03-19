@@ -20,6 +20,9 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
         const subscription = res.data.data.find(sub => sub.subject_id.id === subject_id);
         if(subscription){
           setCurrentPlanId(subscription.pricing_plan_id.id);
+          console.log("subscriptions"+subscription);
+          console.log("pricing_plan_id"+subscription.pricing_plan_id.id);
+          
         }
       } catch (e) {
         console.warn(e);
@@ -104,7 +107,18 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
               pricing_plans.map((item, index) => {
                 const isCurrentPlan = item.id === currentPlanId;
                 return (
-                  <div key={index} className={`flex items-center px-4 py-2 rounded-lg  ${isCurrentPlan ? "opacity-20 border border-gray-400" : "bg-gray bg-opacity-55 border border-gray-400"}`}>
+                  <div 
+                  key={index}
+                   className={`
+                   flex items-center px-4 py-2 rounded-lg 
+                    ${isCurrentPlan 
+                    ?
+                    "opacity-20 border border-gray-400" 
+                    :
+                     "bg-gray bg-opacity-55 border border-gray-400"}
+                     `}
+                     
+                     >
                     <label htmlFor={`bordered-radio-${index}`} className="w-full py-4 ms-2 text-sm font-medium text-black">
                       {item.name} [{item.discount}% Limited Offer Discount]
                     </label>
