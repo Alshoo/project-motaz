@@ -20,8 +20,6 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
         const subscription = res.data.data.find(sub => sub.subject_id.id === subject_id);
         if(subscription){
           setCurrentPlanId(subscription.pricing_plan_id.id);
-          console.log("subscriptions"+subscription);
-          console.log("pricing_plan_id"+subscription.pricing_plan_id.id);
           
         }
       } catch (e) {
@@ -30,7 +28,8 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
     };
     fetchSubscriptions();
   }, [subject_id]);
-
+  console.log("pricing_plan_id"+currentPlanId);
+  console.log("pricing_plan_id"+currentPlanId);
   const handleCouponCheck = async () => {
     try {
       const res = await Axios.get(`subscriptions/expired-coupon/${couponCode}`);
