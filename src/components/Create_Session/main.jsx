@@ -174,7 +174,8 @@ export default function CreateSessionPage() {
                 </select>
                 <div className="mb-4 border border-black p-2 rounded-md">
                   <div className="flex justify-between items-center mb-2">
-                    <p className="text-black opacity-50">Choose a Year or years</p>
+                    {/* <p className="text-black opacity-50">Choose a Year or years</p> */}
+                    <p className="text-black opacity-50">Choose a Topic or Topics</p>
                     {chapters && chapters.length > 0 && (
                       <button
                         onClick={handleSelectAllTopics}
