@@ -20,8 +20,9 @@ export default function CreateSessionPage() {
     subject_id: null,
     chapters: [],
     exams: [],
-    question_count: amount,
+    question_count: 0,
   });
+
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
@@ -160,7 +161,7 @@ export default function CreateSessionPage() {
                       ...prev,
                       subject_id: e.target.value,
                       exams: [],
-                      question_count: null,
+                      question_count: 0,
                     }));
                   }}
                 >
@@ -174,7 +175,6 @@ export default function CreateSessionPage() {
                 </select>
                 <div className="mb-4 border border-black p-2 rounded-md">
                   <div className="flex justify-between items-center mb-2">
-                    {/* <p className="text-black opacity-50">Choose a Year or years</p> */}
                     <p className="text-black opacity-50">Choose a Topic or Topics</p>
                     {chapters && chapters.length > 0 && (
                       <button
@@ -226,7 +226,7 @@ export default function CreateSessionPage() {
                           className={`flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border border-black rounded-lg shadow-sm ${remaining < 1 ? "opacity-30" : "opacity-100"}`}
                         >
                           <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
-                            {exam.name} ( {remaining} Out Of {exam.questions_count} )                        
+                            {exam.name} ( {remaining} Out Of {exam.questions_count} )
                           </label>
                           <input
                             type="checkbox"
@@ -273,7 +273,7 @@ export default function CreateSessionPage() {
                       }
                       setdata((prev) => ({
                         ...prev,
-                        question_count: value,
+                        question_count: Number(value)
                       }));
                       setAmount(value);
                     }}

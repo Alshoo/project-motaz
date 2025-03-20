@@ -14,7 +14,7 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
       : "bg-blackOpacity";
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] gap-4 bg-white rounded shadow-lg border border-gray-300 p-4">
+    <div className="w-[85vw] grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] gap-4 bg-white rounded shadow-lg border border-gray-300 p-4">
       <div className="flex justify-center items-center">
         <Image
           className="object-cover rounded-lg w-32 h-24 md:w-48 md:h-40"
