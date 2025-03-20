@@ -1,17 +1,15 @@
 import React from 'react'
 import Image from 'next/image'
 import Axios from '@/lib/axiosInstance';
+
 async function Footer() {
-
-  let Data = {};
-  try {
-    const res = await Axios.get("settings");
-    Data = res.data.data;
-  } catch (error) {
-    console.error("Error fetching SEO settings:", error);
-  }
-
-
+  // let Data = {};
+  // try {
+  //   const res = await Axios.get("settings");
+  //   Data = res.data.data;
+  // } catch (error) {
+  //   console.error("Error fetching SEO settings:", error);
+  // }
 
   return (
     <footer className="bg-black w-full">
@@ -22,10 +20,7 @@ async function Footer() {
               <Image src="/name-logo.svg" alt="Logo" width={150} height={50} />
             </div>
             <p className="mt-4 max-w-xs text-white text-xs sm:text-sm leading-relaxed text-start">
-              {Data?.seo?.description}<br /><br />
-              <span className="opacity-50 text-white text-[10px]">&copy; 2025. Company Name. All rights reserved.</span>
-              <br />
-              <span className="opacity-50 text-white text-[10px]">{Data?.contact?.address}</span>
+            The first free end-to-end analytics service for the site, The first free end-to-end analytics service for the site,<br /><br /><span className="opacity-50 text-white text-[10px]">&copy; 2025. Company Name. All rights reserved.</span>
             </p>
             <ul className="mt-4 flex gap-4">
               <li>
@@ -45,10 +40,10 @@ async function Footer() {
           <div className="flex justify-end items-end">
             <ul className="flex gap-4 text-xs sm:text-sm">
               <li>
-                <a href="mailto:motazmcqs@gmail.com" className="text-white">{Data?.contact?.email}</a>
+              <a href="mailto:motazmcqs@gmail.com" className="text-white">motazmcqs@gmail.com</a>
               </li>
               <li>
-                <a href="tel:+218915227857" className="text-white">{Data?.contact?.phone}</a>
+              <a href="tel:+218915227857" className="text-white">+218915227857</a>
               </li>
             </ul>
           </div>
@@ -57,4 +52,5 @@ async function Footer() {
     </footer>
   )
 }
+
 export default Footer
