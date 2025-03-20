@@ -39,7 +39,7 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
           <li>
             <span className='text-primary font-bold'>Subject </span>: {subject?.name || "Loading..."}
           </li>
-          <li>
+          <li className=' truncate'>
             <span className='text-primary font-bold'>Topics </span>: {chapters.length > 0 ? chapters.map((item) => ` ( ${item.name} ) `) : "Loading..."}
           </li>
           <li>
