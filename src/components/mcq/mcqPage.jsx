@@ -181,7 +181,7 @@ function McqPageContent() {
                     <span className="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-bold">
                       {letter}
                     </span>
-                    <strong className="font-medium">{ans.answer_text}</strong>
+                    <strong className="font-normal">{ans.answer_text}</strong>
                   </div>
                 );
               })}
@@ -214,14 +214,14 @@ function McqPageContent() {
                         {letter}
                       </span>
                       <label className="cursor-not-allowed ml-2">
-                        <strong>{ans.answer_text}</strong>
+                        <strong className="font-normal">{ans.answer_text}</strong>
                       </label>
                       <button
                         onClick={() => toggleDetails(ans.id)}
                         className="ml-auto focus:outline-none"
                       >
                         <svg
-                          className={`w-4 h-4 transition-transform ${
+                          className={`w-4 h-4 transition-transform opacity-60 ${
                             detailsVisible[ans.id] ? "rotate-180" : ""
                           }`}
                           xmlns="http://www.w3.org/2000/svg"

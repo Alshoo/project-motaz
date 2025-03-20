@@ -22,7 +22,6 @@ export default function CreateSessionPage() {
     exams: [],
     question_count: amount,
   });
-
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
@@ -226,7 +225,7 @@ export default function CreateSessionPage() {
                           className={`flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border border-black rounded-lg shadow-sm ${remaining < 1 ? "opacity-30" : "opacity-100"}`}
                         >
                           <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
-                            {exam.name} ( {remaining} Out Of {exam.questions_count} )
+                            {exam.name} ( {remaining} Out Of {exam.questions_count} )                        
                           </label>
                           <input
                             type="checkbox"

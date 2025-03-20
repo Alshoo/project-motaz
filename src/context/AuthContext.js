@@ -116,7 +116,7 @@ export function AuthProvider({ children }) {
     try {
       const response = await Axios.post("verify-email", {email, code:code.code});
       
-      // Set token from response
+      // Set token from response 
       const token = response.data.token;
       const user = response.data.data;
       Cookies.set("auth_token", token, { expires: 7 });
