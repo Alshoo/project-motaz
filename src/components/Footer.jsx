@@ -49,7 +49,7 @@ function Footer() {
           <div className="flex justify-end items-end">
             <ul className="flex gap-4 text-xs sm:text-sm">
               <li>
-                <a href="mailto:motazmcqs@gmail.com" className="text-white">{data?.contact?.email}</a>
+                <a href={`mailto:${data?.contact?.email}`} className="text-white">{data?.contact?.email}</a>
               </li>
               <li>
                 <a href="tel:+218915227857" className="text-white">{data?.contact?.phone}</a>

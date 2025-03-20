@@ -47,7 +47,7 @@ export default function Store() {
 
                 <div className='m-auto max-w-screen-lg py-5 px-5 gap-4 grid place-items-center  min-h-[50vh]'>
                 {
-                        loading?(
+                        loading?( 
                             <div className="spinner-container">
                             <div className="spinner"></div>
                           </div>
@@ -62,6 +62,7 @@ export default function Store() {
                                 chapters ={subject.chapters}
                                 pricing_plans={subject.pricing_plans}
                                 subject_ID={subject.id}
+                                Subject_Image={subject.image}
                                 
                                 />
                                 ))

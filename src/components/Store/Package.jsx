@@ -4,7 +4,7 @@ import useProfile from '@/hooks/profile';
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from "react-hot-toast";
 
-function Package({ closePopup, pricing_plans, title, subject_ID, questions_count, chapters }) {
+function Package({ closePopup, pricing_plans, title, subject_ID, questions_count, chapters,Subject_Image }) {
   const [coupon, setCoupon] = useState(null);
   const [couponCode, setCouponCode] = useState('');
   const [couponError, setCouponError] = useState('');
@@ -28,9 +28,6 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
     };
     fetchSubscriptions();
   }, [subject_id]);
-  console.log("pricing_plan_id"+currentPlanId);
-  console.log("pricing_plans"+pricing_plans);
-  console.log("pricing_plan_id"+currentPlanId);
   const handleCouponCheck = async () => {
     try {
       const res = await Axios.get(`subscriptions/expired-coupon/${couponCode}`);
@@ -98,7 +95,10 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
           </div>
         </div>
         <div className='flex justify-center items-center p-6'>
-          <img className="w-[400px] h-[150px] rounded-lg" src="https://storage.googleapis.com/t16t_assets/gyn_prod_logo.jpg" alt="Gynaecology" />
+          <img 
+          className="w-[400px] h-[150px] rounded-lg" 
+          src={Subject_Image? Subject_Image : "https://storage.googleapis.com/t16t_assets/gyn_prod_logo.jpg"}
+           alt="Gynaecology" />
         </div>
         <div className='gap-5 grid'>
           <h2 className='text-primary font text-2xl'>Please Choose The Package</h2>
