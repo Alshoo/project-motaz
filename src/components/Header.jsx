@@ -14,7 +14,18 @@ function Header() {
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { logout } = useContext(AuthContext);
-
+  const [data, setData] = useState({});
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await Axios.get("settings");
+        setData(res.data.data);
+      } catch (error) {
+        console.error("Error fetching SEO settings:", error);
+      }
+    }
+    fetchData();
+  }, []);
   useEffect(() => {
     const cookieData = Cookies.get("user");
     if (cookieData) {
@@ -50,7 +61,10 @@ function Header() {
           }`}>
         <div className="flex items-center h-[50px] lg:pl-10">
           <Link href="/">
-            <img src="/MOTAZ MCQs_20250317_220842_٠٠٠٠.svg" alt="Logo" 
+            <img 
+            // src="/MOTAZ MCQs_20250317_220842_٠٠٠٠.svg"
+            src={data?.branding?.logo}
+             alt="Logo" 
             // width={100} height={100}
             className="w-[100px]"
             />
