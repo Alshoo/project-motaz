@@ -1,18 +1,21 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Axios from '@/lib/axiosInstance';
-import Cookies from 'js-cookie';
-async function Footer() {
 
-  let Data = Cookies.get('footersettings');
-  // try {
-  //   const res = await Axios.get("settings");
-  //   Data = res.data.data;
-  // } catch (error) {
-  //   console.error("Error fetching SEO settings:", error);
-  // }
-
-
+function Footer() {
+  const [data, setData] = useState({});
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await Axios.get("settings");
+        setData(res.data.data);
+      } catch (error) {
+        console.error("Error fetching SEO settings:", error);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <footer className="bg-black w-full">
@@ -23,10 +26,10 @@ async function Footer() {
               <Image src="/name-logo.svg" alt="Logo" width={150} height={50} />
             </div>
             <p className="mt-4 max-w-xs text-white text-xs sm:text-sm leading-relaxed text-start">
-              {Data?.seo?.description}<br /><br />
+              {data?.seo?.description}<br /><br />
               <span className="opacity-50 text-white text-[10px]">&copy; 2025. Company Name. All rights reserved.</span>
               <br />
-              <span className="opacity-50 text-white text-[10px]">{Data?.contact?.address}</span>
+              <span className="opacity-50 text-white text-[10px]">{data?.contact?.address}</span>
             </p>
             <ul className="mt-4 flex gap-4">
               <li>
@@ -46,10 +49,10 @@ async function Footer() {
           <div className="flex justify-end items-end">
             <ul className="flex gap-4 text-xs sm:text-sm">
               <li>
-                <a href="mailto:motazmcqs@gmail.com" className="text-white">{Data?.contact?.email}</a>
+                <a href="mailto:motazmcqs@gmail.com" className="text-white">{data?.contact?.email}</a>
               </li>
               <li>
-                <a href="tel:+218915227857" className="text-white">{Data?.contact?.phone}</a>
+                <a href="tel:+218915227857" className="text-white">{data?.contact?.phone}</a>
               </li>
             </ul>
           </div>
@@ -58,4 +61,5 @@ async function Footer() {
     </footer>
   )
 }
+
 export default Footer

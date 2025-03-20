@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useEffect} from "react";
+import { createContext} from "react";
 import Axios from "@/lib/axiosInstance";
 import toast, { Toaster } from "react-hot-toast";
 import Cookies from "js-cookie";
@@ -158,6 +158,12 @@ export function AuthProvider({ children }) {
 
 
 
+
+
+
+
+
+
   const logout = async () => {
 
     try {
@@ -185,28 +191,6 @@ export function AuthProvider({ children }) {
 
 
 
-
-  const footersettings = async () => {
-
-    try {
-      const res = await Axios.get("settings");
-      Data = res.data.data;
-      Cookies.set("footersettings", Data);
-    } catch (e) {
-      if (e.response) {
-        console.warn(e.response.data);
-      }
-      }
-
-
-    } 
-  
-
-    useEffect(() => {
-      footersettings();
-    }, []);
-
-
   return (
     <div>
       <Toaster position="top-center" toastOptions={{ duration: 4000 }} />
@@ -216,7 +200,6 @@ export function AuthProvider({ children }) {
           register,
           verfiy,
           logout,
-          footersettings,
         }}
       >
         {children}
