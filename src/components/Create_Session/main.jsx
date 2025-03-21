@@ -214,6 +214,7 @@ export default function CreateSessionPage() {
                 <div className="max-h-[225px] overflow-y-auto shadow-sm bg-zinc-100 rounded-md p-4">
                   {exams.length > 0 && (
                     <div className="flex justify-end items-center">
+                       <p className="text-black opacity-50">Choose a Topic or Topics</p>
                       <button
                         type="button"
                         onClick={handleSelectAllExams}
@@ -232,8 +233,6 @@ export default function CreateSessionPage() {
                           key={exam.id}
                           className={`flex items-center bg-white justify-between py-2 px-2 mb-2 border border-black rounded-lg shadow-sm ${isExamDisabled ? "opacity-30" : "opacity-100"}`}
                         >
-
-                          <p className="text-black opacity-50">Choose a Topic or Topics</p>
 
                           <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
                             {exam.name} ( {remaining} Out Of {exam.questions_count} )
