@@ -111,7 +111,7 @@ export default function CreateSessionPage() {
     const availableExams = exams.filter(
       (exam) =>
         (exam.questions_count - exam.question_used) > 0 &&
-        (freeTrial === 0 ? exam.type === "free" : true)
+        (freeTrial === 1 ? exam.type === "free" : true)
     );
     if (selectedExams.length === availableExams.length) {
       setSelectedExams([]);
@@ -232,7 +232,7 @@ export default function CreateSessionPage() {
                   {exams.length > 0 ? (
                     exams.map((exam) => {
                       const remaining = exam.questions_count - exam.question_used;
-                      const isExamDisabled = remaining < 1 || (freeTrial === 0 && exam.type !== "free");
+                      const isExamDisabled = remaining < 1 || (freeTrial === 1 && exam.type !== "free");
                       return (
                         <div 
                           key={exam.id}
