@@ -203,7 +203,7 @@ function McqPageContent() {
                   >
                     <div className="flex items-center p-2 md:p-4">
                       <span
-                        className={`w-9 h-9 p-[20px] flex items-center justify-center rounded-full font-bold ${
+                        className={`w-8 h-8 p-[15px] flex items-center justify-center rounded-full font-bold ${
                           selectedAnswer === ans.id
                             ? ans.is_correct
                               ? "bg-green text-black"
@@ -214,7 +214,7 @@ function McqPageContent() {
                         {letter}
                       </span>
                       <label className="cursor-not-allowed ml-2">
-                        <strong className="font-normal">{ans.answer_text}</strong>
+                        <strong className="font-normal text-sm">{ans.answer_text}</strong>
                       </label>
                       <button
                         onClick={() => toggleDetails(ans.id)}
