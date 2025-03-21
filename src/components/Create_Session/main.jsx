@@ -181,7 +181,7 @@ export default function CreateSessionPage() {
                 </select>
                 <div className="mb-4 border border-black p-2 rounded-md">
                   <div className="flex justify-between items-center mb-2">
-                    <p className="text-black opacity-50">Choose a Topic or Topics</p>
+                    <p className="text-black opacity-50">Choose a Year or Years</p>
                     {chapters && chapters.length > 0 && (
                       <button
                         onClick={handleSelectAllTopics}
@@ -194,6 +194,7 @@ export default function CreateSessionPage() {
                   {chapters && chapters.length > 0 ? (
                     chapters.map((topic) => (
                       <div key={topic.id} className="flex items-center mb-1">
+                        <p className="text-black opacity-50">Choose a Topic or Topics</p>
                         <input
                           type="checkbox"
                           id={`topic-${topic.id}`}
