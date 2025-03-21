@@ -6,6 +6,7 @@ import Axios from '@/lib/axiosInstance';
 function CardStore({ title, pricing_plans, subject_ID, questions_count, chapters, Subject_Image }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isCardDisabled, setIsCardDisabled] = useState(false);
+  const [subData, setSubData] = useState(false);
   const togglePopup = () => setIsPopupOpen(!isPopupOpen);
 
   useEffect(() => {
@@ -15,6 +16,7 @@ function CardStore({ title, pricing_plans, subject_ID, questions_count, chapters
         const subscription = subjectRes.data.data.find(sub => sub.subject_id.id === subject_ID);
         if (subscription) {
           setIsCardDisabled(subscription.pricing_plan_id.free_trial === "1");
+          setSubData(subscription);
         }
       } catch (err) {
         console.warn(err);
@@ -23,7 +25,7 @@ function CardStore({ title, pricing_plans, subject_ID, questions_count, chapters
     fetchData();
   }, [subject_ID]);
 
-  console.log(subscription);
+  console.log(subData);
   
   return (
     <div className={`grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] gap-4 bg-white rounded shadow-lg border border-gray-300 p-4 ${isCardDisabled ? "opacity-50" : ""}`}>
