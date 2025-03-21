@@ -232,7 +232,7 @@ export default function CreateSessionPage() {
                   {exams.length > 0 ? (
                     exams.map((exam) => {
                       const remaining = exam.questions_count - exam.question_used;
-                      const isExamDisabled = remaining < 1 || (freeTrial === 0 && exam.type === "paid");
+                      const isExamDisabled = remaining < 1 || (freeTrial === 0 && exam.type !== "free");
                       return (
                         <div 
                           key={exam.id}
