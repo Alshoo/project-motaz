@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Axios from "@/lib/axiosInstance";
 import React, { useEffect, useState } from "react";
 import Popup from "./popup";
@@ -105,7 +105,16 @@ export default function CreateSessionPage() {
   };
 
   const handleSelectAllExams = () => {
-    const availableExams = exams.filter((exam) => (exam.questions_count - exam.question_used) > 0);
+    // Determine the subscription plan free_trial value
+    const subscriptionPlan = subject?.find(
+      (sub) => sub.subject_id.id === SelectedSubject
+    )?.pricing_plan_id;
+    const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
+    // If free_trial is 0, only allow free exams; otherwise, allow all
+    const availableExams =
+      freeTrial === 0
+        ? exams.filter((exam) => exam.type === "free" && (exam.questions_count - exam.question_used) > 0)
+        : exams.filter((exam) => (exam.questions_count - exam.question_used) > 0);
     if (selectedExams.length === availableExams.length) {
       setSelectedExams([]);
     } else {
@@ -120,6 +129,14 @@ export default function CreateSessionPage() {
           return sum + (examObj ? (examObj.questions_count - examObj.question_used) : 0);
         }, 0)
       : 0;
+
+  // Determine subscription free_trial value for the selected subject
+  const subscriptionPlan = subject?.find(
+    (sub) => sub.subject_id.id === SelectedSubject
+  )?.pricing_plan_id;
+  const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
+  // Filter exams based on subscription: if free_trial === 0, only free exams
+  const filteredExams = freeTrial === 0 ? exams.filter((exam) => exam.type === "free") : exams;
 
   return (
     <div>
@@ -206,7 +223,7 @@ export default function CreateSessionPage() {
                   )}
                 </div>
                 <div className="max-h-[225px] overflow-y-auto shadow-sm bg-zinc-100 rounded-md p-4">
-                  {exams.length > 0 && (
+                  {filteredExams.length > 0 && (
                     <div className="flex justify-end items-center">
                       <button
                         type="button"
@@ -217,8 +234,8 @@ export default function CreateSessionPage() {
                       </button>
                     </div>
                   )}
-                  {exams.length > 0 ? (
-                    exams.map((exam) => {
+                  {filteredExams.length > 0 ? (
+                    filteredExams.map((exam) => {
                       const remaining = exam.questions_count - exam.question_used;
                       return (
                         <div 
@@ -227,6 +244,11 @@ export default function CreateSessionPage() {
                         >
                           <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
                             {exam.name} ( {remaining} Out Of {exam.questions_count} )
+                            {freeTrial === 0 && (
+                              <span className="ml-2 text-[10px] font-medium">
+                                {exam.type === "free" ? "Free" : "Paid"}
+                              </span>
+                            )}
                           </label>
                           <input
                             type="checkbox"
