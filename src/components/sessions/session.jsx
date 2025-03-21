@@ -180,6 +180,7 @@ function SessionContent() {
                   statusText={session.status}
                   subject={session.subject_id}
                   chapters={session.chapters}
+                  exams={session.exams}
                   mode={session.mood_id}
                   created_at={session.created_at}
                   updated_at={session.updated_at}

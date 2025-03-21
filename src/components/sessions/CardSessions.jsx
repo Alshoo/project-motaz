@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
-function CardSessions({ statusText, buttonText, mode, question_count, created_at, updated_at, chapters, subject, Session_id }) {
+function CardSessions({ statusText, buttonText, mode, question_count, created_at, updated_at, chapters, subject, Session_id,exams }) {
   const dateOnly1 = created_at.split("T")[0];
   const dateOnly2 = updated_at.split("T")[0];
 
@@ -40,7 +40,7 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
             <span className='text-primary font-bold'>Subject </span>: {subject?.name || "Loading..."}
           </li>
           <li className=' truncate '>
-            <span className='text-primary font-bold'>Topics </span>: {chapters.length > 0 ? chapters.map((item) => ` ( ${item.name} ) `) : "Loading..."}
+            <span className='text-primary font-bold'>Topics </span>: {exams.length > 0 ? exams.map((item) => ` ( ${item.name} ) `) : "Loading..."}
           </li>
           <li>
             <span className='text-primary font-bold'>Last access </span>: {dateOnly2}
