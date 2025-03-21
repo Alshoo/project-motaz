@@ -106,9 +106,7 @@ export default function CreateSessionPage() {
   const subscriptionPlan = subject?.find(
     (sub) => sub.subject_id.id === SelectedSubject
   )?.pricing_plan_id;
-  const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
-console.log("freeTrial" + freeTrial);
-console.log("subscriptionPlan" + subscriptionPlan);
+  const freeTrial = subscriptionPlan ? (subscriptionPlan.free_trial === "0" ? 0 : 1) : 1;
 
   const handleSelectAllExams = () => {
     const availableExams = exams.filter(
@@ -235,11 +233,9 @@ console.log("subscriptionPlan" + subscriptionPlan);
                         >
                           <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
                             {exam.name} ( {remaining} Out Of {exam.questions_count} )
-                            {freeTrial === 0 && (
-                              <span className="ml-2 text-[10px] font-medium">
-                                {exam.type === "free" ? "Free" : "Paid"}
-                              </span>
-                            )}
+                            <span className="ml-2 text-[10px] font-medium">
+                              {exam.type === "free" ? "Free" : "Paid"}
+                            </span>
                           </label>
                           <input
                             type="checkbox"
