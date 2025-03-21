@@ -105,16 +105,17 @@ export default function CreateSessionPage() {
   };
 
   const handleSelectAllExams = () => {
-    // Determine the subscription plan free_trial value
+    // Get subscription plan free_trial value for selected subject
     const subscriptionPlan = subject?.find(
       (sub) => sub.subject_id.id === SelectedSubject
     )?.pricing_plan_id;
     const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
-    // If free_trial is 0, only allow free exams; otherwise, allow all
-    const availableExams =
-      freeTrial === 0
-        ? exams.filter((exam) => exam.type === "free" && (exam.questions_count - exam.question_used) > 0)
-        : exams.filter((exam) => (exam.questions_count - exam.question_used) > 0);
+    // If freeTrial is 0, allow selection only for exams marked as free
+    const availableExams = exams.filter(
+      (exam) =>
+        (exam.questions_count - exam.question_used) > 0 &&
+        (freeTrial === 0 ? exam.type === "free" : true)
+    );
     if (selectedExams.length === availableExams.length) {
       setSelectedExams([]);
     } else {
@@ -130,13 +131,11 @@ export default function CreateSessionPage() {
         }, 0)
       : 0;
 
-  // Determine subscription free_trial value for the selected subject
+  // Determine free_trial value for the selected subject
   const subscriptionPlan = subject?.find(
     (sub) => sub.subject_id.id === SelectedSubject
   )?.pricing_plan_id;
   const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
-  // Filter exams based on subscription: if free_trial === 0, only free exams
-  const filteredExams = freeTrial === 0 ? exams.filter((exam) => exam.type === "free") : exams;
 
   return (
     <div>
@@ -223,7 +222,7 @@ export default function CreateSessionPage() {
                   )}
                 </div>
                 <div className="max-h-[225px] overflow-y-auto shadow-sm bg-zinc-100 rounded-md p-4">
-                  {filteredExams.length > 0 && (
+                  {exams.length > 0 && (
                     <div className="flex justify-end items-center">
                       <button
                         type="button"
@@ -234,21 +233,21 @@ export default function CreateSessionPage() {
                       </button>
                     </div>
                   )}
-                  {filteredExams.length > 0 ? (
-                    filteredExams.map((exam) => {
+                  {exams.length > 0 ? (
+                    exams.map((exam) => {
                       const remaining = exam.questions_count - exam.question_used;
+                      // Disable exam if no remaining questions OR if freeTrial is 0 and exam type is paid
+                      const isExamDisabled = remaining < 1 || (freeTrial === 0 && exam.type === "paid");
                       return (
                         <div 
                           key={exam.id}
-                          className={`flex items-center bg-white justify-between py-2 px-2 mb-2 text-black border border-black rounded-lg shadow-sm ${remaining < 1 ? "opacity-30" : "opacity-100"}`}
+                          className={`flex items-center bg-white justify-between py-2 px-2 mb-2 border border-black rounded-lg shadow-sm ${isExamDisabled ? "opacity-30" : "opacity-100"}`}
                         >
                           <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
                             {exam.name} ( {remaining} Out Of {exam.questions_count} )
-                            {freeTrial === 0 && (
-                              <span className="ml-2 text-[10px] font-medium">
-                                {exam.type === "free" ? "Free" : "Paid"}
-                              </span>
-                            )}
+                            <span className="ml-2 text-[10px] font-medium">
+                              {exam.type === "free" ? "Free" : "Paid"}
+                            </span>
                           </label>
                           <input
                             type="checkbox"
@@ -256,7 +255,7 @@ export default function CreateSessionPage() {
                             checked={selectedExams.includes(exam.id)}
                             onChange={() => handleExamSelection(exam.id)}
                             className="rounded-full"
-                            disabled={remaining < 1}
+                            disabled={isExamDisabled}
                           />
                         </div>
                       );
