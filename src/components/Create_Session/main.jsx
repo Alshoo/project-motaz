@@ -175,6 +175,7 @@ export default function CreateSessionPage() {
                     subject.map((sub) => (
                       <option key={sub.id} value={sub.subject_id.id}>
                         {sub.subject_id.name}
+                        {sub.pricing_plan_id.free_trial === "0" && " (free trail)"}
                       </option>
                     ))}
                 </select>
