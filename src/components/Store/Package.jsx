@@ -107,7 +107,9 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
             {pricing_plans.length > 0 &&
               pricing_plans.map((item, index) => {
                 const isCurrentPlan = item.id === currentPlanId;
-                const planText = item.free_trial === 0 ? "Free Trial" : `[${item.discount}% Limited Offer Discount]`;
+                const planText = Number(item.free_trial) === 0 
+                  ? "Free Trial" 
+                  : `[${item.discount}% Limited Offer Discount]`;
                 return (
                   <div 
                     key={index}
