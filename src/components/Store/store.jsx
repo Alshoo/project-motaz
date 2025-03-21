@@ -38,7 +38,7 @@ export default function Store() {
                 <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 lg:px-8 ">
 
                     <div className="max-w-lg md:max-w-none py-8">
-                        <h2 className="text-2xl font-bold pb-9 text-gray-900 sm:text-3xl text-center">
+                        <h2 className="text-lg font-bold pb-9 text-gray-900 sm:text-lg text-center">
                             Choose a Subject from this and start solving interactive questions
                         </h2>
                         <hr />

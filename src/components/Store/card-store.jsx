@@ -37,6 +37,10 @@ function CardStore({ title, pricing_plans, subject_ID, questions_count, chapters
           <h2 className="text-primary font-bold text-xl md:text-2xl m-0">{title}</h2>
           <h3 className="text-black font-bold text-sm md:text-md m-0">Contains {questions_count} Questions</h3>
           <p className="text-blackOpacity text-sm md:text-base m-0">Choose to buy one of the items and enjoy high-quality content.</p>
+
+
+          <p className="mt-2 text-blackOpacity text-sm md:text-base m-0"> <strong className='text-primary'>Expires At :</strong> {subscription.expires_at} </p>
+
           <button onClick={togglePopup} disabled={isCardDisabled} className={`mt-4 w-full lg:w-[75%] font-light px-3 py-2 border border-transparent bg-primary text-white rounded-lg shadow-md transition duration-300 ${isCardDisabled ? "" : "hover:border-primary hover:text-primary hover:bg-transparent"}`}>
             {isCardDisabled ? "Subscribed" : "Explore Packages"}
           </button>
