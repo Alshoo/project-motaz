@@ -7,7 +7,6 @@ import Image from "next/image";
 export default function CreateSessionPage() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const togglePopup = () => setIsPopupOpen(!isPopupOpen);
-
   const [selectedTopics, setSelectedTopics] = useState([]);
   const [selectedExams, setSelectedExams] = useState([]);
   const [amount, setAmount] = useState("");
@@ -105,12 +104,10 @@ export default function CreateSessionPage() {
   };
 
   const handleSelectAllExams = () => {
-    // Get subscription plan free_trial value for selected subject
     const subscriptionPlan = subject?.find(
       (sub) => sub.subject_id.id === SelectedSubject
     )?.pricing_plan_id;
     const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
-    // If freeTrial is 0, allow selection only for exams marked as free
     const availableExams = exams.filter(
       (exam) =>
         (exam.questions_count - exam.question_used) > 0 &&
@@ -131,7 +128,6 @@ export default function CreateSessionPage() {
         }, 0)
       : 0;
 
-  // Determine free_trial value for the selected subject
   const subscriptionPlan = subject?.find(
     (sub) => sub.subject_id.id === SelectedSubject
   )?.pricing_plan_id;
@@ -236,7 +232,6 @@ export default function CreateSessionPage() {
                   {exams.length > 0 ? (
                     exams.map((exam) => {
                       const remaining = exam.questions_count - exam.question_used;
-                      // Disable exam if no remaining questions OR if freeTrial is 0 and exam type is paid
                       const isExamDisabled = remaining < 1 || (freeTrial === 0 && exam.type === "paid");
                       return (
                         <div 
@@ -245,9 +240,11 @@ export default function CreateSessionPage() {
                         >
                           <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
                             {exam.name} ( {remaining} Out Of {exam.questions_count} )
-                            <span className="ml-2 text-[10px] font-medium">
-                              {exam.type === "free" ? "Free" : "Paid"}
-                            </span>
+                            {freeTrial === 0 && (
+                              <span className="ml-2 text-[10px] font-medium">
+                                {exam.type === "free" ? "Free" : "Paid"}
+                              </span>
+                            )}
                           </label>
                           <input
                             type="checkbox"
