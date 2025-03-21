@@ -106,7 +106,7 @@ export default function CreateSessionPage() {
   const subscriptionPlan = subject?.find(
     (sub) => sub.subject_id.id === SelectedSubject
   )?.pricing_plan_id;
-  const freeTrial = subscriptionPlan ? (subscriptionPlan.free_trial === "0" ? 0 : 1) : 1;
+  const freeTrial = subscriptionPlan && subscriptionPlan.free_trial === "0" ? 0 : 1;
 
   const handleSelectAllExams = () => {
     const availableExams = exams.filter(
@@ -158,13 +158,13 @@ export default function CreateSessionPage() {
                 <select
                   className="block w-full p-2 border border-black bg-white text-black opacity-50 rounded-md mb-4"
                   onChange={(e) => {
-                    setSelectedSubject(e.target.value);
+                    setSelectedSubject(Number(e.target.value));
                     setSelectedTopics([]);
                     setSelectedExams([]);
                     setAmount("");
                     setdata((prev) => ({
                       ...prev,
-                      subject_id: e.target.value,
+                      subject_id: Number(e.target.value),
                       exams: [],
                       question_count: 0,
                     }));
@@ -305,7 +305,7 @@ export default function CreateSessionPage() {
                   <Popup
                     closePopup={togglePopup}
                     subjectName={
-                      subject?.find((sub) => sub.subject_id.id == SelectedSubject)
+                      subject?.find((sub) => sub.subject_id.id === SelectedSubject)
                         ?.subject_id.name || ""
                     }
                     topics={chapters.filter((ch) => selectedTopics.includes(ch.id))}
