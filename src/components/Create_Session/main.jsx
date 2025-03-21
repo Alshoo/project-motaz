@@ -103,15 +103,16 @@ export default function CreateSessionPage() {
     }
   };
 
+  const subscriptionPlan = subject?.find(
+    (sub) => sub.subject_id.id === SelectedSubject
+  )?.pricing_plan_id;
+  const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
+
   const handleSelectAllExams = () => {
-    const subscriptionPlan = subject?.find(
-      (sub) => sub.subject_id.id === SelectedSubject
-    )?.pricing_plan_id;
-    const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
     const availableExams = exams.filter(
       (exam) =>
-        (exam.questions_count - exam.question_used) > 0 &&
-        (freeTrial === 1 ? exam.type === "free" : true)
+        exam.questions_count - exam.question_used > 0 &&
+        (freeTrial === 0 ? exam.type === "free" : true)
     );
     if (selectedExams.length === availableExams.length) {
       setSelectedExams([]);
@@ -128,21 +129,13 @@ export default function CreateSessionPage() {
         }, 0)
       : 0;
 
-  const subscriptionPlan = subject?.find(
-    (sub) => sub.subject_id.id === SelectedSubject
-  )?.pricing_plan_id;
-  const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
-
   return (
     <div>
       <div className="w-full flex justify-center items-center flex-col">
         <div className="flex justify-center flex-col w-full max-w-screen-lg items-center min-h-screen">
           <div className="w-full max-w-3xl">
             <div className="w-full flex justify-start">
-              <button
-                onClick={() => window.history.back()}
-                className="bg-primary text-white px-3 py-2 my-4 mx-2 rounded-md w-[110px]"
-              >
+              <button onClick={() => window.history.back()} className="bg-primary text-white px-3 py-2 my-4 mx-2 rounded-md w-[110px]">
                 Back
               </button>
             </div>
@@ -232,9 +225,9 @@ export default function CreateSessionPage() {
                   {exams.length > 0 ? (
                     exams.map((exam) => {
                       const remaining = exam.questions_count - exam.question_used;
-                      const isExamDisabled = remaining < 1 || (freeTrial === 1 && exam.type !== "free");
+                      const isExamDisabled = remaining < 1 || (freeTrial === 0 && exam.type !== "free");
                       return (
-                        <div 
+                        <div
                           key={exam.id}
                           className={`flex items-center bg-white justify-between py-2 px-2 mb-2 border border-black rounded-lg shadow-sm ${isExamDisabled ? "opacity-30" : "opacity-100"}`}
                         >
