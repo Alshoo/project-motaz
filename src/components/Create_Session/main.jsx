@@ -194,7 +194,6 @@ export default function CreateSessionPage() {
                   {chapters && chapters.length > 0 ? (
                     chapters.map((topic) => (
                       <div key={topic.id} className="flex items-center mb-1">
-                        <p className="text-black opacity-50">Choose a Topic or Topics</p>
                         <input
                           type="checkbox"
                           id={`topic-${topic.id}`}
@@ -213,6 +212,7 @@ export default function CreateSessionPage() {
                   )}
                 </div>
                 <div className="max-h-[225px] overflow-y-auto shadow-sm bg-zinc-100 rounded-md p-4">
+                <p className="text-black opacity-50">Choose a Topic or Topics</p>
                   {exams.length > 0 && (
                     <div className="flex justify-end items-center">
                       <button
