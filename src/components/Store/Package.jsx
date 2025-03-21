@@ -155,7 +155,7 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
               </div>
             )}
           </div>
-          {selectedPlan && (
+          {selectedPlan && Number(selectedPlan.free_trial) !== 0 && (
             <div className="w-full text-center lg:text-start border-[1px] border-gray-300 bg-transparent rounded-lg my-4 p-5">
               <h1 className="text-primary text-xl font-bold">Order Summary</h1>
               <hr />
@@ -180,12 +180,14 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
         </div>
         {selectedPlan && (
           <div>
-            <div className='flex justify-between items-center pt-3 pb-2'>
-              <p className="text-black text-lg">Balance After Payment</p>
-              <p className="text-black text-lg">
-                {(walletBalance - totalPrice).toFixed(2)} YLD
-              </p>
-            </div>
+            {Number(selectedPlan.free_trial) === 0 ? null : (
+              <div className='flex justify-between items-center pt-3 pb-2'>
+                <p className="text-black text-lg">Balance After Payment</p>
+                <p className="text-black text-lg">
+                  {(walletBalance - totalPrice).toFixed(2)} YLD
+                </p>
+              </div>
+            )}
             {insufficientBalance && (
               <p className="text-red-500 text-center mb-2">Your balance is not enough</p>
             )}
