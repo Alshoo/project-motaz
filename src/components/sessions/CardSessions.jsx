@@ -10,8 +10,10 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
   const statusColor = statusText === "completed" ? "bg-primary" : statusText === "ongoing" ? "bg-green" : "bg-blackOpacity";
   useEffect(() => {
     const fetchExams = async () => {
-      if (!chapters || chapters.length === 0) return;
-      const chapterIds = Array.isArray(chapters) ? chapters : [chapters];
+      if (!chapters || (Array.isArray(chapters) && chapters.length === 0)) return;
+      const chapterIds = Array.isArray(chapters)
+        ? chapters.map(ch => typeof ch === "object" && ch.id ? ch.id : ch)
+        : [typeof chapters === "object" && chapters.id ? chapters.id : chapters];
       const examsData = await Promise.all(
         chapterIds.map(async (id) => {
           const response = await Axios.get(`/exams/${id}`);
