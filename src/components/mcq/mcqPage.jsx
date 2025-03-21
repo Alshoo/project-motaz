@@ -164,7 +164,7 @@ function McqPageContent() {
            <strong className="text-gray-400 font-medium">{questDet.current_page } </strong> / <strong className="font-medium"> { questDet.total}</strong>
           </h5>
           <h2 className="mt-2 ml-2 md:ml-4 text-base sm:text-lg md:text-xl font-light">
-            {questDet.questionText} ?
+            {questDet.questionText} 
           </h2>
           {mode === "question" && (
             <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl p-2 bg-white overflow-hidden">

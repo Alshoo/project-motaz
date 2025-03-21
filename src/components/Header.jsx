@@ -62,8 +62,8 @@ function Header() {
         <div className="flex items-center h-[50px] lg:pl-10">
           <Link href="/">
             <img 
-            // src="/MOTAZ MCQs_20250317_220842_٠٠٠٠.svg"
-            src={data?.branding?.logo}
+            src="/MOTAZ MCQs_20250317_220842_٠٠٠٠.svg"
+            // src={data?.branding?.logo}
              alt="Logo" 
             // width={100} height={100}
             className="w-[100px]"
