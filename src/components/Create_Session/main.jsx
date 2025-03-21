@@ -107,6 +107,8 @@ export default function CreateSessionPage() {
     (sub) => sub.subject_id.id === SelectedSubject
   )?.pricing_plan_id;
   const freeTrial = subscriptionPlan ? Number(subscriptionPlan.free_trial) : 1;
+console.log("freeTrial" + freeTrial);
+console.log("subscriptionPlan" + subscriptionPlan);
 
   const handleSelectAllExams = () => {
     const availableExams = exams.filter(
