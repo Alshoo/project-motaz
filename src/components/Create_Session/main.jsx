@@ -234,9 +234,14 @@ export default function CreateSessionPage() {
                         >
                           <label htmlFor={`exam-${exam.id}`} className="text-black opacity-70 text-xs font-bold">
                             {exam.name} ( {remaining} Out Of {exam.questions_count} )
-                            <span className="ml-2 text-[10px] font-medium">
-                              {exam.type === "free" ? "Free" : "Paid"}
-                            </span>
+                            {
+                              freeTrial === 0 && (
+                                <span className="ml-2 text-[10px] font-medium">
+                                {exam.type === "free" ? "Free" : "Paid"}
+                              </span>
+                              )
+                            }
+                           
                           </label>
                           <input
                             type="checkbox"
