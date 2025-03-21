@@ -160,10 +160,10 @@ function McqPageContent() {
               Suspend
             </Link>
           )}
-          <h5 className="text-end text-xl mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
+          <h5 className="text-end text-md mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
            <strong className="text-gray-400 font-medium">{questDet.current_page } </strong> / <strong className="font-medium"> { questDet.total}</strong>
           </h5>
-          <h2 className="mt-2 ml-2 md:ml-4 text-base sm:text-lg md:text-xl font-light">
+          <h2 className="mt-2 ml-2 md:ml-4 text-base text-md font-light">
             {questDet.questionText} 
           </h2>
           {mode === "question" && (
@@ -181,7 +181,7 @@ function McqPageContent() {
                     <span className="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-bold">
                       {letter}
                     </span>
-                    <strong className="font-normal">{ans.answer_text}</strong>
+                    <strong className="font-normal text-sm">{ans.answer_text}</strong>
                   </div>
                 );
               })}
@@ -290,7 +290,7 @@ function McqPageContent() {
             )}
           
             <div 
-            className=" rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md">
+            className="pt-0 pb-0 rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md">
               <button
                 onClick={() => setShowOverallExplanation((prev) => !prev)}
                 className="flex cursor-pointer items-center justify-between gap-2 bg-white p-1 text-gray-900 transition"
