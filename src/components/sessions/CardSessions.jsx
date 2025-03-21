@@ -1,94 +1,102 @@
 "use client";
-import React, { useEffect } from 'react'
-import Link from 'next/link'
-import Image from 'next/image'
+import React, { useEffect, useState } from 'react';
+import Package from './Package';
+import Axios from '@/lib/axiosInstance';
+import Link from 'next/link';
+import Image from 'next/image';
 
-function CardSessions({ 
-  statusText, 
-  buttonText,
-   mode,
-    question_count,
-     created_at,
-      updated_at,
-       chapters,
-        subject,
-         Session_id,examsItems }) {
-  const dateOnly1 = created_at.split("T")[0];
-  const dateOnly2 = updated_at.split("T")[0];
+function CardStore({ title, pricing_plans, subject_ID, questions_count, chapters, Subject_Image, examsItems }) {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isCardDisabled, setIsCardDisabled] = useState(false);
+  const [subData, setSubData] = useState(null);
+  const [fetchedExams, setFetchedExams] = useState([]);
+  const togglePopup = () => setIsPopupOpen(!isPopupOpen);
 
-  const statusColor = statusText === "completed"
+  useEffect(() => {
+    const fetchSubscription = async () => {
+      try {
+        const subjectRes = await Axios.get("subscriptions");
+        const subscription = subjectRes.data.data.find(sub => sub.subject_id.id === subject_ID);
+        if (subscription) {
+          setIsCardDisabled(subscription.pricing_plan_id.free_trial === "1");
+          setSubData(subscription);
+        }
+      } catch (err) {
+        console.warn(err);
+      }
+    };
+    fetchSubscription();
+  }, [subject_ID]);
+
+  useEffect(() => {
+    const fetchExams = async () => {
+      if (chapters && chapters.length > 0 && examsItems && examsItems.length > 0) {
+        try {
+          const examPromises = chapters.map(chapter => Axios.get(`exams/${chapter.id}`));
+          const responses = await Promise.all(examPromises);
+          const allExams = responses.flatMap(res => res.data.data);
+          const filteredExams = allExams.filter(exam => examsItems.includes(exam.id));
+          setFetchedExams(filteredExams);
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+    };
+    fetchExams();
+  }, [chapters, examsItems]);
+
+  const dateOnlyCreated = subData?.created_at?.split("T")[0] || "";
+  const dateOnlyUpdated = subData?.updated_at?.split("T")[0] || "";
+
+  const statusColor = fetchedExams.length > 0
     ? "bg-primary"
-    : statusText === "ongoing"
-      ? "bg-green"
-      : "bg-blackOpacity";
-
-
-console.log(examsItems);
-console.log(examsItems);
-console.log(examsItems);
-
-
+    : "bg-blackOpacity";
 
   return (
-    <div className="w-[100%] grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] gap-4 bg-white rounded shadow-lg border border-gray-300 p-4">
+    <div className={`grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] gap-4 bg-white rounded shadow-lg border border-gray-300 p-4 ${isCardDisabled ? "opacity-50" : ""}`}>
       <div className="flex justify-center items-center">
-        <Image
-          className="object-cover rounded-lg w-32 h-24 md:w-48 md:h-40"
-          src="/sessction.svg"
-          alt="Technology Acquisitions 2021"
-          width={200}
-          height={200}
-          layout="intrinsic"
-        />
+        <img
+          className="object-cover rounded-lg w-40 md:w-48 h-28 md:h-32"
+          src={Subject_Image ? Subject_Image : "https://storage.googleapis.com/t16t_assets/gyn_prod_logo.jpg"}
+          alt={title}
+          width={50} height={50} />
       </div>
-
       <div className="flex flex-col justify-center items-start">
-        <div className="mb-2 flex flex-wrap gap-2 text-xs md:text-sm font-bold text-gray-900 justify-center items-center">
-          <h3 className={`py-1 px-2 rounded text-white ${statusColor} text-xs md:text-sm`}>
-            {statusText}
-          </h3>
-          <h3 className="text-black font-bold text-xs md:text-sm">
-            {`${mode == 1 ? 'study' : 'Exam'} Mode with ${question_count} questions`}
-          </h3>
+        <div className="mb-4 gap-2 grid text-xs md:text-sm font-bold text-gray-900 justify-center items-center">
+          <h2 className="text-primary font-bold text-xl md:text-2xl m-0">{title}</h2>
+          <h3 className="text-black font-bold text-sm md:text-md m-0">Contains {questions_count} Questions</h3>
+          <p className="text-blackOpacity text-sm md:text-base m-0">Choose to buy one of the items and enjoy high-quality content.</p>
+          <p className="mt-2 text-blackOpacity text-sm md:text-base m-0">
+            <strong className="text-primary">Expires At :</strong> {subData?.expires_at || "N/A"}
+          </p>
+          <li className="truncate text-blackOpacity text-sm md:text-base m-0">
+            <strong className="text-primary">Topics :</strong> {fetchedExams.length > 0 ? fetchedExams.map(item => ` ( ${item.name} ) `) : "Loading..."}
+          </li>
+          <button onClick={togglePopup} disabled={isCardDisabled} className={`mt-4 w-full lg:w-[75%] font-light px-3 py-2 border border-transparent bg-primary text-white rounded-lg shadow-md transition duration-300 ${isCardDisabled ? "" : "hover:border-primary hover:text-primary hover:bg-transparent"}`}>
+            {isCardDisabled ? "Subscribed" : "Explore Packages"}
+          </button>
         </div>
-        <ul className="text-gray-700 grid gap-1 text-xs md:text-sm">
-          <li>
-            <span className='text-primary font-bold'>Subject </span>: {subject?.name || "Loading..."}
-          </li>
-          <li className=' truncate '>
-            <span className='text-primary font-bold'>Topics </span>: {examsItems.length > 0 ? examsItems.map((item) => ` ( ${item.name} ) `) : "Loading..."}
-          </li>
-          <li>
-            <span className='text-primary font-bold'>Last access </span>: {dateOnly2}
-          </li>
-        </ul>
       </div>
-
-      <div className="flex flex-col md:items-end items-center justify-between">
-        <p className="text-black opacity-40 text-xs md:text-sm font-semibold">
-          Created at: {dateOnly1}
+      <div className="flex flex-col md:items-end items-center justify-center relative mb-5 md:mb-0">
+        <p className="text-black opacity-40 text-sm md:text-base font-semibold absolute top-0">
+          Start at {pricing_plans[0]?.total_price} LYD
         </p>
-        {statusText === 'ongoing' ? (
-          <Link
-            href={`MCQ?id=${Session_id}`}
-            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent hover:bg-black hover:text-white  rounded flex flex-wrap justify-center items-center transition duration-300 text-xs md:text-sm"
-          >
-            <i className="mr-1 fa-regular fa-rectangle-list"></i>
-            {buttonText}
-          </Link>
-        ) : (
-          <Link
-            // href={`done?sessionID=${Session_id}`}
-            href={`MCQ?id=${Session_id}`}
-            className="mt-2 w-auto px-2 py-1 border border-black text-black bg-transparent hover:bg-black hover:text-white  rounded flex flex-wrap justify-center items-center transition duration-300 text-xs md:text-sm"
-          >
-            <i className="mr-1 fa-regular fa-rectangle-list"></i>
-            {buttonText}
-          </Link> 
-        )}
       </div>
+      {isPopupOpen && (
+        <div className="fixed inset-0 bg-gray-200 bg-opacity-50 flex justify-center items-center z-50 backdrop-blur-lg">
+          <Package
+            closePopup={togglePopup}
+            pricing_plans={pricing_plans}
+            title={title}
+            subject_ID={subject_ID}
+            questions_count={questions_count}
+            chapters={chapters}
+            Subject_Image={Subject_Image}
+          />
+        </div>
+      )}
     </div>
-  )
+  );
 }
 
-export default CardSessions;
+export default CardStore;
