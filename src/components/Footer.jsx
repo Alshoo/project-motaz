@@ -33,15 +33,27 @@ function Footer() {
             </p>
             <ul className="mt-4 flex gap-4">
               <li>
-                <a href="https://www.facebook.com/share/1DdEGDjJcP/" rel="noreferrer" target="_blank" className="text-gray-700 transition hover:opacity-75">
+                <a href={data?.social_media?.facebook} rel="noreferrer" target="_blank" className="text-gray-700 transition hover:opacity-75">
                   <span className="sr-only">Facebook</span>
-                  <Image src="/fac.svg" width={40} height={40} alt="facebook" />
+                  <i className="fa-brands fa-facebook p-3 bg-white rounded-full" ></i>
                 </a>
               </li>
               <li>
-                <a href="https://t.me/mcqsam" rel="noreferrer" target="_blank" className="text-gray-700 transition hover:opacity-75">
+                <a href={data?.social_media?.telegram} rel="noreferrer" target="_blank" className="text-gray-700 transition hover:opacity-75">
                   <span className="sr-only">Telegram</span>
-                  <Image src="/teleg.svg" width={40} height={40} alt="Telegram" />
+                  <i className="fa-brands fa-telegram p-3 bg-white rounded-full" ></i>
+                </a>
+              </li>
+              <li>
+                <a href={data?.social_media?.instagram} rel="noreferrer" target="_blank" className="text-gray-700 transition hover:opacity-75">
+                  <span className="sr-only">instagram</span>
+                  <i className="fa-brands fa-square-instagram p-3 bg-white rounded-full" ></i>
+                </a>
+              </li>
+              <li>
+                <a href={data?.social_media?.twitter} rel="noreferrer" target="_blank" className="text-gray-700 transition hover:opacity-75">
+                  <span className="sr-only">Twitter</span>
+                  <i className="fa-brands fa-twitter p-3 bg-white rounded-full" ></i>
                 </a>
               </li>
             </ul>
@@ -52,7 +64,7 @@ function Footer() {
                 <a href={`mailto:${data?.contact?.email}`} className="text-white">{data?.contact?.email}</a>
               </li>
               <li>
-                <a href="tel:+218915227857" className="text-white">{data?.contact?.phone}</a>
+                <a href={`tel:${data?.contact?.phone}`} className="text-white">{data?.contact?.phone}</a>
               </li>
             </ul>
           </div>
