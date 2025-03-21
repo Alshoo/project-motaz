@@ -4,7 +4,7 @@ import useProfile from '@/hooks/profile';
 import React, { useEffect, useState } from 'react';
 import toast, { Toaster } from "react-hot-toast";
 
-function Package({ closePopup, pricing_plans, title, subject_ID, questions_count, chapters,Subject_Image }) {
+function Package({ closePopup, pricing_plans, title, subject_ID, questions_count, chapters, Subject_Image }) {
   const [coupon, setCoupon] = useState(null);
   const [couponCode, setCouponCode] = useState('');
   const [couponError, setCouponError] = useState('');
@@ -20,7 +20,6 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
         const subscription = res.data.data.find(sub => sub.subject_id.id === subject_id);
         if(subscription){
           setCurrentPlanId(subscription.pricing_plan_id.id);
-          
         }
       } catch (e) {
         console.warn(e);
@@ -28,6 +27,7 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
     };
     fetchSubscriptions();
   }, [subject_id]);
+
   const handleCouponCheck = async () => {
     try {
       const res = await Axios.get(`subscriptions/expired-coupon/${couponCode}`);
@@ -89,16 +89,17 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
             <p className='text-black'><span className='font-bold text-black'>{questions_count} </span>Questions</p>
           </div>
           <div>
-          <i onClick={closePopup} 
-          className="   fa-solid fa-x      cursor-pointer border border-gray-500 font-bold rounded-full px-[7px] py-[5px] hover:bg-gray-200"
-          ></i>
+            <i onClick={closePopup} 
+              className="fa-solid fa-x cursor-pointer border border-gray-500 font-bold rounded-full px-[7px] py-[5px] hover:bg-gray-200"
+            ></i>
           </div>
         </div>
         <div className='flex justify-center items-center p-6'>
           <img 
-          className="w-[400px] h-[150px] rounded-lg" 
-          src={Subject_Image? Subject_Image : "https://storage.googleapis.com/t16t_assets/gyn_prod_logo.jpg"}
-           alt="Gynaecology" />
+            className="w-[400px] h-[150px] rounded-lg" 
+            src={Subject_Image ? Subject_Image : "https://storage.googleapis.com/t16t_assets/gyn_prod_logo.jpg"}
+            alt="Gynaecology" 
+          />
         </div>
         <div className='gap-5 grid'>
           <h2 className='text-primary font text-2xl'>Please Choose The Package</h2>
@@ -106,21 +107,17 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
             {pricing_plans.length > 0 &&
               pricing_plans.map((item, index) => {
                 const isCurrentPlan = item.id === currentPlanId;
+                const planText = item.free_trial === 0 ? "Free Trial" : `[${item.discount}% Limited Offer Discount]`;
                 return (
                   <div 
-                  key={index}
-                   className={`
-                   flex items-center px-4 py-2 rounded-lg 
-                    ${isCurrentPlan 
-                    ?
-                    "opacity-20 border border-gray-400" 
-                    :
-                     "bg-gray bg-opacity-55 border border-gray-400"}
-                     `}
-                     
-                     >
+                    key={index}
+                    className={`
+                      flex items-center px-4 py-2 rounded-lg 
+                      ${isCurrentPlan ? "opacity-20 border border-gray-400" : "bg-gray bg-opacity-55 border border-gray-400"}
+                    `}
+                  >
                     <label htmlFor={`bordered-radio-${index}`} className="w-full py-4 ms-2 text-sm font-medium text-black">
-                      {item.name} [{item.discount}% Limited Offer Discount]
+                      {item.name} {planText}
                     </label>
                     <input
                       id={`bordered-radio-${index}`}
@@ -195,7 +192,7 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
         )}
         <div className='flex justify-center items-center'>
           <button onClick={handlePayment} type="button" disabled={insufficientBalance} 
-          className="mt-4 text-white bg-primary font-bold rounded-lg text-lg px-[4rem] py-1 mb-2 transition duration-300 hover:bg-transparent border hover:border-[1px] hover:border-primary hover:text-black disabled:opacity-50">
+            className="mt-4 text-white bg-primary font-bold rounded-lg text-lg px-[4rem] py-1 mb-2 transition duration-300 hover:bg-transparent border hover:border-[1px] hover:border-primary hover:text-black disabled:opacity-50">
             Pay
           </button>
         </div>
