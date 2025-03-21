@@ -1,5 +1,5 @@
 "use client";
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -21,6 +21,13 @@ function CardSessions({
     : statusText === "ongoing"
       ? "bg-green"
       : "bg-blackOpacity";
+
+
+console.log(examsItems);
+console.log(examsItems);
+console.log(examsItems);
+
+
 
   return (
     <div className="w-[100%] grid grid-cols-1 md:grid-cols-[1fr_2fr_1fr] gap-4 bg-white rounded shadow-lg border border-gray-300 p-4">
