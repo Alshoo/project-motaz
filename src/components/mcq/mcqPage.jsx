@@ -178,7 +178,7 @@ function McqPageContent() {
                       selectedAnswer === ans.id ? "bg-blue-100" : "hover:bg-gray-100"
                     }`}
                   >
-                    <span className="w-10 h-10 flex items-center justify-center bg-primary text-white rounded-full font-bold">
+                    <span className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full font-bold">
                       {letter}
                     </span>
                     <strong className="font-normal text-sm">{ans.answer_text}</strong>
