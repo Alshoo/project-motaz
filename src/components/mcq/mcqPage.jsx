@@ -151,15 +151,15 @@ function McqPageContent() {
         </div>
       ) : (
         <>
-          {mode === "question" || mode === "review" && (
+          
             <Link
-              href="/sessction"
+              href="/sessction" 
               className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2"
             >
               <img src="paaause 1.png" alt="ERR404" width={17} height={17} />
               Suspend
             </Link>
-          )}
+          
           <h5 className="text-end text-md mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
            <strong className="text-gray-400 font-medium">{questDet.current_page } </strong> / <strong className="font-medium"> { questDet.total}</strong>
           </h5>
