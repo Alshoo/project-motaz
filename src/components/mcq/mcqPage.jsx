@@ -221,7 +221,7 @@ function McqPageContent() {
                         className="ml-auto focus:outline-none"
                       >
                         <svg
-                          className={`w-4 h-4 transition-transform opacity-60 ${
+                          className={`w-3 h-3 transition-transform opacity-60 ${
                             detailsVisible[ans.id] ? "rotate-180" : ""
                           }`}
                           xmlns="http://www.w3.org/2000/svg"
