@@ -151,7 +151,7 @@ function McqPageContent() {
         </div>
       ) : (
         <>
-          {mode === "question" && mode === "review" && (
+          {mode === "question" || mode === "review" && (
             <Link
               href="/sessction"
               className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2"
