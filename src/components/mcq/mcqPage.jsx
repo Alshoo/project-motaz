@@ -289,35 +289,45 @@ function McqPageContent() {
               </button>
             )}
           
-            <div 
-            className="pt-0 pb-0 rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md">
-              <button
-                onClick={() => setShowOverallExplanation((prev) => !prev)}
-                className="flex cursor-pointer items-center justify-between gap-2 bg-white p-1 text-gray-900 transition"
+
+          {mode === "review" && (
+        <div 
+        className="pt-0 pb-0 rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md">
+          <button
+            onClick={() => setShowOverallExplanation((prev) => !prev)}
+            className="flex cursor-pointer items-center justify-between gap-2 bg-white p-1 text-gray-900 transition"
+          >
+            <p className="flex items-center text-xs md:text-lg text-stone-500 w-fit py-1 md:py-3 rounded-full">
+              {showOverallExplanation
+                ? "Hide Overall Explanation"
+                : "Show Overall Explanation"}
+              <svg
+                className={`w-2.5 h-2.5 ml-1 md:ml-3 transition-transform ${
+                  showOverallExplanation ? "rotate-180" : ""
+                }`}
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
               >
-                <p className="flex items-center text-xs md:text-lg text-stone-500 w-fit py-1 md:py-3 rounded-full">
-                  {showOverallExplanation
-                    ? "Hide Overall Explanation"
-                    : "Show Overall Explanation"}
-                  <svg
-                    className={`w-2.5 h-2.5 ml-1 md:ml-3 transition-transform ${
-                      showOverallExplanation ? "rotate-180" : ""
-                    }`}
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 10 6"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 1 4 4 4-4"
-                    />
-                  </svg>
-                </p>
-              </button>
-            </div>
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </p>
+          </button>
+        </div>
+          )}
+
+
+
+          
+
+
+
             <button
               onClick={
                 mode === "question" ? handleNextInQuestionMode : handleNextQuestion
