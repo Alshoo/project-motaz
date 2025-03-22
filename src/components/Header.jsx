@@ -113,14 +113,14 @@ function Header() {
               />
             Store
           </Link>
-          <Link href="/wallet" 
+          <a href="/wallet" 
           className="flex items-center px-3 py-2  rounded-[30px] transition-colors duration-500 hover:bg-black hover:text-white group">
             <img 
                 src="/Walfdfdlet (1).svg" 
                 className="w-5 h-5 mr-2  invert-0 brightness-0 transition-all duration-500 group-hover:invert group-hover:brightness-0"
               />
             Wallet 
-          </Link>
+          </a>
         </div>
         <div className="hidden md:flex items-center z-50">
           {userData ? (
@@ -220,14 +220,14 @@ function Header() {
               </Link>
             </li>
             <li>
-              <Link href="/wallet"
+              <a href="/wallet"
                className="flex gap-2 items-center px-3 py-2  rounded-[30px] transition-colors duration-500 hover:bg-black hover:text-white group">
               <img 
                 src="/Walfdfdlet (1).svg" 
                 className="w-5 h-5 mr-2  invert-0 brightness-0 transition-all duration-500 group-hover:invert group-hover:brightness-0"
               />
                 Wallet
-              </Link>
+              </a>
             </li>
             {userData ? (
               <li className="mt-2 flex flex-col items-start">
