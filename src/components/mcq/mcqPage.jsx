@@ -151,9 +151,9 @@ function McqPageContent() {
         </div>
       ) : (
         <>
-          {mode === "question" && (
+          {mode === "question" && mode === "review" && (
             <Link
-              href="/"
+              href="/sessction"
               className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2"
             >
               <img src="paaause 1.png" alt="ERR404" width={17} height={17} />
@@ -221,7 +221,7 @@ function McqPageContent() {
                         className="ml-auto focus:outline-none"
                       >
                         <svg
-                          className={`w-3 h-3 transition-transform opacity-60 ${
+                          className={`w-3 h-3 transition-transform opacity-70 ${
                             detailsVisible[ans.id] ? "rotate-180" : ""
                           }`}
                           xmlns="http://www.w3.org/2000/svg"
