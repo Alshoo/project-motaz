@@ -42,7 +42,7 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
                 ))
               : "Loading..."}
             {chapters.length > 2 && (
-              <button onClick={() => setShowMore(!showMore)} className="text-blue-500 text-xs ml-1">
+              <button onClick={() => setShowMore(!showMore)} className="text-primary text-xs ml-1">
                 {showMore ? "Show less..." : "Show more..."}
               </button>
             )}
