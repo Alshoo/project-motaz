@@ -56,7 +56,7 @@ function Popup({ closePopup, subjectName, topics, questionCount, data ,exams}) {
             <span>{subjectName}</span>
           </div>
           <div>
-            <strong className="text-primary font-bold">Years:</strong>
+            <strong className="text-primary font-bold">Topics:</strong>
             <ul className="list-disc pl-5 mt-1 space-y-1">
               {topics.map((t, i) => (
                 <li key={i}>{t.name}</li>
@@ -64,7 +64,7 @@ function Popup({ closePopup, subjectName, topics, questionCount, data ,exams}) {
             </ul>
           </div>
           <div>
-            <strong className="text-primary font-bold">Topics:</strong>
+            <strong className="text-primary font-bold">Years:</strong>
             <ul className="list-disc pl-5 mt-1 space-y-1">
               {exams.map((t, i) => (
                 <li key={i}>{t.name}</li>

@@ -181,7 +181,7 @@ export default function CreateSessionPage() {
                 </select>
                 <div className="mb-4 border border-black p-2 rounded-md">
                   <div className="flex justify-between items-center mb-2">
-                    <p className="text-black opacity-50">Choose a Year or Years</p>
+                    <p className="text-black opacity-50">Choose a Topic or Topics</p>
                     {chapters && chapters.length > 0 && (
                       <button
                         onClick={handleSelectAllTopics}
@@ -214,7 +214,7 @@ export default function CreateSessionPage() {
                 <div className="max-h-[225px] overflow-y-auto shadow-sm bg-zinc-100 rounded-md p-4">
                   {exams.length > 0 && (
                     <div className="flex justify-between items-center">
-                       <p className="text-black opacity-50">Choose a Topic or Topics</p>
+                       <p className="text-black opacity-50">Choose a Year or Years</p>
                       <button
                         type="button"
                         onClick={handleSelectAllExams}
@@ -259,7 +259,7 @@ export default function CreateSessionPage() {
                   ) : (
                     <div className="flex flex-col gap-2 sm:gap-5 items-center justify-center">
                       <Image src="/saddd 1 (1).svg" alt="ERR404" width={100} height={100} />
-                      <p className="text-[12px] sm:text-[16px]">Couldn’t Find any Topics</p>
+                      <p className="text-[12px] sm:text-[16px]">Couldn’t Find any Years</p>
                       <p className="text-[12px] sm:text-[16px]">Please Change Your filters and try again</p>
                     </div>
                   )}
