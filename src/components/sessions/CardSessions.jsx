@@ -9,7 +9,6 @@ function CardSessions({ statusText, buttonText, mode, question_count, created_at
   const dateOnly2 = updated_at.split("T")[0];
   const statusColor = statusText === "completed" ? "bg-primary" : statusText === "ongoing" ? "bg-green" : "bg-blackOpacity";
 
-  // عرض أول 2 موضوع فقط إذا لم يكن showMore مفعل
   const displayedChapters = showMore ? chapters : chapters.slice(0, 2);
 
   return (
