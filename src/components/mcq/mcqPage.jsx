@@ -270,7 +270,7 @@ function McqPageContent() {
             {questDet.current_page > 1 ? (
               <button
                 onClick={() => fetchQuest(questDet.current_page - 1)}
-                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-xl flex justify-center items-center text-xs md:text-base"
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
               >
                 {/* <span>
                   <Image src="left 9.svg" alt="back" width={13} height={13} />
@@ -280,7 +280,7 @@ function McqPageContent() {
             ) : (
               <button
                 disabled
-                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-xl flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
               >
                 {/* <span>
                   <Image src="left 9.svg" alt="back" width={13} height={13} />
@@ -336,7 +336,7 @@ function McqPageContent() {
                 mode === "question" ? handleNextInQuestionMode : handleNextQuestion
               }
               disabled={mode === "question" && selectedAnswer === null}
-              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-xl flex justify-center items-center text-xs md:text-base"
+              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
             >
               {mode === "question"
                 ? "Next"
@@ -351,7 +351,7 @@ function McqPageContent() {
         </>
       )}
       {showOverallExplanation && (
-        <div className="mt-2 border border-gray-200 bg-white p-4 rounded-lg shadow-inner text-sm md:text-base prose">
+        <div className="mt-2 border border-gray-200 bg-white p-4 rounded-full shadow-inner text-sm md:text-base prose">
           <div dangerouslySetInnerHTML={{ __html: questDet.questionDescription }} />
           {questDet.img && (
             <img

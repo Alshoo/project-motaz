@@ -28,7 +28,6 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
        <link rel="icon" 
-      //  href={seoData?.branding?.favicon || "favicon.svg"}
        href="favicon.svg"
         />
       <body>
