@@ -351,7 +351,7 @@ function McqPageContent() {
         </>
       )}
       {showOverallExplanation && (
-        <div className="mt-2 border border-gray-200 bg-white p-4 rounded-full shadow-inner text-sm md:text-base prose">
+        <div className="mt-2 border border-gray-200 bg-white p-4 rounded-xl shadow-inner text-sm md:text-base prose">
           <div dangerouslySetInnerHTML={{ __html: questDet.questionDescription }} />
           {questDet.img && (
             <img
