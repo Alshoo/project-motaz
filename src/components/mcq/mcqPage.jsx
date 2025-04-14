@@ -5,14 +5,14 @@ import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import './mcq.css'
-
+import "./mcq.css";
 
 function McqPageContent() {
   const searchParams = useSearchParams();
   const sessionID = searchParams.get("id");
   const [mode, setMode] = useState("question");
   const [loading, setLoading] = useState(false);
+  const [finished, setFinished] = useState(false);
   const [questDet, setQuestDet] = useState({
     id: null,
     total: null,
@@ -118,17 +118,10 @@ function McqPageContent() {
   };
   const handleNextQuestion = async () => {
     if (questDet.current_page >= questDet.total) {
-      setQuestDet({
-        id: null,
-        total: 0,
-        current_page: 0,
-        questionText: "Exam Finished",
-        questionDescription: "",
-        img: "",
-        questionSummary: "",
-        answers: [],
-      });
-      window.location.replace(`/done?sessionID=${sessionID}`);
+      setFinished(true);
+      setTimeout(() => {
+        window.location.replace(`/done?sessionID=${sessionID}`);
+      }, 2000);
     } else {
       await fetchQuest(questDet.current_page + 1);
     }
@@ -139,6 +132,15 @@ function McqPageContent() {
   if (!sessionID) {
     return <div>Error: Session ID not provided.</div>;
   }
+  if (finished) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-white">
+        <div className="spinner-container">
+          <div className="spinner"></div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="container w-full m-auto px-4 md:px-4 relative">
       {loading ? (
@@ -147,24 +149,27 @@ function McqPageContent() {
         </div>
       ) : questDet.total === 0 ? (
         <div>
-          <h1 className="my-10 text-primary font-bold">{questDet.questionText}</h1>
+          <h1 className="my-10 text-primary font-bold">
+            {questDet.questionText}
+          </h1>
         </div>
       ) : (
         <>
-          
-            <Link
-              href="/sessction" 
-              className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2"
-            >
-              <img src="paaause 1.png" alt="ERR404" width={17} height={17} />
-              Suspend
-            </Link>
-          
+          <Link
+            href="/sessction"
+            className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2"
+          >
+            <img src="paaause 1.png" alt="ERR404" width={17} height={17} />
+            Suspend
+          </Link>
           <h5 className="text-end text-md mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
-           <strong className="text-gray-400 font-medium">{questDet.current_page } </strong> / <strong className="font-medium"> { questDet.total}</strong>
+            <strong className="text-gray-400 font-medium">
+              {questDet.current_page}{" "}
+            </strong>{" "}
+            / <strong className="font-medium"> {questDet.total}</strong>
           </h5>
           <h2 className="mt-2 ml-2 md:ml-4 text-base text-md font-light">
-            {questDet.questionText} 
+            {questDet.questionText}
           </h2>
           {mode === "question" && (
             <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl p-2 bg-white overflow-hidden">
@@ -175,13 +180,17 @@ function McqPageContent() {
                     key={i}
                     onClick={() => setSelectedAnswer(ans.id)}
                     className={`flex items-center gap-2 py-2 md:py-3 cursor-pointer p-1 md:p-2 rounded-md ${
-                      selectedAnswer === ans.id ? "bg-blue-100" : "hover:bg-gray-100"
+                      selectedAnswer === ans.id
+                        ? "bg-blue-100"
+                        : "hover:bg-gray-100"
                     }`}
                   >
                     <span className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full font-bold">
                       {letter}
                     </span>
-                    <strong className="font-normal text-sm">{ans.answer_text}</strong>
+                    <strong className="font-normal text-sm">
+                      {ans.answer_text}
+                    </strong>
                   </div>
                 );
               })}
@@ -190,15 +199,23 @@ function McqPageContent() {
           {mode === "review" && (
             <div className="mt-5 md:mt-14  text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white overflow-hidden">
               {questDet.answers.map((ans, i) => {
-                const answerColor = ans.is_correct ? "bg-greenOpacity border-green border-l-4" : "bg-red-100 border-red-600 border-l-4";
-                const answerColorbox = ans.is_correct ? "bg-greenOpacity" : "bg-red-200 ";
-                const answerbgColorbox = ans.is_correct ? "bg-greenWhite" : "bg-red-50 ";
+                const answerColor = ans.is_correct
+                  ? "bg-greenOpacity border-green border-l-4"
+                  : "bg-red-100 border-red-600 border-l-4";
+                const answerColorbox = ans.is_correct
+                  ? "bg-greenOpacity"
+                  : "bg-red-200 ";
+                const answerbgColorbox = ans.is_correct
+                  ? "bg-greenWhite"
+                  : "bg-red-50 ";
                 const letter = String.fromCharCode(65 + i);
                 return (
                   <div
                     key={i}
                     className={`relative   ${
-                      selectedAnswer === ans.id ? answerColor : "border-[#00000000] border-l-4"
+                      selectedAnswer === ans.id
+                        ? answerColor
+                        : "border-[#00000000] border-l-4"
                     }`}
                   >
                     <div className="flex items-center p-2 md:p-4">
@@ -214,7 +231,9 @@ function McqPageContent() {
                         {letter}
                       </span>
                       <label className="cursor-not-allowed ml-2">
-                        <strong className="font-normal text-sm">{ans.answer_text}</strong>
+                        <strong className="font-normal text-sm">
+                          {ans.answer_text}
+                        </strong>
                       </label>
                       <button
                         onClick={() => toggleDetails(ans.id)}
@@ -239,15 +258,20 @@ function McqPageContent() {
                       </button>
                     </div>
                     {detailsVisible[ans.id] && (
-                      <div 
-                      className={`mt-2 p-4  shadow-inner text-left text-sm md:text-base prose 
+                      <div
+                        className={`mt-2 p-4  shadow-inner text-left text-sm md:text-base prose 
                        ${
-                        selectedAnswer === ans.id ? answerbgColorbox : "bg-gray-100"
-                      }   
-                       `} >
+                         selectedAnswer === ans.id
+                           ? answerbgColorbox
+                           : "bg-gray-100"
+                       }   
+                       `}
+                      >
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: ans.description || "<ul><li>No details for this answer</li></ul>",
+                            __html:
+                              ans.description ||
+                              "<ul><li>No details for this answer</li></ul>",
                           }}
                           className={`text-`}
                         />
@@ -272,9 +296,6 @@ function McqPageContent() {
                 onClick={() => fetchQuest(questDet.current_page - 1)}
                 className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
               >
-                {/* <span>
-                  <Image src="left 9.svg" alt="back" width={13} height={13} />
-                </span> */}
                 Back
               </button>
             ) : (
@@ -282,58 +303,49 @@ function McqPageContent() {
                 disabled
                 className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
               >
-                {/* <span>
-                  <Image src="left 9.svg" alt="back" width={13} height={13} />
-                </span> */}
                 Back
               </button>
             )}
-          
-
-         
-        <div 
-        className="pt-0 pb-0 rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md overflow-hidden">
-          <button
-            onClick={() => setShowOverallExplanation((prev) => !prev)}
-            disabled = {mode === "question"}
-            className={`flex items-center justify-between gap-2 bg-white p-1 text-gray-900 transition ${
-              mode === "question" ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
-            }`}
-          >
-            <p className="flex items-center text-xs md:text-lg text-stone-500 w-fit py-1 md:py-3 rounded-full">
-              {showOverallExplanation
-                ? "Hide Overall Explanation"
-                : "Show Overall Explanation"}
-              <svg
-                className={`w-2.5 h-2.5 ml-1 md:ml-3 transition-transform ${
-                  showOverallExplanation ? "rotate-180" : ""
+            <div className="pt-0 pb-0 rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md overflow-hidden">
+              <button
+                onClick={() =>
+                  setShowOverallExplanation((prev) => !prev)
+                }
+                disabled={mode === "question"}
+                className={`flex items-center justify-between gap-2 bg-white p-1 text-gray-900 transition ${
+                  mode === "question"
+                    ? "opacity-50 cursor-not-allowed"
+                    : "cursor-pointer"
                 }`}
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 10 6"
               >
-                <path
-                  stroke="currentColor"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="m1 1 4 4 4-4"
-                />
-              </svg>
-            </p>
-          </button>
-        </div>
-         
-
-
-
-          
-
-
-
+                <p className="flex items-center text-xs md:text-lg text-stone-500 w-fit py-1 md:py-3 rounded-full">
+                  {showOverallExplanation
+                    ? "Hide Overall Explanation"
+                    : "Show Overall Explanation"}
+                  <svg
+                    className={`w-2.5 h-2.5 ml-1 md:ml-3 transition-transform ${
+                      showOverallExplanation ? "rotate-180" : ""
+                    }`}
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 10 6"
+                  >
+                    <path
+                      stroke="currentColor"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="m1 1 4 4 4-4"
+                    />
+                  </svg>
+                </p>
+              </button>
+            </div>
             <button
               onClick={
-                mode === "question" ? handleNextInQuestionMode : handleNextQuestion
+                mode === "question"
+                  ? handleNextInQuestionMode
+                  : handleNextQuestion
               }
               disabled={mode === "question" && selectedAnswer === null}
               className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
@@ -343,16 +355,17 @@ function McqPageContent() {
                 : questDet.current_page >= questDet.total
                 ? "Finish"
                 : "Next"}
-              {/* <span>
-                <Image src="left 10.svg" alt="next" width={13} height={13} />
-              </span> */}
             </button>
           </div>
         </>
       )}
       {showOverallExplanation && (
         <div className="mt-2 border border-gray-200 bg-white p-4 rounded-xl shadow-inner text-sm md:text-base prose">
-          <div dangerouslySetInnerHTML={{ __html: questDet.questionDescription }} />
+          <div
+            dangerouslySetInnerHTML={{
+              __html: questDet.questionDescription,
+            }}
+          />
           {questDet.img && (
             <img
               src={questDet.img}
@@ -366,10 +379,10 @@ function McqPageContent() {
       {popupImg && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="relative bg-white p-2 rounded shadow-2xl">
-            <i 
-            onClick={() => setPopupImg(null)}
-          className="   fa-solid fa-x     absolute top-0 right-0 mx-3 my-2 cursor-pointer border border-gray-500 font-bold rounded-full px-[8px] py-[6px] hover:bg-gray-200"
-          ></i>
+            <i
+              onClick={() => setPopupImg(null)}
+              className="fa-solid fa-x absolute top-0 right-0 mx-3 my-2 cursor-pointer border border-gray-500 font-bold rounded-full px-[8px] py-[6px] hover:bg-gray-200"
+            ></i>
             <img
               src={popupImg}
               alt="Popup"
