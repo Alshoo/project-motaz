@@ -188,7 +188,7 @@ function McqPageContent() {
             </div>
           )}
           {mode === "review" && (
-            <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white overflow-hidden">
+            <div className="mt-5 md:mt-14  text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white overflow-hidden">
               {questDet.answers.map((ans, i) => {
                 const answerColor = ans.is_correct ? "bg-greenOpacity border-green border-l-4" : "bg-red-100 border-red-600 border-l-4";
                 const answerColorbox = ans.is_correct ? "bg-greenOpacity" : "bg-red-200 ";
@@ -197,8 +197,8 @@ function McqPageContent() {
                 return (
                   <div
                     key={i}
-                    className={`relative  ${
-                      selectedAnswer === ans.id ? answerColor : ""
+                    className={`relative   ${
+                      selectedAnswer === ans.id ? answerColor : "border-[#00000000] border-l-4"
                     }`}
                   >
                     <div className="flex items-center p-2 md:p-4">
