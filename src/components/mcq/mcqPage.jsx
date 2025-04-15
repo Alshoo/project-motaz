@@ -119,9 +119,9 @@ function McqPageContent() {
   const handleNextQuestion = async () => {
     if (questDet.current_page >= questDet.total) {
       setFinished(true);
-      setTimeout(() => {
+      // setTimeout(() => {
         window.location.replace(`/done?sessionID=${sessionID}`);
-      }, 2000);
+      // }, 2000);
     } else {
       await fetchQuest(questDet.current_page + 1);
     }
