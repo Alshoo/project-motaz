@@ -405,19 +405,20 @@ function ResultPage({ sessionID }) {
   }, [sessionID]);
   return (
     <div>
-      <h1 className="my-10 text-stone-600 border-stone-600 border-b-2 w-[50%] m-auto flex justify-center pb-5 text-3xl">
-        Well done! You’ve finished the exam.
-      </h1>
-      <div className="container text-center m-auto mb-24">
-        <h2 className="border shadow-md text-black py-3 know my-11 w-80 rounded-3xl m-auto">
-          <strong>Total</strong> : <span className="text-slate-600">{resultDetails.correct}/</span>
-          <span className="text-blue-500">{resultDetails.total}</span>
-        </h2>
-        <Link href="/sessction" className="bg-primary text-white px-5 py-1 rounded-md">
-          Done
-        </Link>
-      </div>
+    <h1 className='my-10 text-stone-600 border-stone-600 border-b-2 w-[50%] m-auto flex justify-center pb-5 text-3xl'>
+      Well done! You’ve finished the exam.
+    </h1>
+    <div className="container text-center m-auto mb-24">
+      <h2 className='border shadow-md text-black py-3 know my-11 w-80 rounded-3xl m-auto'>
+        <strong>Total</strong> : 
+        <span className='text-slate-600'>{resultDetails.correct}/</span>
+        <span className='text-blue-500'>{resultDetails.total}</span>
+      </h2>
+      <Link href='/sessction' className='bg-primary text-white px-5 py-1 rounded-md'>
+        Done
+      </Link>
     </div>
+  </div>
   );
 }
 
