@@ -118,7 +118,7 @@ function McqPageContent() {
   };
   const handleNextQuestion = async () => {
     if (questDet.current_page >= questDet.total) {
-      setFinished(true);
+      // setFinished(true);
       // setTimeout(() => {
         window.location.replace(`/done?sessionID=${sessionID}`);
       // }, 2000);
