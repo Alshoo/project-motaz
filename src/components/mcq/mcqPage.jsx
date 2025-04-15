@@ -218,7 +218,13 @@ function McqPageContent() {
                         : ""
                     }`}
                   >
-                    <div className="flex items-center p-2 md:p-4  border-[#00000000] border-l-4">
+                    <div 
+                        className={`flex items-center p-2 md:p-4  ${
+                          selectedAnswer === ans.id
+                            ? ""
+                            : " border-[#00000000] border-l-4  "
+                        }`}
+                    >
                       <span
                         className={`w-8 h-8 p-[15px] flex items-center justify-center rounded-full font-bold ${
                           selectedAnswer === ans.id
