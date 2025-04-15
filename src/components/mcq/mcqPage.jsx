@@ -21,7 +21,7 @@ function McqPageContent() {
     questionDescription: "",
     img: "",
     questionSummary: "",
-    answers: [],
+    answers: []
   });
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showOverallExplanation, setShowOverallExplanation] = useState(false);
@@ -47,7 +47,7 @@ function McqPageContent() {
             questionDescription: "",
             img: "",
             questionSummary: "",
-            answers: [],
+            answers: []
           });
           return;
         }
@@ -61,7 +61,7 @@ function McqPageContent() {
           questionDescription: questionData.description,
           img: questionData.img,
           questionSummary: questionData.summary,
-          answers: questionData.answers,
+          answers: questionData.answers
         });
         setDetailsVisible({});
         setShowOverallExplanation(false);
@@ -96,7 +96,7 @@ function McqPageContent() {
       toast.success(res.data.message, {
         duration: 4000,
         position: "top-center",
-        style: { fontSize: "15px" },
+        style: { fontSize: "15px" }
       });
     } catch (e) {
       console.error(e);
@@ -119,9 +119,6 @@ function McqPageContent() {
   const handleNextQuestion = async () => {
     if (questDet.current_page >= questDet.total) {
       setFinished(true);
-      setTimeout(() => {
-        window.location.replace(`/done?sessionID=${sessionID}`);
-      }, 2000);
     } else {
       await fetchQuest(questDet.current_page + 1);
     }
@@ -133,13 +130,7 @@ function McqPageContent() {
     return <div>Error: Session ID not provided.</div>;
   }
   if (finished) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-white">
-        <div className="spinner-container">
-          <div className="spinner"></div>
-        </div>
-      </div>
-    );
+    return <ResultPage sessionID={sessionID} />;
   }
   return (
     <div className="container w-full m-auto px-4 md:px-4 relative">
@@ -197,7 +188,7 @@ function McqPageContent() {
             </div>
           )}
           {mode === "review" && (
-            <div className="mt-5 md:mt-14  text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white overflow-hidden">
+            <div className="mt-5 md:mt-14 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white overflow-hidden">
               {questDet.answers.map((ans, i) => {
                 const answerColor = ans.is_correct
                   ? "bg-greenOpacity border-green border-l-4"
@@ -212,18 +203,16 @@ function McqPageContent() {
                 return (
                   <div
                     key={i}
-                    className={`relative   ${
-                      selectedAnswer === ans.id
-                        ? answerColor
-                        : ""
+                    className={`relative ${
+                      selectedAnswer === ans.id ? answerColor : ""
                     }`}
                   >
-                    <div 
-                        className={`flex items-center p-2 md:p-4  ${
-                          selectedAnswer === ans.id
-                            ? ""
-                            : " border-[#00000000] border-l-4  "
-                        }`}
+                    <div
+                      className={`flex items-center p-2 md:p-4 ${
+                        selectedAnswer === ans.id
+                          ? ""
+                          : " border-[#00000000] border-l-4 "
+                      }`}
                     >
                       <span
                         className={`w-8 h-8 p-[15px] flex items-center justify-center rounded-full font-bold ${
@@ -265,21 +254,19 @@ function McqPageContent() {
                     </div>
                     {detailsVisible[ans.id] && (
                       <div
-                        className={`mt-2 p-4  shadow-inner text-left text-sm md:text-base prose 
-                       ${
-                         selectedAnswer === ans.id
-                           ? answerbgColorbox
-                           : "bg-gray-100"
-                       }   
-                       `}
+                        className={`mt-2 p-4 shadow-inner text-left text-sm md:text-base prose ${
+                          selectedAnswer === ans.id
+                            ? answerbgColorbox
+                            : "bg-gray-100"
+                        }`}
                       >
                         <div
                           dangerouslySetInnerHTML={{
                             __html:
                               ans.description ||
-                              "<ul><li>No details for this answer</li></ul>",
+                              "<ul><li>No details for this answer</li></ul>"
                           }}
-                          className={`text-`}
+                          className=""
                         />
                         {ans.img && (
                           <img
@@ -369,7 +356,7 @@ function McqPageContent() {
         <div className="mt-2 border border-gray-200 bg-white p-4 rounded-xl shadow-inner text-sm md:text-base prose">
           <div
             dangerouslySetInnerHTML={{
-              __html: questDet.questionDescription,
+              __html: questDet.questionDescription
             }}
           />
           {questDet.img && (
@@ -397,6 +384,39 @@ function McqPageContent() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+
+function ResultPage({ sessionID }) {
+  const [resultDetails, setResultDetails] = useState({ total: null, correct: null });
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await Axios.get(`exam-Histories/result/${sessionID}`);
+        setResultDetails({
+          total: res.data.data.total,
+          correct: res.data.data.correct
+        });
+      } catch (e) {
+        console.error("Error fetching result:", e);
+      }
+    })();
+  }, [sessionID]);
+  return (
+    <div>
+      <h1 className="my-10 text-stone-600 border-stone-600 border-b-2 w-[50%] m-auto flex justify-center pb-5 text-3xl">
+        Well done! You’ve finished the exam.
+      </h1>
+      <div className="container text-center m-auto mb-24">
+        <h2 className="border shadow-md text-black py-3 know my-11 w-80 rounded-3xl m-auto">
+          <strong>Total</strong> : <span className="text-slate-600">{resultDetails.correct}/</span>
+          <span className="text-blue-500">{resultDetails.total}</span>
+        </h2>
+        <Link href="/sessction" className="bg-primary text-white px-5 py-1 rounded-md">
+          Done
+        </Link>
+      </div>
     </div>
   );
 }
