@@ -43,6 +43,8 @@ function McqPageContent() {
     })();
   }, [sessionID]);
 
+console.log(questDet);
+console.log(questDet);
 
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
@@ -380,7 +382,7 @@ function McqPageContent() {
               className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
             >
               {questDet.current_page >= questDet.total
-                ?"Finish "
+                ?"Finishhh "
                 :"Next"}
             </button>
             ) : (
