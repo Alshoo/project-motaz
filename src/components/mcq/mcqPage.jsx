@@ -23,7 +23,7 @@ function McqPageContent() {
     questionSummary: "",
     answers: []
   });
-  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showOverallExplanation, setShowOverallExplanation] = useState(false);
   const [detailsVisible, setDetailsVisible] = useState({});
   const [popupImg, setPopupImg] = useState<string | null>(null);
