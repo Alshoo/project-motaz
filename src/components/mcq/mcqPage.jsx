@@ -283,6 +283,9 @@ function McqPageContent() {
               })}
             </div>
           )}
+
+
+
           <div className="my-8 flex md:flex-row justify-evenly items-center gap-2 md:gap-4">
             {questDet.current_page > 1 ? (
               <button
@@ -299,6 +302,8 @@ function McqPageContent() {
                 Back
               </button>
             )}
+
+
             <div className="pt-0 pb-0 rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md overflow-hidden">
               <button
                 onClick={() =>
@@ -334,13 +339,15 @@ function McqPageContent() {
                 </p>
               </button>
             </div>
+
+
             <button
               onClick={
                 mode === "question"
                   ? handleNextInQuestionMode
                   : handleNextQuestion
               }
-              disabled={mode === "question" && selectedAnswer === null}
+              // disabled={mode === "question" && selectedAnswer === null}
               className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
             >
               {mode === "question"
