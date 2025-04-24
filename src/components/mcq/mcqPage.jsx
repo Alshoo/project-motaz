@@ -344,12 +344,20 @@ function McqPageContent() {
             <button
               onClick={
               ()=>{
-                mode === "question"
-                  ? handleNextInQuestionMode
-                  : handleNextQuestion
-                  mode === "review"
-                  ? fetchQuest(questDet.current_page + 1)
-                  : handleNextQuestion
+                if (mode === "question") {
+                  handleNextInQuestionMode();
+                }else if(mode = "review" ){
+                  fetchQuest(questDet.current_page + 1)
+                }else{
+                  handleNextQuestion();
+              }
+
+                // mode === "question"
+                //   ? handleNextInQuestionMode
+                //   : handleNextQuestion
+                //   mode === "review"
+                //   ? fetchQuest(questDet.current_page + 1)
+                //   : handleNextQuestion
               }
               }
               // disabled={mode === "question" && selectedAnswer === null}
