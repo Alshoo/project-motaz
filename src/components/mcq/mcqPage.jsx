@@ -27,6 +27,23 @@ function McqPageContent() {
   const [showOverallExplanation, setShowOverallExplanation] = useState(false);
   const [detailsVisible, setDetailsVisible] = useState({});
   const [popupImg, setPopupImg] = useState(null);
+
+  const [resultDetails, setResultDetails] = useState({ total: null, answer: null });
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await Axios.get(`exam-Histories/result/${sessionID}`);
+        setResultDetails({
+          total: res.data.data.total,
+          answer: res.data.data.answer
+        });
+      } catch (e) {
+        console.error("Error fetching result:", e);
+      }
+    })();
+  }, [sessionID]);
+
+
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
     [sessionID]
@@ -357,7 +374,7 @@ function McqPageContent() {
 
               }
               }
-              // disabled={mode === "question" && selectedAnswer === null}
+              disabled={resultDetails.total < resultDetails.answer}
               className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
             >
               {questDet.current_page >= questDet.total
