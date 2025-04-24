@@ -43,8 +43,8 @@ function McqPageContent() {
     })();
   }, [sessionID]);
 
-console.log(questDet);
-console.log(questDet);
+console.log(resultDetails);
+console.log(resultDetails);
 
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
