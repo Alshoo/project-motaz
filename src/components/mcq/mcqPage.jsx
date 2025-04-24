@@ -358,7 +358,7 @@ function McqPageContent() {
 
 
       {
-            resultDetails.total > resultDetails.answer ? (
+            resultDetails.total > resultDetails.answer && questDet.current_page >= questDet.total? (
               <button
               onClick={
               ()=>{
