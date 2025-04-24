@@ -28,20 +28,7 @@ function McqPageContent() {
   const [detailsVisible, setDetailsVisible] = useState({});
   const [popupImg, setPopupImg] = useState(null);
 
-  const [resultDetails, setResultDetails] = useState({ total: null, answer: null });
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await Axios.get(`exam-Histories/result/${sessionID}`);
-        setResultDetails({
-          total: res.data.data.total,
-          answer: res.data.data.answer
-        });
-      } catch (e) {
-        console.error("Error fetching result:", e);
-      }
-    })();
-  }, [sessionID]);
+
 
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
@@ -127,6 +114,22 @@ function McqPageContent() {
       })();
     }
   }, [selectedAnswer, mode]);
+
+  const [resultDetails, setResultDetails] = useState({ total: null, answer: null });
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await Axios.get(`exam-Histories/result/${sessionID}`);
+        setResultDetails({
+          total: res.data.data.total,
+          answer: res.data.data.answer
+        });
+      } catch (e) {
+        console.error("Error fetching result:", e);
+      }
+    })();
+  }, [sessionID,handleSubmition]);
+
   const handleNextInQuestionMode = async () => {
     if (!selectedAnswer) return;
     await handleSubmition();
@@ -364,17 +367,13 @@ function McqPageContent() {
                 <button
                 onClick={() => {
                   if (questDet.current_page < questDet.total) {
-                    if (mode === "question") {
-                      fetchQuest(questDet.current_page + 1);
-                    } else if (mode === "review") {
+                  if (mode === "review") {
                       handleNextQuestion();
                     }
-                  } else {
-                    handleNextQuestion();
                   }
                 }}
                 
-                disabled = {resultDetails.total != resultDetails.answer? true : resultDetails.total == resultDetails.answer ? false : false}
+                disabled = {resultDetails.total != resultDetails.answer? true : false}
                 className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
               >
                 Finish
