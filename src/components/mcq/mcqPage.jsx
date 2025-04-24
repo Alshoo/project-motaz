@@ -343,9 +343,14 @@ function McqPageContent() {
 
             <button
               onClick={
+              ()=>{
                 mode === "question"
                   ? handleNextInQuestionMode
                   : handleNextQuestion
+                  mode === "review"
+                  ? fetchQuest(questDet.current_page + 1)
+                  : handleNextQuestion
+              }
               }
               // disabled={mode === "question" && selectedAnswer === null}
               className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
