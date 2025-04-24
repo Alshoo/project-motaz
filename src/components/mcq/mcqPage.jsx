@@ -43,9 +43,6 @@ function McqPageContent() {
     })();
   }, [sessionID]);
 
-console.log(resultDetails);
-console.log(resultDetails);
-
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
     [sessionID]
@@ -361,7 +358,7 @@ console.log(resultDetails);
 
 
       {
-            resultDetails.total < resultDetails.answer ? (
+            resultDetails.total > resultDetails.answer ? (
               <button
               onClick={
               ()=>{
@@ -379,7 +376,7 @@ console.log(resultDetails);
               }
               }
               disabled
-              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
+              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
             >
               {questDet.current_page >= questDet.total
                 ?"Finishhh "
