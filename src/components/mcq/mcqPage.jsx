@@ -128,7 +128,7 @@ function McqPageContent() {
         console.error("Error fetching result:", e);
       }
     })();
-  }, [sessionID,handleSubmition]);
+  }, [sessionID,handleSubmition()]);
 
   const handleNextInQuestionMode = async () => {
     if (!selectedAnswer) return;
