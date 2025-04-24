@@ -148,21 +148,6 @@ function McqPageContent() {
   if (finished) {
     return <ResultPage sessionID={sessionID} />;
   }
-
-
-  const isLastPage = questDet.current_page >= questDet.total;
-const disabled = isLastPage && resultDetails.total !== resultDetails.answer;
-const handleClick = () => {
-  if (questDet.current_page < questDet.total) {
-    if (mode === "question") {
-      fetchQuest(questDet.current_page + 1);
-    } else {
-      handleNextQuestion();
-    }
-  } else {
-    handleNextQuestion();
-  }
-};
   return (
     <div className="container w-full m-auto px-4 md:px-4 relative">
       {loading ? (
@@ -373,13 +358,49 @@ const handleClick = () => {
 
 
             
-              <button
-              onClick={handleClick}
-              disabled={disabled}
-              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
-            >
-              {isLastPage ? 'Finish' : 'Next'}
-            </button>
+         {
+              questDet.current_page >= questDet.total ?
+              (
+                <button
+                onClick={() => {
+                  if (questDet.current_page < questDet.total) {
+                    if (mode === "question") {
+                      fetchQuest(questDet.current_page + 1);
+                    } else if (mode === "review") {
+                      handleNextQuestion();
+                    }
+                  } else {
+                    handleNextQuestion();
+                  }
+                }}
+                
+                disabled = {resultDetails.total != resultDetails.answer? true : resultDetails.total == resultDetails.answer ? false : false}
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
+              >
+                Finish
+              </button>
+              )
+              :
+              (
+                <button
+                onClick={() => {
+                  if (questDet.current_page < questDet.total) {
+                    if (mode === "question") {
+                      fetchQuest(questDet.current_page + 1);
+                    } else if (mode === "review") {
+                      handleNextQuestion();
+                    }
+                  } else {
+                    handleNextQuestion();
+                  }
+                }}
+                
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
+              >
+               Next
+              </button>
+              )
+         }
             
 
           </div>
