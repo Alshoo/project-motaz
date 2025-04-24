@@ -344,12 +344,13 @@ function McqPageContent() {
             <button
               onClick={
               ()=>{
-                if (mode === "question") {
-                  // handleNextInQuestionMode();
-                  fetchQuest(questDet.current_page + 1);
-                }else if(mode = "review" ){
-                  // fetchQuest(questDet.current_page + 1);
-                  handleNextQuestion();
+                if(questDet.current_page < questDet.total){
+                  if (mode === "question") {
+                    // handleNextInQuestionMode();
+                    fetchQuest(questDet.current_page + 1);
+                  }else if(mode = "review" ){
+                    handleNextQuestion();
+                  }
                 }else{
                   handleNextQuestion();
               }
