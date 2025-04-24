@@ -28,7 +28,22 @@ function McqPageContent() {
   const [detailsVisible, setDetailsVisible] = useState({});
   const [popupImg, setPopupImg] = useState(null);
 
-
+  const [resultDetails, setResultDetails] = useState({ total: null, answer: null });
+  const fetchResultDetails = async () => {
+    try {
+      const res = await Axios.get(`exam-Histories/result/${sessionID}`);
+      setResultDetails({
+        total: res.data.data.total,
+        answer: res.data.data.answer
+      });
+    } catch (e) {
+      console.error("Error fetching result:", e);
+    }
+  };
+  
+  useEffect(() => {
+    fetchResultDetails();
+  }, [sessionID]);
 
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
@@ -105,6 +120,7 @@ function McqPageContent() {
       console.error(e);
       toast.error("Error submitting answer");
     }
+    fetchResultDetails()
   };
   useEffect(() => {
     if (mode === "question" && selectedAnswer !== null) {
@@ -115,21 +131,9 @@ function McqPageContent() {
     }
   }, [selectedAnswer, mode]);
 
-  const [resultDetails, setResultDetails] = useState({ total: null, answer: null });
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await Axios.get(`exam-Histories/result/${sessionID}`);
-        setResultDetails({
-          total: res.data.data.total,
-          answer: res.data.data.answer
-        });
-      } catch (e) {
-        console.error("Error fetching result:", e);
-      }
-    })();
-  }, [sessionID,handleSubmition()]);
 
+    
+  
   const handleNextInQuestionMode = async () => {
     if (!selectedAnswer) return;
     await handleSubmition();
