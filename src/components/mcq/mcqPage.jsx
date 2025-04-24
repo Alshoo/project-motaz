@@ -358,7 +358,7 @@ function McqPageContent() {
 
 
             {
-  resultDetails.total != resultDetails.correct && questDet.current_page >= questDet.total ? (
+  resultDetails.total != resultDetails.correct ? (
     <button
       onClick={() => {
         if (questDet.current_page < questDet.total) {
