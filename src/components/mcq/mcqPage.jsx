@@ -26,7 +26,7 @@ function McqPageContent() {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [showOverallExplanation, setShowOverallExplanation] = useState(false);
   const [detailsVisible, setDetailsVisible] = useState({});
-  const [popupImg, setPopupImg] = useState<string | null>(null);
+  const [popupImg, setPopupImg] = useState(null);
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
     [sessionID]
@@ -98,14 +98,23 @@ function McqPageContent() {
         position: "top-center",
         style: { fontSize: "15px" }
       });
-      setMode("review");
     } catch (e) {
       console.error(e);
       toast.error("Error submitting answer");
     }
   };
+  useEffect(() => {
+    if (mode === "question" && selectedAnswer !== null) {
+      (async () => {
+        await handleSubmition();
+        setMode("review");
+      })();
+    }
+  }, [selectedAnswer, mode]);
   const handleNextInQuestionMode = async () => {
+    if (!selectedAnswer) return;
     await handleSubmition();
+    setMode("review");
   };
   const handleNextQuestion = async () => {
     if (questDet.current_page >= questDet.total) {
@@ -275,16 +284,26 @@ function McqPageContent() {
             </div>
           )}
           <div className="my-8 flex md:flex-row justify-evenly items-center gap-2 md:gap-4">
-            <button
-              onClick={() => fetchQuest(questDet.current_page - 1)}
-              disabled={questDet.current_page === 1}
-              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
-            >
-              Back
-            </button>
+            {questDet.current_page > 1 ? (
+              <button
+                onClick={() => fetchQuest(questDet.current_page - 1)}
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
+              >
+                Back
+              </button>
+            ) : (
+              <button
+                disabled
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
+              >
+                Back
+              </button>
+            )}
             <div className="pt-0 pb-0 rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md overflow-hidden">
               <button
-                onClick={() => setShowOverallExplanation((prev) => !prev)}
+                onClick={() =>
+                  setShowOverallExplanation((prev) => !prev)
+                }
                 disabled={mode === "question"}
                 className={`flex items-center justify-between gap-2 bg-white p-1 text-gray-900 transition ${
                   mode === "question"
@@ -386,20 +405,20 @@ function ResultPage({ sessionID }) {
   }, [sessionID]);
   return (
     <div>
-      <h1 className='my-10 text-stone-600 border-stone-600 border-b-2 w-[50%] m-auto flex justify-center pb-5 text-3xl'>
-        Well done! You’ve finished the exam.
-      </h1>
-      <div className="container text-center m-auto mb-24">
-        <h2 className='border shadow-md text-black py-3 know my-11 w-80 rounded-3xl m-auto'>
-          <strong>Total</strong> : 
-          <span className='text-slate-600'>{resultDetails.correct}/</span>
-          <span className='text-blue-500'>{resultDetails.total}</span>
-        </h2>
-        <Link href='/sessction' className='bg-primary text-white px-5 py-1 rounded-md'>
-          Done
-        </Link>
-      </div>
+    <h1 className='my-10 text-stone-600 border-stone-600 border-b-2 w-[50%] m-auto flex justify-center pb-5 text-3xl'>
+      Well done! You’ve finished the exam.
+    </h1>
+    <div className="container text-center m-auto mb-24">
+      <h2 className='border shadow-md text-black py-3 know my-11 w-80 rounded-3xl m-auto'>
+        <strong>Total</strong> : 
+        <span className='text-slate-600'>{resultDetails.correct}/</span>
+        <span className='text-blue-500'>{resultDetails.total}</span>
+      </h2>
+      <Link href='/sessction' className='bg-primary text-white px-5 py-1 rounded-md'>
+        Done
+      </Link>
     </div>
+  </div>
   );
 }
 
