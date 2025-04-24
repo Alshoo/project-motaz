@@ -358,43 +358,44 @@ function McqPageContent() {
 
 
             {
-  resultDetails.total != resultDetails.correct ? (
-    <button
-      onClick={() => {
-        if (questDet.current_page < questDet.total) {
-          if (mode === "question") {
-            fetchQuest(questDet.current_page + 1);
-          } else if (mode === "review") {
-            handleNextQuestion();
+              resultDetails.total != resultDetails.correct && questDet.current_page == questDet.total ? (
+              <button
+                onClick={() => {
+                  if (questDet.current_page < questDet.total) {
+                    if (mode === "question") {
+                      fetchQuest(questDet.current_page + 1);
+                    } else if (mode === "review") {
+                      handleNextQuestion();
+                    }
+                  } else {
+                    handleNextQuestion();
+                  }
+                }}
+                
+                disabled
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
+              >
+                {questDet.current_page >= questDet.total ? "Finish" : "Next"}
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  if (questDet.current_page < questDet.total) {
+                    if (mode === "question") {
+                      fetchQuest(questDet.current_page + 1);
+                    } else if (mode === "review") {
+                      handleNextQuestion();
+                    }
+                  } else {
+                    handleNextQuestion();
+                  }
+                }}
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
+              >
+                {questDet.current_page >= questDet.total ? "Finish" : "Next"}
+              </button>
+            )
           }
-        } else {
-          handleNextQuestion();
-        }
-      }}
-      disabled
-      className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
-    >
-      {questDet.current_page >= questDet.total ? "Finish" : "Next"}
-    </button>
-  ) : (
-    <button
-      onClick={() => {
-        if (questDet.current_page < questDet.total) {
-          if (mode === "question") {
-            fetchQuest(questDet.current_page + 1);
-          } else if (mode === "review") {
-            handleNextQuestion();
-          }
-        } else {
-          handleNextQuestion();
-        }
-      }}
-      className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
-    >
-      {questDet.current_page >= questDet.total ? "Finish" : "Next"}
-    </button>
-  )
-}
 
           </div>
         </>
