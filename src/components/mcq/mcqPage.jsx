@@ -379,7 +379,7 @@ function McqPageContent() {
               className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
             >
               {questDet.current_page >= questDet.total
-                ?"Finishhh "
+                ?"Finish "
                 :"Next"}
             </button>
             ) : (
