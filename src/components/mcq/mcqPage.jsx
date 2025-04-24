@@ -358,7 +358,10 @@ function McqPageContent() {
 
 
             
-              <button
+         {
+              questDet.current_page >= questDet.total ?
+              (
+                <button
                 onClick={() => {
                   if (questDet.current_page < questDet.total) {
                     if (mode === "question") {
@@ -374,8 +377,30 @@ function McqPageContent() {
                 disabled = {resultDetails.total != resultDetails.answer? true : false}
                 className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
               >
-                {questDet.current_page >= questDet.total ? "Finish" : "Next"}
+                Finish
               </button>
+              )
+              :
+              (
+                <button
+                onClick={() => {
+                  if (questDet.current_page < questDet.total) {
+                    if (mode === "question") {
+                      fetchQuest(questDet.current_page + 1);
+                    } else if (mode === "review") {
+                      handleNextQuestion();
+                    }
+                  } else {
+                    handleNextQuestion();
+                  }
+                }}
+                
+                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
+              >
+               Next
+              </button>
+              )
+         }
             
 
           </div>
