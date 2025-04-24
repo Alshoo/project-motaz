@@ -23,10 +23,10 @@ function McqPageContent() {
     questionSummary: "",
     answers: []
   });
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showOverallExplanation, setShowOverallExplanation] = useState(false);
   const [detailsVisible, setDetailsVisible] = useState({});
-  const [popupImg, setPopupImg] = useState(null);
+  const [popupImg, setPopupImg] = useState<string | null>(null);
   const constructUrl = useCallback(
     (page = 1) => `exam-Histories/${sessionID}?page=${page}`,
     [sessionID]
@@ -98,22 +98,14 @@ function McqPageContent() {
         position: "top-center",
         style: { fontSize: "15px" }
       });
+      setMode("review");
     } catch (e) {
       console.error(e);
       toast.error("Error submitting answer");
     }
   };
-  useEffect(() => {
-    if (mode === "question" && selectedAnswer !== null) {
-      (async () => {
-        await handleSubmition();
-        setMode("review");
-      })();
-    }
-  }, [selectedAnswer, mode]);
   const handleNextInQuestionMode = async () => {
     await handleSubmition();
-    setMode("review");
   };
   const handleNextQuestion = async () => {
     if (questDet.current_page >= questDet.total) {
@@ -285,15 +277,14 @@ function McqPageContent() {
           <div className="my-8 flex md:flex-row justify-evenly items-center gap-2 md:gap-4">
             <button
               onClick={() => fetchQuest(questDet.current_page - 1)}
+              disabled={questDet.current_page === 1}
               className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
             >
               Back
             </button>
             <div className="pt-0 pb-0 rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md overflow-hidden">
               <button
-                onClick={() =>
-                  setShowOverallExplanation((prev) => !prev)
-                }
+                onClick={() => setShowOverallExplanation((prev) => !prev)}
                 disabled={mode === "question"}
                 className={`flex items-center justify-between gap-2 bg-white p-1 text-gray-900 transition ${
                   mode === "question"
@@ -330,7 +321,7 @@ function McqPageContent() {
                   ? handleNextInQuestionMode
                   : handleNextQuestion
               }
-              disabled={questDet.current_page >= questDet.total && selectedAnswer === null}
+              disabled={mode === "question" && selectedAnswer === null}
               className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
             >
               {mode === "question"
