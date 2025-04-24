@@ -42,7 +42,7 @@ function McqPageContent() {
             id: null,
             total: 0,
             current_page: 0,
-            questionText: "No questions available, right now.",
+            questionText: "No questions available right now.",
             questionDescription: "",
             img: "",
             questionSummary: "",
@@ -50,19 +50,18 @@ function McqPageContent() {
           });
           return;
         }
-        const questionData = questions[0].question;
-        const existingAnswer = questions[0].answer;
+        const q = questions[0].question;
         setQuestDet({
           id: questions[0].id,
           total: res.data.data.meta.total,
           current_page: res.data.data.meta.current_page,
-          questionText: questionData.question_text,
-          questionDescription: questionData.description,
-          img: questionData.img,
-          questionSummary: questionData.summary,
-          answers: questionData.answers
+          questionText: q.question_text,
+          questionDescription: q.description,
+          img: q.img,
+          questionSummary: q.summary,
+          answers: q.answers
         });
-        setSelectedAnswer(existingAnswer ? existingAnswer.id : null);
+        setSelectedAnswer(questions[0].answer?.id || null);
         setDetailsVisible({});
       } catch (err) {
         console.error(err);
@@ -76,207 +75,90 @@ function McqPageContent() {
 
   useEffect(() => {
     if (sessionID) {
-      const pageParam = searchParams.get("page") || "1";
-      fetchQuest(Number(pageParam));
+      const page = Number(searchParams.get("page") || "1");
+      fetchQuest(page);
     }
   }, [sessionID, fetchQuest, searchParams]);
 
-  const handleSubmition = async () => {
+  const handleSubmit = async () => {
+    if (selectedAnswer == null) return;
     try {
       const res = await Axios.put(
         `exam-Histories/examHistorie/${questDet.id}`,
         { exam_answer_id: selectedAnswer }
       );
-      toast.success(res.data.message, {
-        duration: 4000,
-        position: "top-center",
-        style: { fontSize: "15px" }
-      });
-    } catch (e) {
-      console.error(e);
+      toast.success(res.data.message, { duration: 3000, position: "top-center", style: { fontSize: "15px" } });
+    } catch {
       toast.error("Error submitting answer");
     }
   };
 
   const handleNext = async () => {
-    if (!selectedAnswer) return;
-    await handleSubmition();
+    await handleSubmit();
     if (questDet.current_page >= questDet.total) {
       setFinished(true);
     } else {
-      await fetchQuest(questDet.current_page + 1);
+      fetchQuest(questDet.current_page + 1);
     }
   };
 
-  const toggleDetails = (id) => {
-    setDetailsVisible((prev) => ({ ...prev, [id]: !prev[id] }));
+  const handleBack = () => {
+    if (questDet.current_page > 1) {
+      fetchQuest(questDet.current_page - 1);
+    }
   };
 
-  if (!sessionID) {
-    return <div>Error: Session ID not provided.</div>;
-  }
-  if (finished) {
-    return <ResultPage sessionID={sessionID} />;
-  }
+  const toggleDetails = (id) => setDetailsVisible(prev => ({ ...prev, [id]: !prev[id] }));
+
+  if (!sessionID) return <div>Error: Session ID not provided.</div>;
+  if (finished) return <ResultPage sessionID={sessionID} />;
+
   return (
     <div className="container w-full m-auto px-4 md:px-4 relative">
       {loading ? (
-        <div className="spinner-container">
-          <div className="spinner"></div>
-        </div>
+        <div className="spinner-container"><div className="spinner"></div></div>
       ) : questDet.total === 0 ? (
-        <div>
-          <h1 className="my-10 text-primary font-bold">
-            {questDet.questionText}
-          </h1>
-        </div>
+        <div><h1 className="my-10 text-primary font-bold">{questDet.questionText}</h1></div>
       ) : (
         <>
-          <Link
-            href="/sessction"
-            className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2"
-          >
-            <img src="paaause 1.png" alt="ERR404" width={17} height={17} />
-            Suspend
+          <Link href="/sessction" className="w-[125px] bg-red-700 text-white px-4 py-2 rounded-lg mt-8 flex items-center gap-2">
+            <img src="paaause 1.png" alt="pause" width={17} height={17} /> Suspend
           </Link>
-          <h5 className="text-end text-md mb-4 md:mb-14 mt-3 md:mt-5 me-2 md:me-5">
-            <strong className="text-gray-400 font-medium">
-              {questDet.current_page}{" "}
-            </strong>{" "}
-            / <strong className="font-medium"> {questDet.total}</strong>
+          <h5 className="text-end text-md mb-4 md:mb-14 mt-3 md:mt-5 me-2">
+            <strong className="text-gray-400">{questDet.current_page}</strong> / <strong>{questDet.total}</strong>
           </h5>
-          <h2 className="mt-2 ml-2 md:ml-4 text-base text-md font-light">
-            {questDet.questionText}
-          </h2>
-          <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl p-2 bg-white overflow-hidden">
+          <h2 className="mt-2 ml-2 md:ml-4 text-base font-light">{questDet.questionText}</h2>
+          <div className="mt-5 md:mt-14 space-y-2 md:space-y-4 text-base shadow-lg rounded-2xl p-2 bg-white overflow-hidden">
             {questDet.answers.map((ans, i) => {
               const letter = String.fromCharCode(65 + i);
               return (
-                <div
-                  key={i}
-                  onClick={() => setSelectedAnswer(ans.id)}
-                  className={`flex items-center gap-2 py-2 md:py-3 cursor-pointer p-1 md:p-2 rounded-md ${
-                    selectedAnswer === ans.id
-                      ? "bg-blue-100"
-                      : "hover:bg-gray-100"
-                  }`}
-                >
-                  <span className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full font-bold">
-                    {letter}
-                  </span>
-                  <strong className="font-normal text-sm">
-                    {ans.answer_text}
-                  </strong>
+                <div key={i} onClick={() => setSelectedAnswer(ans.id)} className={`flex items-center gap-2 p-2 rounded-md cursor-pointer ${selectedAnswer === ans.id ? "bg-blue-100" : "hover:bg-gray-100"}`}>
+                  <span className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full font-bold">{letter}</span>
+                  <strong>{ans.answer_text}</strong>
+                  <button onClick={e => { e.stopPropagation(); toggleDetails(ans.id); }} className="ml-auto focus:outline-none">
+                    <svg className={`w-3 h-3 transition-transform ${detailsVisible[ans.id] ? "rotate-180" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                  </button>
                 </div>
               );
             })}
           </div>
-          <div className="mt-5 md:mt-14 text-xs sm:text-sm md:text-base shadow-lg rounded-2xl bg-white overflow-hidden">
-            {questDet.answers.map((ans, i) => {
-              const answerColor = ans.is_correct
-                ? "bg-greenOpacity border-green border-l-4"
-                : "bg-red-100 border-red-600 border-l-4";
-              const answerColorbox = ans.is_correct
-                ? "bg-greenOpacity"
-                : "bg-red-200 ";
-              const answerbgColorbox = ans.is_correct
-                ? "bg-greenWhite"
-                : "bg-red-50 ";
-              const letter = String.fromCharCode(65 + i);
-              return (
-                <div
-                  key={i}
-                  className={`relative ${
-                    selectedAnswer === ans.id ? answerColor : ""
-                  }`}
-                >
-                  <div
-                    className={`flex items-center p-2 md:p-4 ${
-                      selectedAnswer === ans.id
-                        ? ""
-                        : " border-[#00000000] border-l-4 "
-                    }`}
-                  >
-                    <span
-                      className={`w-8 h-8 p-[15px] flex items-center justify-center rounded-full font-bold ${
-                        selectedAnswer === ans.id
-                          ? ans.is_correct
-                            ? "bg-green text-black"
-                            : "bg-red-200 text-black"
-                          : answerColorbox
-                      }`}
-                    >
-                      {letter}
-                    </span>
-                    <label className="cursor-not-allowed ml-2">
-                      <strong className="font-normal text-sm">
-                        {ans.answer_text}
-                      </strong>
-                    </label>
-                    <button
-                      onClick={() => toggleDetails(ans.id)}
-                      className="ml-auto focus:outline-none"
-                    >
-                      <svg
-                        className={`w-3 h-3 transition-transform opacity-70 ${
-                          detailsVisible[ans.id] ? "rotate-180" : ""
-                        }`}
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 10 6"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="m1 1 4 4 4-4"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  {detailsVisible[ans.id] && (
-                    <div
-                      className={`mt-2 p-4 shadow-inner text-left text-sm md:text-base prose ${
-                        selectedAnswer === ans.id
-                          ? answerbgColorbox
-                          : "bg-gray-100"
-                      }`}
-                    >
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            ans.description ||
-                            "<ul><li>No details for this answer</li></ul>"
-                        }}
-                      />
-                      {ans.img && (
-                        <img
-                          src={ans.img}
-                          alt="ERR404"
-                          className="w-[15%] rounded-lg mt-2 cursor-pointer"
-                          onClick={() => setPopupImg(ans.img)}
-                        />
-                      )}
-                    </div>
-                  )}
+          <div className="mt-5 md:mt-14 prose">
+            {questDet.answers.map(ans =>
+              selectedAnswer === ans.id && detailsVisible[ans.id] && (
+                <div key={ans.id} className="mt-2 p-4 shadow-inner bg-gray-100 rounded">
+                  <div dangerouslySetInnerHTML={{ __html: ans.description || "<ul><li>No details</li></ul>" }}/>
+                  {ans.img && <img src={ans.img} alt="" className="w-[15%] rounded mt-2 cursor-pointer" onClick={() => setPopupImg(ans.img)}/>}
                 </div>
-              );
-            })}
+              )
+            )}
           </div>
-          <div className="my-8 flex md:flex-row justify-evenly items-center gap-2 md:gap-4">
-            <button
-              onClick={() => fetchQuest(questDet.current_page - 1)}
-              disabled={questDet.current_page <= 1}
-              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed text-xs md:text-base"
-            >
+          <div className="my-8 flex justify-between items-center gap-4">
+            <button onClick={handleBack} disabled={questDet.current_page <= 1} className="h-10 bg-primary text-white px-6 rounded-full disabled:opacity-50 disabled:cursor-not-allowed">
               Back
             </button>
-            <button
-              onClick={handleNext}
-              disabled={!selectedAnswer}
-              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 disabled:cursor-not-allowed text-xs md:text-base"
-            >
+            <button onClick={handleNext} className="h-10 bg-primary text-white px-6 rounded-full">
               {questDet.current_page >= questDet.total ? "Finish" : "Next"}
             </button>
           </div>
@@ -285,15 +167,8 @@ function McqPageContent() {
       {popupImg && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="relative bg-white p-2 rounded shadow-2xl">
-            <i
-              onClick={() => setPopupImg(null)}
-              className="fa-solid fa-x absolute top-0 right-0 mx-3 my-2 cursor-pointer border border-gray-500 font-bold rounded-full px-[8px] py-[6px] hover:bg-gray-200"
-            ></i>
-            <img
-              src={popupImg}
-              alt="Popup"
-              className="w-[60vw] max-h-[80vh] object-contain"
-            />
+            <i onClick={() => setPopupImg(null)} className="fa-solid fa-x absolute top-0 right-0 m-2 cursor-pointer"></i>
+            <img src={popupImg} alt="" className="w-[60vw] max-h-[80vh] object-contain"/>
           </div>
         </div>
       )}
@@ -307,38 +182,23 @@ function ResultPage({ sessionID }) {
     (async () => {
       try {
         const res = await Axios.get(`exam-Histories/result/${sessionID}`);
-        setResultDetails({
-          total: res.data.data.total,
-          correct: res.data.data.correct
-        });
-      } catch (e) {
-        console.error("Error fetching result:", e);
-      }
+        setResultDetails({ total: res.data.data.total, correct: res.data.data.correct });
+      } catch {}
     })();
   }, [sessionID]);
   return (
     <div>
-      <h1 className='my-10 text-stone-600 border-stone-600 border-b-2 w-[50%] m-auto flex justify-center pb-5 text-3xl'>
-        Well done! You’ve finished the exam.
-      </h1>
+      <h1 className="my-10 text-stone-600 border-b-2 w-1/2 m-auto text-3xl flex justify-center pb-5">Well done! You’ve finished the exam.</h1>
       <div className="container text-center m-auto mb-24">
-        <h2 className='border shadow-md text-black py-3 know my-11 w-80 rounded-3xl m-auto'>
-          <strong>Total</strong> : 
-          <span className='text-slate-600'>{resultDetails.correct}/</span>
-          <span className='text-blue-500'>{resultDetails.total}</span>
+        <h2 className="border shadow-md py-3 my-11 w-80 rounded-3xl m-auto">
+          <strong>Total</strong> : <span className="text-slate-600">{resultDetails.correct}/</span><span className="text-blue-500">{resultDetails.total}</span>
         </h2>
-        <Link href='/sessction' className='bg-primary text-white px-5 py-1 rounded-md'>
-          Done
-        </Link>
+        <Link href="/sessction" className="bg-primary text-white px-5 py-1 rounded-md">Done</Link>
       </div>
     </div>
   );
 }
 
 export default function McqPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <McqPageContent />
-    </Suspense>
-  );
+  return <Suspense fallback={<div>Loading...</div>}><McqPageContent/></Suspense>;
 }
