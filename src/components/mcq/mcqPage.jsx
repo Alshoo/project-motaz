@@ -112,7 +112,7 @@ function McqPageContent() {
     }
   }, [selectedAnswer, mode]);
   const handleNextInQuestionMode = async () => {
-    if (!selectedAnswer) return;
+    // if (!selectedAnswer) return;
     await handleSubmition();
     setMode("review");
   };
@@ -347,7 +347,7 @@ function McqPageContent() {
                 if (mode === "question") {
                   handleNextInQuestionMode();
                 }else if(mode = "review" ){
-                  fetchQuest(questDet.current_page + 1)
+                  fetchQuest(questDet.current_page + 1);
                 }else{
                   handleNextQuestion();
               }
