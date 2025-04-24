@@ -112,7 +112,6 @@ function McqPageContent() {
     }
   }, [selectedAnswer, mode]);
   const handleNextInQuestionMode = async () => {
-    if (!selectedAnswer) return;
     await handleSubmition();
     setMode("review");
   };
@@ -284,21 +283,12 @@ function McqPageContent() {
             </div>
           )}
           <div className="my-8 flex md:flex-row justify-evenly items-center gap-2 md:gap-4">
-            {questDet.current_page > 1 ? (
-              <button
-                onClick={() => fetchQuest(questDet.current_page - 1)}
-                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
-              >
-                Back
-              </button>
-            ) : (
-              <button
-                disabled
-                className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center disabled:opacity-50 text-xs md:text-base"
-              >
-                Back
-              </button>
-            )}
+            <button
+              onClick={() => fetchQuest(questDet.current_page - 1)}
+              className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
+            >
+              Back
+            </button>
             <div className="pt-0 pb-0 rounded-full md:text-lg px-2 md:px-10 py-3 text-center relative border shadow-md overflow-hidden">
               <button
                 onClick={() =>
@@ -340,7 +330,7 @@ function McqPageContent() {
                   ? handleNextInQuestionMode
                   : handleNextQuestion
               }
-              disabled={mode === "question" && selectedAnswer === null}
+              disabled={questDet.current_page >= questDet.total && selectedAnswer === null}
               className="h-8 md:h-[50px] bg-primary text-white px-2 md:px-7 py-0 md:py-4 rounded-full flex justify-center items-center text-xs md:text-base"
             >
               {mode === "question"
@@ -405,20 +395,20 @@ function ResultPage({ sessionID }) {
   }, [sessionID]);
   return (
     <div>
-    <h1 className='my-10 text-stone-600 border-stone-600 border-b-2 w-[50%] m-auto flex justify-center pb-5 text-3xl'>
-      Well done! You’ve finished the exam.
-    </h1>
-    <div className="container text-center m-auto mb-24">
-      <h2 className='border shadow-md text-black py-3 know my-11 w-80 rounded-3xl m-auto'>
-        <strong>Total</strong> : 
-        <span className='text-slate-600'>{resultDetails.correct}/</span>
-        <span className='text-blue-500'>{resultDetails.total}</span>
-      </h2>
-      <Link href='/sessction' className='bg-primary text-white px-5 py-1 rounded-md'>
-        Done
-      </Link>
+      <h1 className='my-10 text-stone-600 border-stone-600 border-b-2 w-[50%] m-auto flex justify-center pb-5 text-3xl'>
+        Well done! You’ve finished the exam.
+      </h1>
+      <div className="container text-center m-auto mb-24">
+        <h2 className='border shadow-md text-black py-3 know my-11 w-80 rounded-3xl m-auto'>
+          <strong>Total</strong> : 
+          <span className='text-slate-600'>{resultDetails.correct}/</span>
+          <span className='text-blue-500'>{resultDetails.total}</span>
+        </h2>
+        <Link href='/sessction' className='bg-primary text-white px-5 py-1 rounded-md'>
+          Done
+        </Link>
+      </div>
     </div>
-  </div>
   );
 }
 
