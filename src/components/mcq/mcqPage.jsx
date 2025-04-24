@@ -371,9 +371,13 @@ function McqPageContent() {
                 <button
                 onClick={() => {
                   if (questDet.current_page < questDet.total) {
-                  if (mode === "review") {
-                      handleNextQuestion();
+                    if (mode === "question") {
+                      fetchQuest(questDet.current_page + 1);
+                    } else if (mode === "review") {
+                    handleNextQuestion();
                     }
+                  } else {
+                    handleNextQuestion();
                   }
                 }}
                 
@@ -391,7 +395,7 @@ function McqPageContent() {
                     if (mode === "question") {
                       fetchQuest(questDet.current_page + 1);
                     } else if (mode === "review") {
-                      handleNextQuestion();
+                    handleNextQuestion();
                     }
                   } else {
                     handleNextQuestion();
