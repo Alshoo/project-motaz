@@ -51,6 +51,9 @@ function McqPageContent() {
           });
           return;
         }
+
+        console.log(fetchQuest());
+        
         const questionData = questions[0].question;
         const existingAnswer = questions[0].answer;
         setQuestDet({
