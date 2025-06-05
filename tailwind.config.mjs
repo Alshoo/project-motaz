@@ -19,6 +19,9 @@ export default {
         blackOpacity: "var(--blackOpacity)",
         blue: "var(--blue)",
       },
+      screens: {
+        custom: "856px", // ✅ كسر الشاشة المخصص
+      },
     },
   },
   plugins: [require("flowbite/plugin")],
