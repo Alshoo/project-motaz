@@ -27,9 +27,9 @@ export default function HomePage() {
     processBackendCall();
   }, []);
 
-  setTimeout(()=>{
+  setTimeout(() => {
     setIsLoaded(true);
-  },2000)
+  }, 2000)
   return (
     <div>
       <section>
@@ -73,55 +73,55 @@ export default function HomePage() {
 
 
           <div className="grid grid-cols-1 py-11 gap-4 md:grid-cols-2 md:items-center md:gap-8">
-      <motion.div
-        initial={{ opacity: 1 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="flex justify-center"
-      >
-        {!videoError ? (
-          <>
-            {!isLoaded && (
-              <div className="w-[400px] h-[300px] rounded bg-gray-200 animate-pulse flex items-center justify-center">
-                <span className="text-gray-500">Loading video...</span>
+            <motion.div
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="flex justify-center"
+            >
+              {!videoError ? (
+                <>
+                  {!isLoaded && (
+                    <div className="w-[400px] h-[300px] rounded bg-gray-200 animate-pulse flex items-center justify-center">
+                      <span className="text-gray-500">Loading video...</span>
+                    </div>
+                  )}
+                  <iframe
+                    style={{ boxShadow: '0 0 25px black' }}
+                    className={`rounded ${!isLoaded ? "hidden" : ""}`}
+                    width="400"
+                    height="300"
+                    src="https://www.youtube.com/embed/4FWh6S4xFf4"
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    onLoad={() => setIsLoaded(true)}
+                    onError={() => setVideoError(true)}
+                  ></iframe>
+                </>
+              ) : (
+                <div className="w-[400px] h-[300px] rounded bg-gray-200 flex items-center justify-center">
+                  <span className="text-gray-500">Video not available</span>
+                </div>
+              )}
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.5 }}
+            >
+              <div className="max-w-lg md:max-w-none">
+                <h2 className="text-xl font-semibold text-primary md:text-2xl">
+                  Watch our introduction video to learn how to get the most out of your learning experience
+                </h2>
+                <p className="mt-4 text-gray-500 text-sm md:text-base">
+                  In this introductory video, you'll learn how to use our educational platform effectively. We’ll guide you through the steps of selecting study topics, solving questions, and tracking your academic progress. This video will be a perfect guide for new students to make the most of the website.
+                </p>
               </div>
-            )}
-            <video
-              className={`rounded ${!isLoaded ? "hidden" : ""}`}
-              width="400"
-              height="300"
-              autoPlay
-              muted
-              controls
-              src="WhatsApp Video 2025-03-18 at 00.13.41_32ee48bd.mp4"
-              onLoadedData={() => setIsLoaded(true)}
-              onError={() => setVideoError(true)}
-            ></video>
-          </>
-        ) : (
-          <div className="w-[400px] h-[300px] rounded bg-gray-200 flex items-center justify-center">
-            <span className="text-gray-500">Video not available</span>
+            </motion.div>
           </div>
-        )}
-      </motion.div>
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.5 }}
-      >
-        <div className="max-w-lg md:max-w-none">
-          <h2 className="text-xl font-semibold text-primary md:text-2xl">
-            Watch our introduction video to learn how to get the most out of your learning experience
-          </h2>
-          <p className="mt-4 text-gray-500 text-sm md:text-base">
-            In this introductory video, you'll learn how to use our educational platform effectively. We’ll guide you through the steps of selecting study topics, solving questions, and tracking your academic progress. This video will be a perfect guide for new students to make the most of the website.
-          </p>
-        </div>
-      </motion.div>
-    </div>
-
-
-
 
         </div>
       </section>
