@@ -27,7 +27,15 @@ function Footer() {
             </div>
             <p className="mt-4 max-w-xs text-white text-xs sm:text-sm leading-relaxed text-start">
               {data?.seo?.description}<br /><br />
-              <span className="opacity-50 text-white text-[10px]">&copy; 2025. Company Name. All rights reserved.</span>
+              <span className="opacity-50 text-white text-[10px]">
+                <a style={{ textDecoration: 'none' }} href='https://youssef-el-fadaly.vercel.app/'>
+                  &copy; 2025.
+                  <span style={{ textDecoration: 'underline',margin:'0 3px' }} className='font-bold'>
+                    youssef-el-fadaly. 
+                  </span>
+                  All rights reserved.
+                </a>
+              </span>
               <br />
               <span className="opacity-50 text-white text-[10px]">{data?.contact?.address}</span>
             </p>
