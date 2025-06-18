@@ -6,34 +6,10 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 
 export default function Store() {
-
   const cookieData = Cookies.get("user");
-
   const [loading, setLoading] = useState(true);
   const [Subject, setSubject] = useState([]);
 
-  // =========================
-  // الكود القديم (بيجيب صفحة واحدة بس)
-  // =========================
-  /*
-  useEffect(() => {
-    const FetchSubject = async () => {
-      try {
-        const response = await Axios.get('subjects');
-        setSubject(response.data.data.data || []);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    }
-    FetchSubject();
-  }, []);
-  */
-
-  // =========================
-  // الكود الجديد (بيجيب كل الصفحات)
-  // =========================
   useEffect(() => {
     const FetchAllSubjects = async () => {
       try {
@@ -41,19 +17,20 @@ export default function Store() {
         let allSubjects = [];
         let lastPage = 1;
 
+        // ابدأ بجلب الصفحة الأولى وتعرف على إجمالي عدد الصفحات
         do {
           const response = await Axios.get(`subjects?page=${page}`);
           const data = response.data.data.data || [];
           allSubjects = [...allSubjects, ...data];
 
-          // تأكد من اسم المتغير اللي بيرجع عدد الصفحات (غيره حسب الـ API لو مختلف)
-          lastPage = response.data.data.last_page || 1;
+          // هات عدد الصفحات الصحيح من meta
+          lastPage = response.data.data.meta?.last_page || 1;
           page++;
         } while (page <= lastPage);
 
+        // عرض كل المواد وعددهم في الكونسول
         console.log('عدد المواد:', allSubjects.length);
         console.log('كل المواد:', allSubjects);
-
 
         setSubject(allSubjects);
         setLoading(false);
@@ -61,7 +38,7 @@ export default function Store() {
         console.error(error);
         setLoading(false);
       }
-    }
+    };
     FetchAllSubjects();
   }, []);
 
@@ -76,8 +53,7 @@ export default function Store() {
             <hr />
           </div>
         </div>
-
-        <div className='m-auto max-w-screen-lg py-5 px-5 gap-4 grid place-items-center  min-h-[50vh]'>
+        <div className='m-auto max-w-screen-lg py-5 px-5 gap-4 grid place-items-center min-h-[50vh]'>
           {
             loading ? (
               <div className="spinner-container">
@@ -97,7 +73,7 @@ export default function Store() {
                   />
                 ))
               ) : (
-                <div className='flex flex-col  min-h-[40vh]'>
+                <div className='flex flex-col min-h-[40vh]'>
                   <p className="text-sm text-gray-600 translate-y-[15vh]">No Subject available.</p>
                 </div>
               )
