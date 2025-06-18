@@ -28,10 +28,6 @@ export default function Store() {
           page++;
         } while (page <= lastPage);
 
-        // عرض كل المواد وعددهم في الكونسول
-        console.log('عدد المواد:', allSubjects.length);
-        console.log('كل المواد:', allSubjects);
-
         setSubject(allSubjects);
         setLoading(false);
       } catch (error) {
