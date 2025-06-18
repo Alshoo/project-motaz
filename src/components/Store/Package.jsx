@@ -13,6 +13,9 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
   const subject_id = subject_ID;
   const { walletBalance, loading: profileLoading, error: profileError } = useProfile();
 
+  // =========================
+  // الكود الحالي لجلب الاشتراك الخاص بالباقة
+  // =========================
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
@@ -27,6 +30,13 @@ function Package({ closePopup, pricing_plans, title, subject_ID, questions_count
     };
     fetchSubscriptions();
   }, [subject_id]);
+
+  // =========================
+  // الكود الحالي جيد ولا يحتاج تعديل
+  // =========================
+  // اقتراح اختياري فقط: لو عايز أداء أعلى مع مستخدمين أو مواد كتير جدا
+  // ممكن تجيب بيانات كل الاشتراكات في الأعلى (Store) وتبعتها كـ prop هنا بدل ما تعمل طلب في كل Package
+  // لكن الطريقة دي مناسبة جدًا للمشاريع المتوسطة
 
   const handleCouponCheck = async () => {
     try {
