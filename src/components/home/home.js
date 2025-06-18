@@ -38,7 +38,7 @@ export default function HomePage() {
             <motion.div initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.5 }}>
               <div className="max-w-lg md:max-w-none">
                 <h2 className="text-xl font-semibold text-primary md:text-2xl">
-                  jWelcome to the Medical College Learning Platform!
+                  Welcome to the Medical College Learning Platform!
                 </h2>
                 <p className="mt-4 text-gray-500 text-sm md:text-base">
                   We're here to help you strengthen your knowledge with interactive quizzes and study materials from your medical courses. Select the topics you're studying, solve related questions, and track your progress anytime, anywhere. Our platform offers a wide range of topics and questions to test your understanding. With regularly updated content and an easy-to-use interface, you can focus on what matters most to your studies. Whether you want to practice specific topics or review your performance, we're here to support you every step of the way. Start exploring now and improve your academic skills!
