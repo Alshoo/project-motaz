@@ -51,6 +51,10 @@ export default function Store() {
           page++;
         } while (page <= lastPage);
 
+        console.log('عدد المواد:', allSubjects.length);
+        console.log('كل المواد:', allSubjects);
+
+
         setSubject(allSubjects);
         setLoading(false);
       } catch (error) {
