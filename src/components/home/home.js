@@ -87,7 +87,7 @@ export default function HomePage() {
                     </div>
                   )}
                   <iframe
-                    style={{ boxShadow: '0 0 25px black' }}
+                    style={{ boxShadow: ' 0 0 29px -18px black' }}
                     className={`rounded ${!isLoaded ? "hidden" : ""}`}
                     width="400"
                     height="300"
